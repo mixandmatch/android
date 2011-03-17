@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, HelloWorldActivity!</string>
     <string name="app_name">Mix and Match</string>
+    <string name="base_uri">http://mixmatch-t.elasticbeanstalk.com/</string>
 </resources>
