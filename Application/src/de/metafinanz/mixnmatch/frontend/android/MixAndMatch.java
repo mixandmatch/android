@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MixAndMatch extends Activity {
 	private Intent iRequestMatch;
@@ -15,6 +16,9 @@ public class MixAndMatch extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        Toast toast = Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT);
+		toast.show();
         
         iRequestMatch = new Intent(this, RequestMatch.class);
         
