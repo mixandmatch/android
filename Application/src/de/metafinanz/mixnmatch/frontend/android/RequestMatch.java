@@ -54,23 +54,16 @@ public class RequestMatch extends AbstractAsyncActivity {
 		parameters.put("who", who);
 		parameters.put("where", position);
 
-//		String restaurant =
-		String restaurant = null;
-		AsyncTask<Void, Void, String> result = new RequestLocation(position).execute();
-		try {
-			 restaurant = result.get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		AsyncTask<Void, Void, Location[]> task = new RequestLocation(position).execute();
+			 try {
+				task.get();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		
 	}
 
-	private class RequestLocation extends AsyncTask<Void, Void, String> {
+	private class RequestLocation extends AsyncTask<Void, Void, Location[]> {
 		protected String TAG = "RequestLocation";
 		
 		private Position position;
@@ -89,7 +82,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 		}
 
 		@Override
-		protected String doInBackground(Void... params) {
+		protected Location[] doInBackground(Void... params) {
 			
 			// Create a new RestTemplate instance
 			RestTemplate restTemplate = new RestTemplate();
@@ -105,21 +98,25 @@ public class RequestMatch extends AbstractAsyncActivity {
 			
 			// Initiate the HTTP GET request, expecting an array of State
 			// objects in response
-//			String result = restTemplate.getForObject(url,
-//				    String.class, this.lat, this.lon);
-			String result = restTemplate.getForObject(url, String.class); 
+//			String result = restTemplate.getForObject(url, String.class); 
 			//Man kann auch gleich ein POJO statt String erstellen lassen.
+			Location[] locations = restTemplate.getForObject(url, Location[].class); 
 			
-			return result;
+			return locations;
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(Location[] locations) {
 			// hide the progress indicator when the network request is complete
 			dismissProgressDialog();
 
-			if (result != null && result.length() > 0) {
-				Toast toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT);
+			if (locations != null && locations.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < locations.length; i++) {
+					sb.append(locations[i].getLabel());
+					sb.append("\n");
+				}
+				Toast toast = Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_LONG);
 				toast.show();
 			}
 		}
