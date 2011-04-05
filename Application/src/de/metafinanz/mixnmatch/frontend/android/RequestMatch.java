@@ -114,6 +114,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 				StringBuilder sb = new StringBuilder();
 				for (int i = 0; i < locations.length; i++) {
 					sb.append(locations[i].getLabel());
+					sb.append(" (");
+					sb.append(locations[i].getKey());
+					sb.append(")");
 					sb.append("\n");
 				}
 				Toast toast = Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_LONG);
