@@ -9,8 +9,29 @@ public class Location {
 	public static String[] COLUMNS = {Locations.LOCATION_ID, Locations.LABLE};
 	
 	private int id;
+	private String key;
 	private String label;
+	
 
+	public Location(int id, String label) {
+		super();
+		this.id = id;
+		this.label = label;
+	}
+	public Location(String key, String label) {
+		super();
+		this.key = key;
+		this.label = label;
+	}
+
+	
+	
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
 	public int getId() {
 		return id;
 	}
@@ -40,6 +61,8 @@ public class Location {
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.locations";
 
 		public static final String LOCATION_ID = "_id";
+		
+		public static final String KEY = "key";
 
 		public static final String LABLE = "lable";
 	}

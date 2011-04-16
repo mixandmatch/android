@@ -1,12 +1,15 @@
 package de.metafinanz.mixnmatch.frontend.android.test.providers;
 
+import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.test.ProviderTestCase2;
 import android.util.Log;
 import de.metafinanz.mixnmatch.frontend.android.Location;
+import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
+import de.metafinanz.mixnmatch.frontend.android.providers.ContentLocations;
 
 public class ContProvTest extends ProviderTestCase2<ContProv> {
 	private static final String TAG = "ContProvTest";
@@ -14,6 +17,7 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        ContentLocations.getInstance().removeAll();
         Log.d(TAG, "setUp");
     }
 
@@ -52,24 +56,58 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 //		fail("Not yet implemented");
 //	}
 //
-//	public void testInsertUriContentValues() {
-//		fail("Not yet implemented");
-//	}
+	public void testInsertUriContentValues() {
+		Uri myURI = ContProv.INSERT_URI;
+		ContProv provider = getProvider();
+		ContentValues values = new ContentValues();
+		values.put("key", "HVU");
+		values.put("label", "HVU Unterföhring");
+		
+		Uri resultUri = provider.insert(myURI, values);
+		assertNotNull(resultUri);
+		
+		
+		ContProv providerResult = getProvider();
+		Cursor cursorResult = providerResult.query(resultUri, Location.COLUMNS, null, null, null);
+		
+		assertNotNull(cursorResult);
+		
+		cursorResult.moveToNext();
+        String locName = cursorResult.getString(1);
+        assertEquals("HVU Unterföhring", locName);
+	}
 
 	public void testQueryUriStringArrayStringStringArrayString() {
-		Uri myURI = ContProv.CONTENT_URI;
+		ContentValues values = new ContentValues();
+		values.put("key", "HVU");
+		values.put("label", "HVU Unterföhring");
+		ContentLocations.getInstance().insert(values );
+		values = new ContentValues();
+		values.put("key", "VGU");
+		values.put("label", "VGU Unterföhring");
+		ContentLocations.getInstance().insert(values );
 		
+		Uri myURI = ContProv.CONTENT_ALL_URI;
 		ContProv provider = getProvider();
-		
 		Cursor cursor = provider.query(myURI, Location.COLUMNS, null, null, null);
 		
-		assertNotNull(cursor);
+		assertNotNull(cursor);		
+		assertEquals(2, cursor.getCount());
 		
-		assertTrue(cursor.getCount()==0);
-//		while (cursor.moveToNext()) {
-//            int id = cursor.getInt(0);
-//            String locName = cursor.getString(1);
-//        }
+		cursor.moveToNext();
+		
+        String key = cursor.getString(0);
+        assertEquals("HVU", key);
+        String locName = cursor.getString(1);
+        assertEquals("HVU Unterföhring", locName);
+
+		cursor.moveToNext();
+
+        key = cursor.getString(0);
+        assertEquals("VGU", key);
+        locName = cursor.getString(1);
+        assertEquals("VGU Unterföhring", locName);
+            
 
 
 	}
