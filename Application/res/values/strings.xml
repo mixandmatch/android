@@ -2,5 +2,14 @@
 <resources>
     <string name="hello">Hello World, HelloWorldActivity!</string>
     <string name="app_name">Mix and Match</string>
+    <string name="matchwunsch_button">Matchwunsch bekanntgeben</string>
+    <string name="matchempfangen_button">Matchwunsch empfangen</string>
+    <string name="name_feld">Name</string>
+    <string name="email_feld">eMail</string>
+    <string name="ort_feld">Ort</string>
+    <string name="datum_feld">Datum</string>
+    <string name="date_button">Datum auswählen</string>
     <string name="base_uri">http://mixmatch-t.elasticbeanstalk.com/</string>
+    <string name="error_name_missing">Bitte Namen eingeben.</string>
+    <string name="error_ok">OK</string>
 </resources>
