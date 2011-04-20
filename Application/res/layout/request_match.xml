@@ -39,7 +39,7 @@
 		android:text="@string/ort_feld">
 	</TextView>
 		
-	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scrollView1">
+	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ortScrollView">
 		<LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"></LinearLayout>
 	</ScrollView>
 	
