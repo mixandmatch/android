@@ -16,6 +16,8 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="de.metafinanz.mixnmatch.frontend.android.RequestMatch" />
+		<activity android:name="android.widget.DatePicker" />
+		
 
 	</application>
 </manifest>
