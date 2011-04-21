@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 public class Location {
 	
 	public static String[] COLUMNS = {Locations.LOCATION_ID, Locations.LABLE};
-	
+
 	private int id;
 	private String key;
 	private String label;
@@ -24,13 +24,8 @@ public class Location {
 		this.label = label;
 	}
 
-	
-	
-	public String getKey() {
-		return key;
-	}
-	public void setKey(String key) {
-		this.key = key;
+	public Location() {
+		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
@@ -40,15 +35,20 @@ public class Location {
 		this.id = id;
 	}
 
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+	
 	public String getLabel() {
 		return label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-	
-	public Location() {
 	}
 
 	public static final class Locations implements BaseColumns {

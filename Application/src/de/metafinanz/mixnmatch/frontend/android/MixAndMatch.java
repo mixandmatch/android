@@ -21,12 +21,12 @@ public class MixAndMatch extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Toast toast = Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "Willkommen bei Mix'n'Match", Toast.LENGTH_SHORT);
 		toast.show();
         
         iRequestMatch = new Intent(this, RequestMatch.class);
         
-        Button btnMatch = (Button) findViewById(R.id.buttonMatches);
+        Button btnMatch = (Button) findViewById(R.id.buttonMatchwunschBekanntgeben);
         OnClickListener oclBtnMatches = new OnClickListener() {
 			public void onClick(View v) {
 				startActivity(iRequestMatch);

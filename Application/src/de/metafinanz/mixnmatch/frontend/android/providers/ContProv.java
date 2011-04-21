@@ -43,6 +43,9 @@ public class ContProv extends ContentProvider {
 		case SEARCH_ALL_LOCATIONS:
 			return Locations.CONTENT_TYPE;
 
+		case SEARCH_ONE_LOCATIONS:
+			return Locations.CONTENT_TYPE;
+
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
 		}
@@ -109,15 +112,17 @@ public class ContProv extends ContentProvider {
 			}
 			return getSuggestions(query, projection);
 		case SEARCH_ONE_LOCATIONS:
-			return getOneLocation(uri.getLastPathSegment(), projection);
+			Long index = Long.valueOf(uri.getLastPathSegment());
+			return getOneLocation(index, projection);
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
 
 	}
 
-	private Cursor getOneLocation(String index, String[] projection) {
-		Location location = ContentLocations.getInstance().getMatch(index);
+	private Cursor getOneLocation(Long index, String[] projection) {
+		ContentLocations instanceOfContentLocations = ContentLocations.getInstance();
+		Location location = instanceOfContentLocations.getMatch(index);
 
 		if (location != null) {
 			Log.i(TAG, "found location" + location.getKey());

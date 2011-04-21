@@ -51,7 +51,7 @@ public class ContentLocations {
 		return listResult;
 	}
 
-	public Location getMatch(String index) {
+	public Location getMatch(Long index) {
 		return locations.get(index);
 	}
 
@@ -61,7 +61,7 @@ public class ContentLocations {
 				Log.w(TAG, "Element " + loc.getKey()
 						+ " already in list, skipping.");
 			else
-				this.locations.put(index++, loc);
+				this.locations.put(++index, loc);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class ContentLocations {
 					+ " already in list, skipping.");
 			return null;
 		} else {
-			this.locations.put(index++, newLoc);
+			this.locations.put(++index, newLoc);
 			Log.d(TAG, "location " + newLoc.getKey() + " added");
 			return index;
 		}

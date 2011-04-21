@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<ImageView android:src="@drawable/logo"
+		android:layout_height="wrap_content" android:id="@+id/logo"
+		android:layout_width="fill_parent" 
+		android:paddingTop="5px"
+		android:paddingBottom="10px" 
+		android:layout_gravity="top">
+	</ImageView>
+	<TextView android:id="@+id/dateDisplay" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:text=""/>
+	<Button android:id="@+id/pickDate"  
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/date_button"/>
+</LinearLayout>

@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent" android:orientation="vertical">
-    <Button android:layout_height="wrap_content"
-	android:layout_width="fill_parent" android:id="@+id/buttonRequestMatch"
-	android:text="Request Match"></Button>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<ImageView android:src="@drawable/logo"
+		android:layout_height="wrap_content" android:id="@+id/logo"
+		android:layout_width="fill_parent" 
+		android:paddingTop="5px"
+		android:paddingBottom="10px" 
+		android:layout_gravity="top">
+	</ImageView>
+	<TextView android:id="@+id/TextName" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal"
+		android:text="@string/name_feld">
+	</TextView>
+	<EditText android:id="@+id/editName"  
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+	</EditText>
+	<TextView android:id="@+id/TextName" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal"
+		android:text="@string/email_feld">
+	</TextView>
+	<EditText android:id="@+id/editName"  
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+	</EditText>
+		
+	<TextView android:id="@+id/TextOrt" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal"
+		android:text="@string/ort_feld">
+	</TextView>
+		
+	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ortScrollView">
+		<LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"></LinearLayout>
+	</ScrollView>
+	
+	<TextView android:id="@+id/TextDatum" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal"
+		android:text="@string/datum_feld">
+	</TextView>
+	
+	<Button android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/buttonPickDate"
+		android:text="@string/date_button">
+	</Button>
+	
+	<Button android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/buttonRequestMatch"
+		android:text="@string/matchwunsch_button" android:layout_gravity="bottom">
+	</Button>
+	
 </LinearLayout>
