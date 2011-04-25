@@ -10,6 +10,11 @@
     <string name="datum_feld">Datum</string>
     <string name="date_button">Datum auswählen</string>
     <string name="base_uri">http://mixmatch-t.elasticbeanstalk.com/</string>
+    <string name="location_service_started">Location service startet.</string>
+    <string name="location_service_stopped">Location service stopped.</string>
+    <string name="location_service_created">Location service created.</string>
+    <string name="local_service_connected">Location service connected.</string>
+    <string name="local_service_disconnected">Location service disconnected.</string>
     <string name="error_name_missing">Bitte Namen eingeben.</string>
     <string name="error_ok">OK</string>
 </resources>
