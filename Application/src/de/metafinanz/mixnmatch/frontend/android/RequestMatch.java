@@ -1,5 +1,6 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,35 +9,35 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class RequestMatch extends AbstractAsyncActivity {
-	// um auf die Datumsauswahl umzuleiten
-	private Intent iPickDate;
 	private Intent iRequestMatch;
-	
-	private ScrollView mLocations;
+	private EditText mName;
+	private TextView mDateDisplay;
+	private Button   mPickDate;
+	private int mYear;
+	private int mMonth;
+	private int mDay;
+	static final int DATE_DIALOG_ID = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.request_match);
-
-		//Feld zum entgegennehmen der Orte
-        mLocations = (ScrollView) findViewById(R.id.ortScrollView);
-        // TODO hier muss noch der Zugriff aufs Backend und die Befüllung der
-		// ScrollView erfolgen!
         
         
 		Button btnMatch = (Button) findViewById(R.id.buttonRequestMatch);
@@ -48,8 +49,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 			public void onClick(View v) {
 				
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
-				EditText nameField = (EditText) findViewById(R.id.editName);
-				String name = nameField.getText().toString();
+				mName = (EditText) findViewById(R.id.editName);
+				String name = mName.getText().toString();
 
 				
 				if (name.length() == 0) {
@@ -61,22 +62,40 @@ public class RequestMatch extends AbstractAsyncActivity {
 				} else {
 					
 					
-					sendMatchWish(new Date(), "me", new Position(0, 0));
+					sendMatchWish(mDateDisplay.getText().toString(), mName.getText().toString(), new Position(0, 0));
 					startActivity(iRequestMatch);
 				}
 			}
 		};
 		btnMatch.setOnClickListener(oclBtnMatches);
 
-		iPickDate = new Intent(this, DatePicker.class);
-
-		Button btnDate = (Button) findViewById(R.id.buttonPickDate);
-		OnClickListener oclBtnDate = new OnClickListener() {
-			public void onClick(View v) {
-				startActivity(iPickDate);
-			}
-		};
-		btnDate.setOnClickListener(oclBtnDate);
+		//Ort auswählen
+		Spinner spinner = (Spinner) findViewById(R.id.ortSpinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		
+		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+		
+		//Datums-Button
+		mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
+        mPickDate = (Button) findViewById(R.id.buttonPickDate);
+        
+        //ClickListener für den Button
+        mPickDate.setOnClickListener(new View.OnClickListener() {
+    	   public void onClick(View v) {
+    		   showDialog(DATE_DIALOG_ID);
+		}
+       });
+       
+       //aktuelles Datum beschaffen
+       final Calendar c = Calendar.getInstance();
+       mYear = c.get(Calendar.YEAR);
+       mMonth = c.get(Calendar.MONTH);
+       mDay = c.get(Calendar.DAY_OF_MONTH);
+       
+       //aktuelles Datum anzeigen
+       updateDisplay();
 
 		
 	}
@@ -86,9 +105,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 	 * 
 	 * @return http return code
 	 */
-	public void sendMatchWish(Date when, String who, Position position) {
+	public void sendMatchWish(String when, String who, Position position) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("day", when.toString());
+		parameters.put("day", when);
 		parameters.put("who", who);
 		parameters.put("where", position);
 
@@ -163,6 +182,36 @@ public class RequestMatch extends AbstractAsyncActivity {
 				toast.show();
 			}
 		}
+	}
+	private void updateDisplay() {
+    	mDateDisplay.setText(
+    			new StringBuilder()
+    			.append(mDay).append(".")
+    			.append(mMonth + 1).append(".")
+    			.append(mYear).append(" "));
+    }
+    
+    //Rückgabe des ausgewählten Datums
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+    		new DatePickerDialog.OnDateSetListener() {
+
+				public void onDateSet(android.widget.DatePicker view, int year,
+								   	  int monthOfYear, int dayOfMonth) {
+					mYear = year;
+					mMonth = monthOfYear;
+					mDay = dayOfMonth;
+					updateDisplay();
+			
+		}
+		};
+		
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch(id) {
+		case DATE_DIALOG_ID:
+			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+		}
+		return null;
 	}
 
 }
