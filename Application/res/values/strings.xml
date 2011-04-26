@@ -17,4 +17,13 @@
     <string name="local_service_disconnected">Location service disconnected.</string>
     <string name="error_name_missing">Bitte Namen eingeben.</string>
     <string name="error_ok">OK</string>
+    <string name="ort_wert">Standort auswählen</string>
+    <string-array name="location_list">
+    	<item>HVU, Unterföhring</item>
+    	<item>BVB, Unterföhring</item>
+    	<item>Mace, Unterföhring</item>
+    	<item>Kistenpfennig, Schwabing</item>
+    	<item>Al Pacino, Schwabing</item>
+    	<item>HV, Schwabing</item>
+    	</string-array>
 </resources>
