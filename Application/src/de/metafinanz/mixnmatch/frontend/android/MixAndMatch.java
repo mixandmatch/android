@@ -45,7 +45,7 @@ public class MixAndMatch extends Activity {
 		};
 		btnMatchEmpfangen.setOnClickListener(oclBtnMatchesEmpfangen);
 
-		LocationsServiceHelper.getInstance(this).updateLocations();
+//		LocationsServiceHelper.getInstance(this).updateLocations();
     }
 
 	@Override

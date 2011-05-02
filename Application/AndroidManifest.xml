@@ -16,6 +16,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="de.metafinanz.mixnmatch.frontend.android.RequestMatch" />
+		<activity android:name="de.metafinanz.mixnmatch.frontend.android.ReceiveMatch" />
 		<activity android:name="android.widget.DatePicker" />
 		<service android:enabled="true" android:name=".services.LocationsService" />
 		<provider android:authorities="de.metafinanz.mixnmatch.frontend.android.contprov" android:name=".providers.ContProv"/>
