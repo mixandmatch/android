@@ -3,6 +3,7 @@
     <string name="hello">Hello World, HelloWorldActivity!</string>
     <string name="app_name">Mix and Match</string>
     <string name="matchwunsch_button">Matchwunsch bekanntgeben</string>
+    <string name="matchsenden_button">Matchwunsch senden</string>
     <string name="matchempfangen_button">Matchwunsch empfangen</string>
     <string name="name_feld">Name</string>
     <string name="email_feld">eMail</string>

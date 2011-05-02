@@ -1,7 +1,6 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,16 +39,16 @@ public class RequestMatch extends AbstractAsyncActivity {
 		setContentView(R.layout.request_match);
         
         
-		Button btnMatch = (Button) findViewById(R.id.buttonRequestMatch);
 		//solange die View zur Ergebnisrückgabe noch nicht fertig ist, leite ich mal lieber auf diese Seite
 		//hier um, um Dumps zu vermeiden
 		iRequestMatch = new Intent(this, RequestMatch.class);
 		
-		OnClickListener oclBtnMatches = new OnClickListener() {
+		Button btnMatchSenden = (Button) findViewById(R.id.buttonMatchwunschSenden);
+		OnClickListener oclBtnMatchesSenden = new OnClickListener() {
 			public void onClick(View v) {
 				
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
-				mName = (EditText) findViewById(R.id.editName);
+				mName = (EditText) findViewById(R.id.EditName);
 				String name = mName.getText().toString();
 
 				
@@ -67,10 +66,10 @@ public class RequestMatch extends AbstractAsyncActivity {
 				}
 			}
 		};
-		btnMatch.setOnClickListener(oclBtnMatches);
+		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
 
 		//Ort auswählen
-		Spinner spinner = (Spinner) findViewById(R.id.ortSpinner);
+		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
