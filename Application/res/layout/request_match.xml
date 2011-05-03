@@ -26,7 +26,7 @@
 		android:orientation="horizontal"
 		android:text="@string/email_feld">
 	</TextView>
-	<EditText android:id="@+id/editName"  
+	<EditText android:id="@+id/editEMail"  
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal">
@@ -50,13 +50,19 @@
 		android:text="@string/datum_feld">
 	</TextView>
 	
+	<TextView android:id="@+id/textDatumWert" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:orientation="horizontal">
+	</TextView>
+	
 	<Button android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/buttonPickDate"
 		android:text="@string/date_button">
 	</Button>
 	
 	<Button android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:id="@+id/buttonRequestMatch"
+		android:layout_width="fill_parent" android:id="@+id/buttonMatchwunschSenden"
 		android:text="@string/matchwunsch_button" android:layout_gravity="bottom">
 	</Button>
 	

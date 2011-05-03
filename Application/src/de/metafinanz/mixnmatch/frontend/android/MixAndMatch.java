@@ -45,20 +45,20 @@ public class MixAndMatch extends Activity {
 		};
 		btnMatchEmpfangen.setOnClickListener(oclBtnMatchesEmpfangen);
 
-//		LocationsServiceHelper.getInstance(this).updateLocations();
+		LocationsServiceHelper.getInstance(this).updateLocations();
     }
 
-//	@Override
-//	protected void onStop() {
-//		super.onStop();
-//		Log.d(TAG, "stopping service");
-//	    stopService(new Intent(this, LocationsService.class));
-//	}
-//	
-//	@Override
-//	protected void onRestart() {
-//		super.onRestart();
-//		Log.d(TAG, "restarting service");
-//	    startService(new Intent(this, LocationsService.class));
-//	}
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Log.d(TAG, "stopping service");
+	    stopService(new Intent(this, LocationsService.class));
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.d(TAG, "restarting service");
+	    startService(new Intent(this, LocationsService.class));
+	}
 }

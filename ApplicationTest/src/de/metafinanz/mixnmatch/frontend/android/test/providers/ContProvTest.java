@@ -65,6 +65,9 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 		
 		Uri resultUri = provider.insert(myURI, values);
 		assertNotNull(resultUri);
+
+		Log.d(TAG, "Insert-URI: " + myURI);
+		Log.d(TAG, "Result-URI: " + resultUri);
 		
 		
 		ContProv providerResult = getProvider();

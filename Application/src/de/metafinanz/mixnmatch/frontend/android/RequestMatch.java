@@ -1,6 +1,8 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +13,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,12 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RequestMatch extends AbstractAsyncActivity {
-	private Intent iRequestMatch;
+	private Intent iMixAndMatch;
 	private Intent iLocationDialog;
-	private TextView mDateDisplay;
 	private Button   mPickDate;
-	private TextView mTimeDisplay;
 	private Button   mPickTime;
+	private Calendar meetingCalendar = null;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
@@ -38,6 +38,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 	private int mMinute;
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
+	
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +49,25 @@ public class RequestMatch extends AbstractAsyncActivity {
 		setContentView(R.layout.request_match);
         
 		//Ort auswählen
-		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
+//		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		
-		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+//		spinner.setAdapter(adapter);
+//		
+//		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
 		
 		iLocationDialog = new Intent(this, LocationDialog.class);
         
-        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
-        OnClickListener oclBtnLocationView = new OnClickListener() {
-			public void onClick(View v) {
-				startActivity(iLocationDialog);
-			}
-		};
-		btnLocationView.setOnClickListener(oclBtnLocationView);
+//        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
+//        OnClickListener oclBtnLocationView = new OnClickListener() {
+//			public void onClick(View v) {
+//				startActivity(iLocationDialog);
+//			}
+//		};
+//		btnLocationView.setOnClickListener(oclBtnLocationView);
 		
 		//Datums-Button
-		mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
+		TextView mDateDisplay = (TextView) findViewById(R.id.textDatumWert);
         mPickDate = (Button) findViewById(R.id.buttonPickDate);
         
         //ClickListener für den Button
@@ -74,65 +77,69 @@ public class RequestMatch extends AbstractAsyncActivity {
     	   }
         });
         
-        //Zeit-Button
-        mTimeDisplay = (TextView) findViewById(R.id.TextUhrzeitWert);
-        mPickTime = (Button) findViewById(R.id.buttonPickTime);
+//        //Zeit-Button
+//        mTimeDisplay = (TextView) findViewById(R.id.TextUhrzeitWert);
+//        mPickTime = (Button) findViewById(R.id.buttonPickTime);
+//        
+//        //ClickListener für den Button
+//        mPickTime.setOnClickListener(new View.OnClickListener() {
+//    	   public void onClick(View v) {
+//    		   showDialog(TIME_DIALOG_ID);
+//    	   }
+//        });
         
-        //ClickListener für den Button
-        mPickTime.setOnClickListener(new View.OnClickListener() {
-    	   public void onClick(View v) {
-    		   showDialog(TIME_DIALOG_ID);
-    	   }
-        });
-        
-        //aktuelles Datum/Uhrzeit beschaffen
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        init();
        
         //aktuelles Datum anzeigen
         updateDisplay();
         
 		//solange die View zur Ergebnisrückgabe noch nicht fertig ist, leite ich mal lieber auf diese Seite
 		//hier um, um Dumps zu vermeiden
-		iRequestMatch = new Intent(this, RequestMatch.class);
+		iMixAndMatch = new Intent(this, MixAndMatch.class);
 		
 		Button btnMatchSenden = (Button) findViewById(R.id.buttonMatchwunschSenden);
 		OnClickListener oclBtnMatchesSenden = new OnClickListener() {
 			public void onClick(View v) {
 				
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
-				EditText mEditName = (EditText) findViewById(R.id.EditName);
+				EditText mEditName = (EditText) findViewById(R.id.editName);
 				String name = mEditName.getText().toString();
-				EditText mEditEmail = (EditText) findViewById(R.id.EditEmail);
+				EditText mEditEmail = (EditText) findViewById(R.id.editEMail);
 				String mail = mEditEmail.getText().toString();
+				EditText mDateDisplay = (EditText) findViewById(R.id.textDatumWert);
+				String date = mEditEmail.getText().toString();
 				
-				if (name.length() == 0) {
-					new AlertDialog.Builder(getApplicationContext())
-							.setMessage(R.string.error_name_missing)
-							.setNeutralButton(R.string.error_ok, null).show();
+//				if (name.length() == 0) {
+//					new AlertDialog.Builder(getApplicationContext())
+//							.setMessage(R.string.error_name_missing)
+//							.setNeutralButton(R.string.error_ok, null).show();
+//
+//					return;
+//				} 
+//				else if  (mail.length() == 0) {
+//					new AlertDialog.Builder(getApplicationContext())
+//					.setMessage(R.string.error_mail_missing)
+//					.setNeutralButton(R.string.error_ok, null).show();
+//					return;
+//				}
+//				else {	
+//					sendMatchWish(mDateDisplay.getText().toString(), mEditName.getText().toString(), new Position(0, 0));
+//					startActivity(iMixAndMatch);
+//				}
 
-					return;
-				} 
-				else if  (mail.length() == 0) {
-					new AlertDialog.Builder(getApplicationContext())
-					.setMessage(R.string.error_mail_missing)
-					.setNeutralButton(R.string.error_ok, null).show();
-
-					return;
-				}
-				else {	
-					sendMatchWish(mDateDisplay.getText().toString(), mEditName.getText().toString(), new Position(0, 0));
-					startActivity(iRequestMatch);
-				}
+				Toast toast = Toast.makeText(getApplicationContext(), "Matchwunsch wird gesendet." , Toast.LENGTH_LONG);
+				toast.show();
+				sendMatchWish(mDateDisplay.getText().toString(), name, new Position(0, 0));
+				startActivity(iMixAndMatch);
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
 
 		
+	}
+
+	private void init() {
+		meetingCalendar = Calendar.getInstance();
 	}
 
 	/**
@@ -146,14 +153,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 		parameters.put("who", who);
 		parameters.put("where", position);
 
-		AsyncTask<Void, Void, Location[]> task = new RequestLocation(position)
-				.execute();
-		try {
-			task.get();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-
+		//Aufruf des Service, welche die Daten in einer Queue ablegt und sendet, sobald ein Signal vorhanden ist.
 	}
 
 	private class RequestLocation extends AsyncTask<Void, Void, Location[]> {
@@ -219,22 +219,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 		}
 	}
 	private void updateDisplay() {
-    	mDateDisplay.setText(
-    			new StringBuilder()
-    			.append(mDay).append(".")
-    			.append(mMonth + 1).append(".")
-    			.append(mYear).append(" "));
-    	
-    	mTimeDisplay.setText(
-    			new StringBuilder().append(pad(mHour)).append(":").append(pad(mMinute)));
+		TextView tvDateDisplay = (TextView) findViewById(R.id.textDatumWert);
+		tvDateDisplay.setText(sdf.format(meetingCalendar.getTime()));
     }
-    
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
-	}
 	
     //Rückgabe des ausgewählten Datums
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -242,9 +229,10 @@ public class RequestMatch extends AbstractAsyncActivity {
 
 				public void onDateSet(android.widget.DatePicker view, int year,
 								   	  int monthOfYear, int dayOfMonth) {
-					mYear = year;
-					mMonth = monthOfYear;
-					mDay = dayOfMonth;
+					
+					meetingCalendar.set(Calendar.YEAR, year);
+					meetingCalendar.set(Calendar.MONTH, monthOfYear);
+					meetingCalendar.set(Calendar.DATE, dayOfMonth);
 					updateDisplay();
 			
 		}
@@ -256,8 +244,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 
 				public void onTimeSet(android.widget.TimePicker view, int hourOfDay,
 								   	  int minute) {
-					mHour = hourOfDay;
-					mMinute = minute;
+					meetingCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+					meetingCalendar.set(Calendar.MINUTE, minute);
 					updateDisplay();
 			
 		}
@@ -266,10 +254,15 @@ public class RequestMatch extends AbstractAsyncActivity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		if (id == DATE_DIALOG_ID) {
-			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+			return new DatePickerDialog(this, mDateSetListener, 
+					meetingCalendar.get(Calendar.YEAR), 
+					meetingCalendar.get(Calendar.MONTH), 
+					meetingCalendar.get(Calendar.DATE));
 		} 
 		else if (id == TIME_DIALOG_ID) {
-			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
+			return new TimePickerDialog(this, mTimeSetListener, 
+					meetingCalendar.get(Calendar.HOUR_OF_DAY), 
+					meetingCalendar.get(Calendar.MINUTE), false);
 		} 
 		else {
 			return null;

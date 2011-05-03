@@ -1,6 +1,10 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
 import android.os.Bundle;
+
 
 public class LocationDialog extends MapActivity {
 	

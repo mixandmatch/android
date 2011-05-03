@@ -21,5 +21,7 @@
 		<activity android:name="de.metafinanz.mixnmatch.frontend.android.LocationDialog" android:theme="@android:style/Theme.NoTitleBar" />
 		<service android:enabled="true" android:name=".services.LocationsService" />
 		<provider android:authorities="de.metafinanz.mixnmatch.frontend.android.contprov" android:name=".providers.ContProv"/>
+		
+		<uses-library android:name="com.google.android.maps" />
 	</application>
 </manifest>
