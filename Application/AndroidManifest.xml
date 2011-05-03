@@ -4,6 +4,7 @@
 	android:versionName="1.0">
 
 	<uses-sdk android:minSdkVersion="7" />
+	<uses-library android:name="com.google.android.maps" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
 
@@ -17,7 +18,7 @@
 		</activity>
 		<activity android:name="de.metafinanz.mixnmatch.frontend.android.RequestMatch" />
 		<activity android:name="de.metafinanz.mixnmatch.frontend.android.ReceiveMatch" />
-		<activity android:name="android.widget.DatePicker" />
+		<activity android:name="de.metafinanz.mixnmatch.frontend.android.LocationDialog" android:theme="@android:style/Theme.NoTitleBar" />
 		<service android:enabled="true" android:name=".services.LocationsService" />
 		<provider android:authorities="de.metafinanz.mixnmatch.frontend.android.contprov" android:name=".providers.ContProv"/>
 	</application>

@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,13 +26,18 @@ import android.widget.Toast;
 
 public class RequestMatch extends AbstractAsyncActivity {
 	private Intent iRequestMatch;
-	private EditText mName;
+	private Intent iLocationDialog;
 	private TextView mDateDisplay;
 	private Button   mPickDate;
+	private TextView mTimeDisplay;
+	private Button   mPickTime;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
+	private int mHour;
+	private int mMinute;
 	static final int DATE_DIALOG_ID = 0;
+	static final int TIME_DIALOG_ID = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,56 @@ public class RequestMatch extends AbstractAsyncActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.request_match);
         
+		//Ort auswählen
+		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		
+		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+		
+		iLocationDialog = new Intent(this, LocationDialog.class);
+        
+        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
+        OnClickListener oclBtnLocationView = new OnClickListener() {
+			public void onClick(View v) {
+				startActivity(iLocationDialog);
+			}
+		};
+		btnLocationView.setOnClickListener(oclBtnLocationView);
+		
+		//Datums-Button
+		mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
+        mPickDate = (Button) findViewById(R.id.buttonPickDate);
+        
+        //ClickListener für den Button
+        mPickDate.setOnClickListener(new View.OnClickListener() {
+    	   public void onClick(View v) {
+    		   showDialog(DATE_DIALOG_ID);
+    	   }
+        });
+        
+        //Zeit-Button
+        mTimeDisplay = (TextView) findViewById(R.id.TextUhrzeitWert);
+        mPickTime = (Button) findViewById(R.id.buttonPickTime);
+        
+        //ClickListener für den Button
+        mPickTime.setOnClickListener(new View.OnClickListener() {
+    	   public void onClick(View v) {
+    		   showDialog(TIME_DIALOG_ID);
+    	   }
+        });
+        
+        //aktuelles Datum/Uhrzeit beschaffen
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+       
+        //aktuelles Datum anzeigen
+        updateDisplay();
         
 		//solange die View zur Ergebnisrückgabe noch nicht fertig ist, leite ich mal lieber auf diese Seite
 		//hier um, um Dumps zu vermeiden
@@ -48,9 +105,10 @@ public class RequestMatch extends AbstractAsyncActivity {
 			public void onClick(View v) {
 				
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
-				mName = (EditText) findViewById(R.id.EditName);
-				String name = mName.getText().toString();
-
+				EditText mEditName = (EditText) findViewById(R.id.EditName);
+				String name = mEditName.getText().toString();
+				EditText mEditEmail = (EditText) findViewById(R.id.EditEmail);
+				String mail = mEditEmail.getText().toString();
 				
 				if (name.length() == 0) {
 					new AlertDialog.Builder(getApplicationContext())
@@ -58,43 +116,21 @@ public class RequestMatch extends AbstractAsyncActivity {
 							.setNeutralButton(R.string.error_ok, null).show();
 
 					return;
-				} else {
-					
-					
-					sendMatchWish(mDateDisplay.getText().toString(), mName.getText().toString(), new Position(0, 0));
+				} 
+				else if  (mail.length() == 0) {
+					new AlertDialog.Builder(getApplicationContext())
+					.setMessage(R.string.error_mail_missing)
+					.setNeutralButton(R.string.error_ok, null).show();
+
+					return;
+				}
+				else {	
+					sendMatchWish(mDateDisplay.getText().toString(), mEditName.getText().toString(), new Position(0, 0));
 					startActivity(iRequestMatch);
 				}
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
-
-		//Ort auswählen
-		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		
-		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
-		
-		//Datums-Button
-		mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
-        mPickDate = (Button) findViewById(R.id.buttonPickDate);
-        
-        //ClickListener für den Button
-        mPickDate.setOnClickListener(new View.OnClickListener() {
-    	   public void onClick(View v) {
-    		   showDialog(DATE_DIALOG_ID);
-		}
-       });
-       
-       //aktuelles Datum beschaffen
-       final Calendar c = Calendar.getInstance();
-       mYear = c.get(Calendar.YEAR);
-       mMonth = c.get(Calendar.MONTH);
-       mDay = c.get(Calendar.DAY_OF_MONTH);
-       
-       //aktuelles Datum anzeigen
-       updateDisplay();
 
 		
 	}
@@ -188,8 +224,18 @@ public class RequestMatch extends AbstractAsyncActivity {
     			.append(mDay).append(".")
     			.append(mMonth + 1).append(".")
     			.append(mYear).append(" "));
+    	
+    	mTimeDisplay.setText(
+    			new StringBuilder().append(pad(mHour)).append(":").append(pad(mMinute)));
     }
     
+	private static String pad(int c) {
+		if (c >= 10)
+			return String.valueOf(c);
+		else
+			return "0" + String.valueOf(c);
+	}
+	
     //Rückgabe des ausgewählten Datums
     private DatePickerDialog.OnDateSetListener mDateSetListener =
     		new DatePickerDialog.OnDateSetListener() {
@@ -202,15 +248,33 @@ public class RequestMatch extends AbstractAsyncActivity {
 					updateDisplay();
 			
 		}
-		};
+	};
+	
+    //Rückgabe der ausgewählten Zeit
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
+    		new TimePickerDialog.OnTimeSetListener() {
+
+				public void onTimeSet(android.widget.TimePicker view, int hourOfDay,
+								   	  int minute) {
+					mHour = hourOfDay;
+					mMinute = minute;
+					updateDisplay();
+			
+		}
+	};
 		
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		switch(id) {
-		case DATE_DIALOG_ID:
+		if (id == DATE_DIALOG_ID) {
 			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+		} 
+		else if (id == TIME_DIALOG_ID) {
+			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
+		} 
+		else {
+			return null;
 		}
-		return null;
 	}
+
 
 }

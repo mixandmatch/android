@@ -5,11 +5,15 @@
     <string name="matchwunsch_button">Matchwunsch bekanntgeben</string>
     <string name="matchsenden_button">Matchwunsch senden</string>
     <string name="matchempfangen_button">Matchwunsch empfangen</string>
+    <string name="emailsenden_button">Email senden</string>
     <string name="name_feld">Name</string>
     <string name="email_feld">eMail</string>
     <string name="ort_feld">Ort</string>
     <string name="datum_feld">Datum</string>
+    <string name="zeit_feld">Zeit</string>
     <string name="date_button">Datum auswählen</string>
+    <string name="time_button">Zeit auswählen</string>
+    <string name="location_button">Karte anzeigen</string>
     <string name="base_uri">http://mixmatch-t.elasticbeanstalk.com/</string>
     <string name="location_service_started">Location service startet.</string>
     <string name="location_service_stopped">Location service stopped.</string>
@@ -17,6 +21,7 @@
     <string name="local_service_connected">Location service connected.</string>
     <string name="local_service_disconnected">Location service disconnected.</string>
     <string name="error_name_missing">Bitte Namen eingeben.</string>
+     <string name="error_mail_missing">Bitte Email eingeben.</string>
     <string name="error_ok">OK</string>
     <string name="ort_wert">Standort auswählen</string>
     <string-array name="location_list">
