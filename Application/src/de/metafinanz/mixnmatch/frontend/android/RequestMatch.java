@@ -2,30 +2,33 @@ package de.metafinanz.mixnmatch.frontend.android;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
 
 public class RequestMatch extends AbstractAsyncActivity {
+	private static final String TAG = "RequestMatch";
+	
 	private Intent iMixAndMatch;
 	private Intent iLocationDialog;
 	private Button   mPickDate;
@@ -48,11 +51,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.request_match);
         
-		//Ort auswählen
-//		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.location_list, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		spinner.setAdapter(adapter);
+
+		prepareLocationsSpinner();
+		
 //		
 //		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
 		
@@ -106,8 +107,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 				String name = mEditName.getText().toString();
 				EditText mEditEmail = (EditText) findViewById(R.id.editEMail);
 				String mail = mEditEmail.getText().toString();
-				EditText mDateDisplay = (EditText) findViewById(R.id.textDatumWert);
-				String date = mEditEmail.getText().toString();
+				TextView mDateDisplay = (TextView) findViewById(R.id.textDatumWert);
+				String date = mDateDisplay.getText().toString();
 				
 //				if (name.length() == 0) {
 //					new AlertDialog.Builder(getApplicationContext())
@@ -136,6 +137,22 @@ public class RequestMatch extends AbstractAsyncActivity {
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
 
 		
+	}
+
+	private void prepareLocationsSpinner() {
+		//Ort auswählen
+		Spinner spinner = (Spinner) findViewById(R.id.OrtSpinner);
+		Cursor cursor = getContentResolver().query(Locations.CONTENT_URI, Location.COLUMNS, null, null, null);
+		startManagingCursor(cursor);
+		
+		Log.d(TAG, "Anzahl im Cursor: " + cursor.getCount());
+		
+		String[] from = new String[] { Locations.LABLE } ;
+		int[] to = new int[] { android.R.id.text1 };
+		
+		SimpleCursorAdapter locationsCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, from, to);
+		locationsCursorAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		spinner.setAdapter(locationsCursorAdapter);
 	}
 
 	private void init() {

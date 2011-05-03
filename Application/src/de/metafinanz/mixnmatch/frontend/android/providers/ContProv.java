@@ -64,7 +64,7 @@ public class ContProv extends ContentProvider {
 			Long id = ContentLocations.getInstance().insert(values);
 
 			if (id != null) {
-				Uri _uri = ContentUris.withAppendedId(CONTENT_URI, id);
+				Uri _uri = ContentUris.withAppendedId(Locations.CONTENT_URI, id);
 				getContext().getContentResolver().notifyChange(_uri, null);
 				return _uri;
 			}
@@ -136,7 +136,9 @@ public class ContProv extends ContentProvider {
 
 		Log.i(TAG, "found " + locations.size() + " results");
 		MatrixCursor cursor = new MatrixCursor(Location.COLUMNS);
+		int counter = 0;
 		for (Location loc : locations) {
+			loc.setId(counter++);
 			cursor.addRow(columnValuesOfLocation(loc));
 		}
 
@@ -144,8 +146,9 @@ public class ContProv extends ContentProvider {
 	}
 
 	private Object[] columnValuesOfLocation(Location loc) {
-		return new Object[] { loc.getKey(), // key
-				loc.getLabel() // text1
+		return new Object[] { loc.getId(), // id
+				loc.getKey(), // key
+				loc.getLabel() // lable
 		};
 	}
 
@@ -165,6 +168,7 @@ public class ContProv extends ContentProvider {
 
 		projectionMap = new HashMap<String, String>();
 		projectionMap.put(Locations.LOCATION_ID, Locations.LOCATION_ID);
+		projectionMap.put(Locations.KEY, Locations.KEY);
 		projectionMap.put(Locations.LABLE, Locations.LABLE);
 
 	}

@@ -38,6 +38,13 @@
 		android:orientation="horizontal"
 		android:text="@string/ort_feld">
 	</TextView>
+	<Spinner 
+        android:id="@+id/OrtSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/ort_wert"
+    />
+	
 		
 	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ortScrollView">
 		<LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"></LinearLayout>

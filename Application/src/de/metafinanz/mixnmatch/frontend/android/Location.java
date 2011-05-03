@@ -6,9 +6,9 @@ import android.provider.BaseColumns;
 
 public class Location {
 	
-	public static String[] COLUMNS = {Locations.LOCATION_ID, Locations.LABLE};
+	public static String[] COLUMNS = {Locations.LOCATION_ID, Locations.KEY, Locations.LABLE};
 
-	private int id;
+	private long id;
 	private String key;
 	private String label;
 	
@@ -27,11 +27,11 @@ public class Location {
 	public Location() {
 		// TODO Auto-generated constructor stub
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

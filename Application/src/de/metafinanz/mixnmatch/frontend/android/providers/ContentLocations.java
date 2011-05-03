@@ -80,7 +80,8 @@ public class ContentLocations {
 					+ " already in list, skipping.");
 			return null;
 		} else {
-			this.locations.put(++index, newLoc);
+			newLoc.setId(++index);
+			this.locations.put(index, newLoc);
 			Log.d(TAG, "location " + newLoc.getKey() + " added");
 			return index;
 		}

@@ -57,16 +57,15 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 //	}
 //
 	public void testInsertUriContentValues() {
-		Uri myURI = ContProv.INSERT_URI;
 		ContProv provider = getProvider();
 		ContentValues values = new ContentValues();
-		values.put("key", "HVU");
-		values.put("label", "HVU Unterföhring");
+		values.put(Locations.KEY, "HVU");
+		values.put(Locations.LABLE, "HVU Unterföhring");
 		
-		Uri resultUri = provider.insert(myURI, values);
+		Uri resultUri = provider.insert(Locations.CONTENT_URI, values);
 		assertNotNull(resultUri);
 
-		Log.d(TAG, "Insert-URI: " + myURI);
+		Log.d(TAG, "Insert-URI: " + Locations.CONTENT_URI);
 		Log.d(TAG, "Result-URI: " + resultUri);
 		
 		
@@ -82,17 +81,16 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 
 	public void testQueryUriStringArrayStringStringArrayString() {
 		ContentValues values = new ContentValues();
-		values.put("key", "HVU");
-		values.put("label", "HVU Unterföhring");
+		values.put(Locations.KEY, "HVU");
+		values.put(Locations.LABLE, "HVU Unterföhring");
 		ContentLocations.getInstance().insert(values );
 		values = new ContentValues();
-		values.put("key", "VGU");
-		values.put("label", "VGU Unterföhring");
+		values.put(Locations.KEY, "VGU");
+		values.put(Locations.LABLE, "VGU Unterföhring");
 		ContentLocations.getInstance().insert(values );
 		
-		Uri myURI = ContProv.CONTENT_ALL_URI;
 		ContProv provider = getProvider();
-		Cursor cursor = provider.query(myURI, Location.COLUMNS, null, null, null);
+		Cursor cursor = provider.query(Locations.CONTENT_URI, Location.COLUMNS, null, null, null);
 		
 		assertNotNull(cursor);		
 		assertEquals(2, cursor.getCount());
