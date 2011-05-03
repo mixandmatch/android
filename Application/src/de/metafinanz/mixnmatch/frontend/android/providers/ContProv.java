@@ -14,37 +14,32 @@ import android.text.TextUtils;
 import android.util.Log;
 import de.metafinanz.mixnmatch.frontend.android.Location;
 import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
-import de.metafinanz.mixnmatch.frontend.android.exception.NotSupportedException;
 
 public class ContProv extends ContentProvider {
 	private static final String TAG = "ContProv";
 	public static final String AUTHORITY = "de.metafinanz.mixnmatch.frontend.android.Location";
 	public final static String SUGGEST_URI_PATH_QUERY_ALL = "search_all_query";
 	public final static String SUGGEST_URI_PATH_QUERY = "search_query";
-	public final static String SUGGEST_URI_PATH_INSERT = "insert_item";
 
 	private static final UriMatcher sURIMatcher;
 	private static HashMap<String, String> projectionMap;
 
 	private static final int SEARCH_ALL_LOCATIONS = 10;
 	private static final int SEARCH_ONE_LOCATIONS = 15;
-	private static final int INSERT_ITEM = 20;
 
 	public static final Uri CONTENT_ALL_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + SUGGEST_URI_PATH_QUERY_ALL);
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + SUGGEST_URI_PATH_QUERY);
-	public static final Uri INSERT_URI = Uri.parse("content://" + AUTHORITY
-			+ "/" + SUGGEST_URI_PATH_INSERT);
 
 	@Override
 	public String getType(Uri uri) {
 		switch (sURIMatcher.match(uri)) {
 		case SEARCH_ALL_LOCATIONS:
-			return Locations.CONTENT_TYPE;
+			return Locations.CONTENT_TYPE_QUERY_LIST;
 
 		case SEARCH_ONE_LOCATIONS:
-			return Locations.CONTENT_TYPE;
+			return Locations.CONTENT_TYPE_QUERY_ITEM;
 
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -65,7 +60,7 @@ public class ContProv extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 
 		switch (sURIMatcher.match(uri)) {
-		case INSERT_ITEM:
+		case SEARCH_ALL_LOCATIONS:
 			Long id = ContentLocations.getInstance().insert(values);
 
 			if (id != null) {
@@ -165,9 +160,8 @@ public class ContProv extends ContentProvider {
 
 	static {
 		sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sURIMatcher.addURI(AUTHORITY, SUGGEST_URI_PATH_QUERY_ALL, SEARCH_ALL_LOCATIONS);
-		sURIMatcher.addURI(AUTHORITY, SUGGEST_URI_PATH_QUERY + "/#", SEARCH_ONE_LOCATIONS);
-		sURIMatcher.addURI(AUTHORITY, SUGGEST_URI_PATH_INSERT, INSERT_ITEM);
+		sURIMatcher.addURI(AUTHORITY, Locations.type, SEARCH_ALL_LOCATIONS);
+		sURIMatcher.addURI(AUTHORITY, Locations.type + "/#", SEARCH_ONE_LOCATIONS);
 
 		projectionMap = new HashMap<String, String>();
 		projectionMap.put(Locations.LOCATION_ID, Locations.LOCATION_ID);

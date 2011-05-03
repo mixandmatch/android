@@ -158,7 +158,7 @@ public class LocationsService extends Service {
 					ContentValues values = new ContentValues();
 					values.put(Locations.KEY, locations[i].getKey());
 					values.put(Locations.LABLE, locations[i].getLabel());        
-					Uri uri = getContentResolver().insert(ContProv.INSERT_URI, values);
+					Uri uri = getContentResolver().insert(Locations.CONTENT_URI, values);
 					Log.d(TAG, "added row '"+uri+"'");
 				}
 				Log.d(TAG, "loaded " + locations.length + "items from backend");
