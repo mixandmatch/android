@@ -54,11 +54,13 @@ public class Location {
 	public static final class Locations implements BaseColumns {
 		private Locations() {
 		}
+		
+		public static final String type = "locations";
 
-		public static final Uri CONTENT_URI = Uri.parse("content://"
-				+ ContProv.AUTHORITY + "/locations");
+		public static final Uri CONTENT_URI = Uri.parse("content://" + ContProv.AUTHORITY + "/locations");
 
-		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.jwei512.locations";
+		public static final String CONTENT_TYPE_QUERY_ITEM = "vnd.android.cursor.item/vnd.mixnmatch.locations";
+		public static final String CONTENT_TYPE_QUERY_LIST = "vnd.android.cursor.dir/vnd.mixnmatch.locations";
 
 		public static final String LOCATION_ID = "_id";
 		

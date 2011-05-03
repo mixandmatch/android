@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import de.metafinanz.mixnmatch.frontend.android.Location;
+import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
 
 public class ContentLocations {
 
@@ -66,8 +67,8 @@ public class ContentLocations {
 	}
 
 	public Long insert(ContentValues values) {
-		String key = values.getAsString("key");
-		String label = values.getAsString("label");
+		String key = values.getAsString(Locations.KEY);
+		String label = values.getAsString(Locations.LABLE);
 
 		if (key == null || label == null)
 			throw new IllegalArgumentException("Either key or label is null");
