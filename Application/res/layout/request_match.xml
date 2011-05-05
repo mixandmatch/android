@@ -6,7 +6,7 @@
 		android:layout_height="wrap_content" android:id="@+id/logo"
 		android:layout_width="fill_parent" 
 		android:paddingTop="5px"
-		android:paddingBottom="10px" 
+		android:paddingBottom="20px" 
 		android:layout_gravity="top">
 	</ImageView>
 	<TextView android:id="@+id/TextName" 
@@ -15,20 +15,22 @@
 		android:orientation="horizontal"
 		android:text="@string/name_feld">
 	</TextView>
-	<EditText android:id="@+id/editName"  
+	<EditText android:id="@+id/EditName"  
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:paddingBottom="20px"
 		android:orientation="horizontal">
 	</EditText>
-	<TextView android:id="@+id/TextName" 
+	<TextView android:id="@+id/TextEmail" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
 		android:orientation="horizontal"
 		android:text="@string/email_feld">
 	</TextView>
-	<EditText android:id="@+id/editEMail"  
+	<EditText android:id="@+id/EditEmail"  
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:paddingBottom="20px"
 		android:orientation="horizontal">
 	</EditText>
 		
@@ -38,17 +40,19 @@
 		android:orientation="horizontal"
 		android:text="@string/ort_feld">
 	</TextView>
-	<Spinner 
-        android:id="@+id/OrtSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/ort_wert"
-    />
-	
 		
-	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/ortScrollView">
-		<LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent"></LinearLayout>
-	</ScrollView>
+	<Spinner android:id="@+id/OrtSpinner"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:paddingBottom="20px"
+		android:prompt="@string/ort_wert">
+	</Spinner>
+	
+	<Button android:id="@+id/buttonLocationView"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content" 
+			android:text="@string/location_button">
+	</Button>
 	
 	<TextView android:id="@+id/TextDatum" 
 		android:layout_width="wrap_content"
@@ -57,20 +61,36 @@
 		android:text="@string/datum_feld">
 	</TextView>
 	
-	<TextView android:id="@+id/textDatumWert" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal">
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="horizontal">
+	
+		<Button android:id="@+id/buttonPickDate"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content" 
+			android:layout_weight="1"
+			android:text="@string/date_button">
+		</Button>
+		
+		<Button android:id="@+id/buttonPickTime"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content" 
+			android:layout_weight="1"
+			android:text="@string/time_button">
+		</Button>
+	
+	</LinearLayout>
+		
+	<TextView android:id="@+id/TextDatumWert" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical|center_horizontal"
+		android:paddingBottom="20px"
+		android:text="">
 	</TextView>
 	
 	<Button android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:id="@+id/buttonPickDate"
-		android:text="@string/date_button">
-	</Button>
-	
-	<Button android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/buttonMatchwunschSenden"
-		android:text="@string/matchwunsch_button" android:layout_gravity="bottom">
+		android:text="@string/matchsenden_button" android:layout_gravity="bottom">
 	</Button>
 	
 </LinearLayout>

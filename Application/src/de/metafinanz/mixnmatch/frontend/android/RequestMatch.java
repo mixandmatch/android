@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -31,6 +33,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 	
 	private Intent iMixAndMatch;
 	private Intent iLocationDialog;
+	private Context context;
 	private Button   mPickDate;
 	private Button   mPickTime;
 	private Calendar meetingCalendar = null;
@@ -44,13 +47,15 @@ public class RequestMatch extends AbstractAsyncActivity {
 	
 	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
+	private void setContext(Context context) {
+		this.context = context;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.request_match);
-        
 
 		prepareLocationsSpinner();
 		
@@ -59,16 +64,16 @@ public class RequestMatch extends AbstractAsyncActivity {
 		
 		iLocationDialog = new Intent(this, LocationDialog.class);
         
-//        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
-//        OnClickListener oclBtnLocationView = new OnClickListener() {
-//			public void onClick(View v) {
-//				startActivity(iLocationDialog);
-//			}
-//		};
-//		btnLocationView.setOnClickListener(oclBtnLocationView);
+        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
+        OnClickListener oclBtnLocationView = new OnClickListener() {
+			public void onClick(View v) {
+				startActivity(iLocationDialog);
+			}
+		};
+		btnLocationView.setOnClickListener(oclBtnLocationView);
 		
 		//Datums-Button
-		TextView mDateDisplay = (TextView) findViewById(R.id.textDatumWert);
+		TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
         mPickDate = (Button) findViewById(R.id.buttonPickDate);
         
         //ClickListener für den Button
@@ -78,16 +83,15 @@ public class RequestMatch extends AbstractAsyncActivity {
     	   }
         });
         
-//        //Zeit-Button
-//        mTimeDisplay = (TextView) findViewById(R.id.TextUhrzeitWert);
-//        mPickTime = (Button) findViewById(R.id.buttonPickTime);
-//        
-//        //ClickListener für den Button
-//        mPickTime.setOnClickListener(new View.OnClickListener() {
-//    	   public void onClick(View v) {
-//    		   showDialog(TIME_DIALOG_ID);
-//    	   }
-//        });
+        //Zeit-Button
+        mPickTime = (Button) findViewById(R.id.buttonPickTime);
+        
+        //ClickListener für den Button
+        mPickTime.setOnClickListener(new View.OnClickListener() {
+    	   public void onClick(View v) {
+    		   showDialog(TIME_DIALOG_ID);
+    	   }
+        });
         
         init();
        
@@ -103,22 +107,22 @@ public class RequestMatch extends AbstractAsyncActivity {
 			public void onClick(View v) {
 				
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
-				EditText mEditName = (EditText) findViewById(R.id.editName);
+				EditText mEditName = (EditText) findViewById(R.id.EditName);
 				String name = mEditName.getText().toString();
-				EditText mEditEmail = (EditText) findViewById(R.id.editEMail);
+				EditText mEditEmail = (EditText) findViewById(R.id.EditEmail);
 				String mail = mEditEmail.getText().toString();
-				TextView mDateDisplay = (TextView) findViewById(R.id.textDatumWert);
+				TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
 				String date = mDateDisplay.getText().toString();
 				
 //				if (name.length() == 0) {
-//					new AlertDialog.Builder(getApplicationContext())
+//					new AlertDialog.Builder(context)
 //							.setMessage(R.string.error_name_missing)
 //							.setNeutralButton(R.string.error_ok, null).show();
 //
 //					return;
 //				} 
 //				else if  (mail.length() == 0) {
-//					new AlertDialog.Builder(getApplicationContext())
+//					new AlertDialog.Builder(context)
 //					.setMessage(R.string.error_mail_missing)
 //					.setNeutralButton(R.string.error_ok, null).show();
 //					return;
@@ -236,7 +240,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 		}
 	}
 	private void updateDisplay() {
-		TextView tvDateDisplay = (TextView) findViewById(R.id.textDatumWert);
+		TextView tvDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
 		tvDateDisplay.setText(sdf.format(meetingCalendar.getTime()));
     }
 	
