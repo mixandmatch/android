@@ -19,7 +19,6 @@ import de.metafinanz.mixnmatch.frontend.android.Location;
 import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.Position;
 import de.metafinanz.mixnmatch.frontend.android.R;
-import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 
 public class LocationsService extends Service {
 	private static final String TAG = "LocationsService";
@@ -66,6 +65,8 @@ public class LocationsService extends Service {
 		AsyncTask<Void, Void, Location[]> task = new RequestLocation(null).execute();
 		try {
 			locations = task.get();
+			if (locations == null || locations.length == 0) 
+				Log.d(TAG, "No locations available.");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -106,6 +107,7 @@ public class LocationsService extends Service {
 	private class RequestLocation extends AsyncTask<Void, Void, Location[]> {
 		protected String TAG = "RequestLocation";
 		
+		@SuppressWarnings("unused")
 		private Position position;
 		
 		public RequestLocation(Position position) {

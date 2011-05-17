@@ -19,7 +19,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingBottom="20px"
-		android:orientation="horizontal">
+		android:orientation="horizontal" 
+		android:inputType="textPersonName">
 	</EditText>
 	<TextView android:id="@+id/TextEmail" 
 		android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingBottom="20px"
-		android:orientation="horizontal">
+		android:orientation="horizontal" android:inputType="textEmailAddress">
 	</EditText>
 		
 	<TextView android:id="@+id/TextOrt" 

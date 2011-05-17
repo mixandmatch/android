@@ -13,6 +13,7 @@ public class MyOnItemSelectedListener implements OnItemSelectedListener {
 			parent.getItemAtPosition(pos).toString(), Toast.LENGTH_LONG).show();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void onNothingSelected(AdapterView parent) {
 		// Do nothing
 	}

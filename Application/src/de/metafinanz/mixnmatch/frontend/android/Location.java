@@ -1,8 +1,8 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
-import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 
 public class Location {
 	

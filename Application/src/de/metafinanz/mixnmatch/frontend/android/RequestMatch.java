@@ -5,18 +5,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.client.RestTemplate;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,26 +23,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.utils.TextTestUtils;
 
 public class RequestMatch extends AbstractAsyncActivity {
 	private static final String TAG = "RequestMatch";
 	
 	private Intent iMixAndMatch;
 	private Intent iLocationDialog;
+	@SuppressWarnings("unused")
 	private Context context;
 	private Button   mPickDate;
 	private Button   mPickTime;
 	private Calendar meetingCalendar = null;
-	private int mYear;
-	private int mMonth;
-	private int mDay;
-	private int mHour;
-	private int mMinute;
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
 	
 	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
+	@SuppressWarnings("unused")
 	private void setContext(Context context) {
 		this.context = context;
 	}
@@ -73,6 +67,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 		btnLocationView.setOnClickListener(oclBtnLocationView);
 		
 		//Datums-Button
+		@SuppressWarnings("unused")
 		TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
         mPickDate = (Button) findViewById(R.id.buttonPickDate);
         
@@ -106,36 +101,26 @@ public class RequestMatch extends AbstractAsyncActivity {
 		OnClickListener oclBtnMatchesSenden = new OnClickListener() {
 			public void onClick(View v) {
 				
+				boolean testResult = false;
 				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
 				EditText mEditName = (EditText) findViewById(R.id.EditName);
-				String name = mEditName.getText().toString();
+				testResult = TextTestUtils.testText(TextTestUtils.Type.TEXT, mEditName);
+				
 				EditText mEditEmail = (EditText) findViewById(R.id.EditEmail);
+				testResult = TextTestUtils.testText(TextTestUtils.Type.EMAIL, mEditEmail);
+				
+				String name = mEditName.getText().toString();
 				String mail = mEditEmail.getText().toString();
 				TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
 				String date = mDateDisplay.getText().toString();
 				
-//				if (name.length() == 0) {
-//					new AlertDialog.Builder(context)
-//							.setMessage(R.string.error_name_missing)
-//							.setNeutralButton(R.string.error_ok, null).show();
-//
-//					return;
-//				} 
-//				else if  (mail.length() == 0) {
-//					new AlertDialog.Builder(context)
-//					.setMessage(R.string.error_mail_missing)
-//					.setNeutralButton(R.string.error_ok, null).show();
-//					return;
-//				}
-//				else {	
-//					sendMatchWish(mDateDisplay.getText().toString(), mEditName.getText().toString(), new Position(0, 0));
-//					startActivity(iMixAndMatch);
-//				}
-
-				Toast toast = Toast.makeText(getApplicationContext(), "Matchwunsch wird gesendet." , Toast.LENGTH_LONG);
-				toast.show();
-				sendMatchWish(mDateDisplay.getText().toString(), name, new Position(0, 0));
-				startActivity(iMixAndMatch);
+				if (testResult) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Matchwunsch wird gesendet.", Toast.LENGTH_LONG);
+					toast.show();
+					sendMatchWish(mDateDisplay.getText().toString(), name, new Position(0, 0));
+					startActivity(iMixAndMatch);
+				}
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
@@ -177,68 +162,7 @@ public class RequestMatch extends AbstractAsyncActivity {
 		//Aufruf des Service, welche die Daten in einer Queue ablegt und sendet, sobald ein Signal vorhanden ist.
 	}
 
-	private class RequestLocation extends AsyncTask<Void, Void, Location[]> {
-		protected String TAG = "RequestLocation";
 
-		private Position position;
-
-		public RequestLocation(Position position) {
-			super();
-			this.position = position;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			// before the network request begins, show a progress indicator
-			showProgressDialog();
-		}
-
-		@Override
-		protected Location[] doInBackground(Void... params) {
-
-			// Create a new RestTemplate instance
-			RestTemplate restTemplate = new RestTemplate();
-
-			// The HttpComponentsClientHttpRequestFactory uses the
-			// org.apache.http package to make network requests
-			restTemplate
-					.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
-			// The URL for making the GET request
-			// final String url = getString(R.string.base_uri) +
-			// "locations/nearby?lat={"+position.getLatitude()+"}&lon={"+position.getLongitude()+"}";
-			final String url = getString(R.string.base_uri) + "locations";
-
-			// Initiate the HTTP GET request, expecting an array of State
-			// objects in response
-			// String result = restTemplate.getForObject(url, String.class);
-			// Man kann auch gleich ein POJO statt String erstellen lassen.
-			Location[] locations = restTemplate.getForObject(url,
-					Location[].class);
-
-			return locations;
-		}
-
-		@Override
-		protected void onPostExecute(Location[] locations) {
-			// hide the progress indicator when the network request is complete
-			dismissProgressDialog();
-
-			if (locations != null && locations.length > 0) {
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < locations.length; i++) {
-					sb.append(locations[i].getLabel());
-					sb.append(" (");
-					sb.append(locations[i].getKey());
-					sb.append(")");
-					sb.append("\n");
-				}
-				Toast toast = Toast.makeText(getApplicationContext(),
-						sb.toString(), Toast.LENGTH_LONG);
-				toast.show();
-			}
-		}
-	}
 	private void updateDisplay() {
 		TextView tvDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
 		tvDateDisplay.setText(sdf.format(meetingCalendar.getTime()));
