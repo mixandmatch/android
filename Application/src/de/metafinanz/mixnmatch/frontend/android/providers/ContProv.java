@@ -80,6 +80,7 @@ public class ContProv extends ContentProvider {
 	 * Not supported
 	 */
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
+		ContentLocations.getInstance().removeAll();
 		return 0;
 	}
 

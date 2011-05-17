@@ -152,6 +152,7 @@ public class LocationsService extends Service {
 
 			if (locations != null && locations.length > 0) {
 				StringBuilder sb = new StringBuilder();
+				getContentResolver().delete(Locations.CONTENT_URI, null, null);
 				for (int i = 0; i < locations.length; i++) {
 					sb.append(locations[i].getLabel());
 					sb.append("\n");
