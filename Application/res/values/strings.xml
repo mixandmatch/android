@@ -32,4 +32,6 @@
     	<item>Al Pacino, Schwabing</item>
     	<item>HV, Schwabing</item>
     	</string-array>
+    	
+    <string name="error_tech_locationservice">Fehler beim aktualisieren der Lokationen</string>
 </resources>
