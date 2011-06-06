@@ -11,6 +11,7 @@ public class Location {
 	private long id;
 	private String key;
 	private String label;
+	private Position coordinates;
 	
 
 	public Location(int id, String label) {
@@ -51,6 +52,14 @@ public class Location {
 		this.label = label;
 	}
 
+	public Position getCoordinates() {
+		return coordinates;
+	}
+	public void setCoordinates(Position coordinates) {
+		this.coordinates = coordinates;
+	}
+
+
 	public static final class Locations implements BaseColumns {
 		private Locations() {
 		}
@@ -67,5 +76,9 @@ public class Location {
 		public static final String KEY = "key";
 
 		public static final String LABLE = "lable";
+		
+		public static final String COORDINATE_LONGITUDE = "lon";
+		
+		public static final String COORDINATE_LADITUDE = "lat";
 	}
 }

@@ -2,25 +2,41 @@ package de.metafinanz.mixnmatch.frontend.android;
 
 public class Position {
 	
-	private double latitude;
-	private double longitude;
+	private double lat;
+	private double lon;
+	
+	public Position() {	
+		super();
+	}
 	
 	public Position(double latitude, double longitude) {
 		super();
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.lat = latitude;
+		this.lon = longitude;
 	}
-	public double getLatitude() {
-		return latitude;
+	
+	public Position(String latitude, String longitude) {
+		super();
+		this.lat = Double.valueOf(latitude);
+		this.lon = Double.valueOf(longitude);
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+
+	public double getLat() {
+		return lat;
 	}
-	public double getLongitude() {
-		return longitude;
+
+	public void setLat(double lat) {
+		this.lat = lat;
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+
+	public double getLon() {
+		return lon;
 	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+	
+
 	
 }

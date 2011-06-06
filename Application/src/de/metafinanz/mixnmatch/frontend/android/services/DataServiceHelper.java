@@ -1,14 +1,16 @@
 package de.metafinanz.mixnmatch.frontend.android.services;
 
+import de.metafinanz.mixnmatch.frontend.android.Location;
+import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-public class LocationsServiceHelper {
-    private static final String TAG = "LocationsServiceHelper";
+public class DataServiceHelper {
+    private static final String TAG = "DataServiceHelper";
     private Context context;
 
-	private LocationsServiceHelper() {
+	private DataServiceHelper() {
 	}
 
 	/**
@@ -17,14 +19,14 @@ public class LocationsServiceHelper {
 	 * not before.
 	 */
 	private static class LocationsServiceHelperHolder {
-		public static final LocationsServiceHelper INSTANCE = new LocationsServiceHelper();
+		public static final DataServiceHelper INSTANCE = new DataServiceHelper();
 	}
 	
 	private void setContext(Context context) {
 		this.context = context;
 	}
 	
-	public static LocationsServiceHelper getInstance(Context context) {
+	public static DataServiceHelper getInstance(Context context) {
 		if (LocationsServiceHelperHolder.INSTANCE != null) {
 			LocationsServiceHelperHolder.INSTANCE.setContext(context.getApplicationContext()) ;
 		}
@@ -33,18 +35,12 @@ public class LocationsServiceHelper {
 	
 	
 	/**
-	 * – Check if the method is already pending
-	 * – Create the request Intent
-	 * – Add the operation type and a unique request id //not needed
-	 * – Add the method specific parameters //not needed
-	 * – Add the binder callback
-	 * – Call startService(Intent)
-	 * – Return the request id
+	 * Aktualisieren der Lokationen
 	 */
 	public void updateLocations()  {
 
 		Log.d(TAG, "starting service");
-		Intent requestIntent = new Intent(context, LocationsService.class);
+		Intent requestIntent = new Intent(context, Location.class);
 		context.startService(requestIntent);
 	}
 

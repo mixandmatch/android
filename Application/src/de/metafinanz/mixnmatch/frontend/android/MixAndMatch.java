@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import de.metafinanz.mixnmatch.frontend.android.services.LocationsService;
-import de.metafinanz.mixnmatch.frontend.android.services.LocationsServiceHelper;
+import de.metafinanz.mixnmatch.frontend.android.services.DataService;
+import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
 
 public class MixAndMatch extends Activity {
 	private Intent iRequestMatch;
@@ -45,20 +45,20 @@ public class MixAndMatch extends Activity {
 		};
 		btnMatchEmpfangen.setOnClickListener(oclBtnMatchesEmpfangen);
 
-		LocationsServiceHelper.getInstance(this).updateLocations();
+		DataServiceHelper.getInstance(this).updateLocations();
     }
 
 	@Override
 	protected void onStop() {
 		super.onStop();
 		Log.d(TAG, "stopping service");
-	    stopService(new Intent(this, LocationsService.class));
+	    stopService(new Intent(this, DataService.class));
 	}
 	
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		Log.d(TAG, "restarting service");
-	    startService(new Intent(this, LocationsService.class));
+	    startService(new Intent(this, DataService.class));
 	}
 }
