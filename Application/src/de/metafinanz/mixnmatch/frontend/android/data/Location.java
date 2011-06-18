@@ -1,4 +1,4 @@
-package de.metafinanz.mixnmatch.frontend.android;
+package de.metafinanz.mixnmatch.frontend.android.data;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -66,7 +66,7 @@ public class Location {
 		
 		public static final String type = "locations";
 
-		public static final Uri CONTENT_URI = Uri.parse("content://" + ContProv.AUTHORITY + "/locations");
+		public static final Uri CONTENT_URI = Uri.parse("content://" + ContProv.AUTHORITY_LOCATION + "/locations");
 
 		public static final String CONTENT_TYPE_QUERY_ITEM = "vnd.android.cursor.item/vnd.mixnmatch.locations";
 		public static final String CONTENT_TYPE_QUERY_LIST = "vnd.android.cursor.dir/vnd.mixnmatch.locations";

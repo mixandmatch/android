@@ -22,7 +22,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Position;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.utils.TextTestUtils;
 
 public class RequestMatch extends AbstractAsyncActivity {

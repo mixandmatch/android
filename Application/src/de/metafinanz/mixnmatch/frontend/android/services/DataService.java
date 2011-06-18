@@ -5,16 +5,14 @@ import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import de.metafinanz.mixnmatch.frontend.android.Location;
-import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
-import de.metafinanz.mixnmatch.frontend.android.Position;
 import de.metafinanz.mixnmatch.frontend.android.R;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Request;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 
 /**
  * Serielle Abarbeitung von Intends durch eine interne Queue
@@ -25,7 +23,12 @@ import de.metafinanz.mixnmatch.frontend.android.R;
 public class DataService extends IntentService {
 
 	private static final String TAG = "DataService";
-	
+
+	public final static int FLAG_REQUEST_UPDATE_LOCATIONS = 100;
+	public final static int FLAG_REQUEST_GET_ALL_REQUEST = 200;
+	public final static int FLAG_REQUEST_GET_ONE_REQUEST = 300;
+	public final static int FLAG_REQUEST_POST_REQUEST = 400;
+
 	public DataService() {
 		super("DataService");
 	}
@@ -55,12 +58,14 @@ public class DataService extends IntentService {
 				Toast.LENGTH_LONG).show();
 		Log.i(TAG, "Received start intent: " + intent);
 		Log.d(TAG, "onHandleIntent");
-		
-		if (Location.class.getName().equals(intent.getComponent().getClassName())) {
+
+		if (intent.getFlags() == FLAG_REQUEST_UPDATE_LOCATIONS) {
 			Log.d(TAG, "getting locations");
 			getLocations();
+		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST) {
+			Log.d(TAG, "getting all requests");
+			getAllRequests();
 		}
-		// updateLocationsList();
 	}
 
 	private void getLocations() {
@@ -76,7 +81,7 @@ public class DataService extends IntentService {
 		// The URL for making the GET request
 		// final String url = getString(R.string.base_uri) +
 		// "locations/nearby?lat={"+position.getLatitude()+"}&lon={"+position.getLongitude()+"}";
-		final String url = getString(R.string.base_uri) + R.string.uri_locations;
+		final String url = getString(R.string.base_uri) +  getString(R.string.uri_locations);
 
 		// Initiate the HTTP GET request, expecting an array of State
 		// objects in response
@@ -107,64 +112,43 @@ public class DataService extends IntentService {
 		}
 	}
 
-	// private void updateLocationsList() {
-	// Location[] locations;
-	// Log.d(TAG, "updateing LocationsList");
-	// AsyncTask<Void, Void, Location[]> task = new RequestLocation(null)
-	// .execute();
-	// try {
-	// locations = task.get();
-	// if (locations == null || locations.length == 0)
-	// Log.d(TAG, "No locations available.");
-	// } catch (Throwable e) {
-	// e.printStackTrace();
-	// }
-	// Log.d(TAG, "LocationsList updated");
-	// }
-	//
-	// private class RequestLocation extends AsyncTask<Void, Void, Location[]> {
-	// protected String TAG = "RequestLocation";
-	//
-	// @SuppressWarnings("unused")
-	// private Position position;
-	//
-	// public RequestLocation(Position position) {
-	// super();
-	// this.position = position;
-	// }
-	//
-	// @Override
-	// protected Location[] doInBackground(Void... params) {
-	//
-	// getLocations();
-	// return null;
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(Location[] locations) {
-	// // hide the progress indicator when the network request is complete
-	// // dismissProgressDialog();
-	//
-	// if (locations != null && locations.length > 0) {
-	// StringBuilder sb = new StringBuilder();
-	// getContentResolver().delete(Locations.CONTENT_URI, null, null);
-	// for (int i = 0; i < locations.length; i++) {
-	// sb.append(locations[i].getLabel());
-	// sb.append("\n");
-	// ContentValues values = new ContentValues();
-	// values.put(Locations.KEY, locations[i].getKey());
-	// values.put(Locations.LABLE, locations[i].getLabel());
-	// Uri uri = getContentResolver().insert(
-	// Locations.CONTENT_URI, values);
-	// Log.d(TAG, "added row '" + uri + "'");
-	// }
-	// Log.d(TAG, "loaded " + locations.length + "items from backend");
-	// Toast toast = Toast.makeText(getApplicationContext(),
-	// sb.toString(), Toast.LENGTH_LONG);
-	// toast.show();
-	//
-	// }
-	// }
-	// }
+	private void getAllRequests() {
+		Request[] requests = null;
+		// Create a new RestTemplate instance
+		RestTemplate restTemplate = new RestTemplate();
+
+		// The HttpComponentsClientHttpRequestFactory uses the
+		// org.apache.http package to make network requests
+		restTemplate
+				.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+
+		// The URL for making the GET request
+		final String url = getString(R.string.base_uri) +  getString(R.string.uri_requests);
+
+		// Initiate the HTTP GET request, expecting an array of State
+		// objects in response
+		// Man kann auch gleich ein POJO statt String erstellen lassen.
+		try {
+			requests = restTemplate.getForObject(url, Request[].class);
+
+		} catch (Exception e) {
+			Log.w(TAG, getText(R.string.error_tech_requestservice).toString(),
+					e);
+		}
+		 if (requests != null && requests.length > 0) {
+		// getContentResolver().delete(Requests.CONTENT_URI, null, null);
+		// for (int i = 0; i < requests.length; i++) {
+		// ContentValues values = new ContentValues();
+		// values.put(Requests.LOCATION_KEY, requests[i].getLocationKey());
+		// values.put(Requests.USERID, requests[i].getUserid());
+		// values.put(Requests.DATE, requests[i].getDate());
+		// Uri uri = getContentResolver().insert(Requests.CONTENT_URI, values);
+		// Log.d(TAG, "added row '" + uri + "'");
+		// }
+			 Log.d(TAG, "Loaded " + requests.length + " items from backend.");
+		 } else {
+			 Log.d(TAG, "Received no data from backend.");
+		 }
+	}
 
 }

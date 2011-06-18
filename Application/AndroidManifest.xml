@@ -20,9 +20,9 @@
 		<activity android:name=".ReceiveMatch"/> 
 		<activity android:name=".LocationDialog" android:theme="@android:style/Theme.NoTitleBar" />
 		
-		<service android:enabled="true" android:name="services.DataService" />
+		<service android:enabled="true" android:name=".services.DataService" />
 		
-		<provider android:name=".providers.ContProv" android:authorities="de.metafinanz.mixnmatch.frontend.android.Location"	/>
+		<provider android:name=".providers.ContProv" android:authorities="de.metafinanz.mixnmatch.frontend.android.data.Location"	/>
 		
 		<uses-library android:name="com.google.android.maps" />
 	</application>

@@ -14,7 +14,7 @@
     <string name="date_button">Datum auswählen</string>
     <string name="time_button">Zeit auswählen</string>
     <string name="location_button">Karte anzeigen</string>
-    <string name="base_uri">http://192.168.0.249/</string>
+    <string name="base_uri">http://192.168.0.248</string>
     <string name="base_uri_prod">http://mixmatch-t.elasticbeanstalk.com/</string>
     <string name="uri_requests">/requests</string>
     <string name="uri_locations">/locations</string>
@@ -37,5 +37,6 @@
     	<item>HV, Schwabing</item>
     	</string-array>
     	
-    <string name="error_tech_locationservice">Fehler beim aktualisieren der Lokationen</string>
+    <string name="error_tech_locationservice">Fehler beim aktualisieren der Lokationen.</string>
+    <string name="error_tech_requestservice">Fehler beim aktualisieren der Essensanfragen.</string>
 </resources>

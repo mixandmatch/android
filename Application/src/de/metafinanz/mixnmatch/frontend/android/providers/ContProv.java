@@ -12,12 +12,12 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-import de.metafinanz.mixnmatch.frontend.android.Location;
-import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 
 public class ContProv extends ContentProvider {
 	private static final String TAG = "ContProv";
-	public static final String AUTHORITY = "de.metafinanz.mixnmatch.frontend.android.Location";
+	public static final String AUTHORITY_LOCATION = "de.metafinanz.mixnmatch.frontend.android.data.Location";
 	public final static String SUGGEST_URI_PATH_QUERY_ALL = "search_all_query";
 	public final static String SUGGEST_URI_PATH_QUERY = "search_query";
 
@@ -27,10 +27,8 @@ public class ContProv extends ContentProvider {
 	private static final int SEARCH_ALL_LOCATIONS = 10;
 	private static final int SEARCH_ONE_LOCATIONS = 15;
 
-	public static final Uri CONTENT_ALL_URI = Uri.parse("content://" + AUTHORITY
-			+ "/" + SUGGEST_URI_PATH_QUERY_ALL);
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-			+ "/" + SUGGEST_URI_PATH_QUERY);
+	public static final Uri CONTENT_ALL_URI = Uri.parse("content://" + AUTHORITY_LOCATION + "/" + SUGGEST_URI_PATH_QUERY_ALL);
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY_LOCATION + "/" + SUGGEST_URI_PATH_QUERY);
 
 	@Override
 	public String getType(Uri uri) {
@@ -164,8 +162,8 @@ public class ContProv extends ContentProvider {
 
 	static {
 		sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sURIMatcher.addURI(AUTHORITY, Locations.type, SEARCH_ALL_LOCATIONS);
-		sURIMatcher.addURI(AUTHORITY, Locations.type + "/#", SEARCH_ONE_LOCATIONS);
+		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.type, SEARCH_ALL_LOCATIONS);
+		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.type + "/#", SEARCH_ONE_LOCATIONS);
 
 		projectionMap = new HashMap<String, String>();
 		projectionMap.put(Locations.LOCATION_ID, Locations.LOCATION_ID);

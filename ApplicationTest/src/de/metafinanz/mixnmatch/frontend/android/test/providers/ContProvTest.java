@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.test.ProviderTestCase2;
 import android.util.Log;
-import de.metafinanz.mixnmatch.frontend.android.Location;
-import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 import de.metafinanz.mixnmatch.frontend.android.providers.ContentLocations;
 
@@ -23,19 +23,19 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 
 
 	public ContProvTest() {
-		super(ContProv.class, ContProv.AUTHORITY);
+		super(ContProv.class, ContProv.AUTHORITY_LOCATION);
 		Log.d(TAG, "Constructor");
 	}
 	
 	public void testSimpleUri() {
 		UriMatcher uriMatcher;
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI(ContProv.AUTHORITY, ContProv.SUGGEST_URI_PATH_QUERY, 1);
-		Uri sampleURI = Uri.parse("content://"+ContProv.AUTHORITY+"/"+ContProv.SUGGEST_URI_PATH_QUERY);
+		uriMatcher.addURI(ContProv.AUTHORITY_LOCATION, ContProv.SUGGEST_URI_PATH_QUERY, 1);
+		Uri sampleURI = Uri.parse("content://"+ContProv.AUTHORITY_LOCATION+"/"+ContProv.SUGGEST_URI_PATH_QUERY);
 		assertEquals(1, uriMatcher.match(sampleURI));
 
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI(ContProv.AUTHORITY, "/" + ContProv.SUGGEST_URI_PATH_QUERY, 1);
+		uriMatcher.addURI(ContProv.AUTHORITY_LOCATION, "/" + ContProv.SUGGEST_URI_PATH_QUERY, 1);
 		assertEquals(UriMatcher.NO_MATCH, uriMatcher.match(sampleURI));
 
 	}

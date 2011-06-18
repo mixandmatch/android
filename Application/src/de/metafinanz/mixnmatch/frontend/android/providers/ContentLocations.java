@@ -7,8 +7,8 @@ import java.util.Map;
 
 import android.content.ContentValues;
 import android.util.Log;
-import de.metafinanz.mixnmatch.frontend.android.Location;
-import de.metafinanz.mixnmatch.frontend.android.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 
 public class ContentLocations {
 

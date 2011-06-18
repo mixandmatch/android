@@ -1,4 +1,4 @@
-package de.metafinanz.mixnmatch.frontend.android;
+package de.metafinanz.mixnmatch.frontend.android.data;
 
 public class Position {
 	
