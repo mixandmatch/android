@@ -1,8 +1,5 @@
 package de.metafinanz.mixnmatch.frontend.android.data;
 
-import android.net.Uri;
-import android.provider.BaseColumns;
-import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 
 public class Request {
 	private String locationKey;

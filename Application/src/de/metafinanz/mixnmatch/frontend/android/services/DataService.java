@@ -1,6 +1,11 @@
 package de.metafinanz.mixnmatch.frontend.android.services;
 
+import java.net.URI;
+import java.util.Arrays;
+
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
@@ -9,10 +14,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import de.metafinanz.mixnmatch.frontend.android.MMApplication;
 import de.metafinanz.mixnmatch.frontend.android.R;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
-import de.metafinanz.mixnmatch.frontend.android.data.Request;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Request;
 
 /**
  * Serielle Abarbeitung von Intends durch eine interne Queue
@@ -65,6 +71,12 @@ public class DataService extends IntentService {
 		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST) {
 			Log.d(TAG, "getting all requests");
 			getAllRequests();
+		} else if (intent.getFlags() == FLAG_REQUEST_POST_REQUEST) {
+			Log.d(TAG, "getting all requests");
+			String date = intent.getStringExtra("date");
+			String userid = intent.getStringExtra("userid");
+			String locationKey = intent.getStringExtra("locationKey");
+			postRequests(userid,locationKey, date);
 		}
 	}
 
@@ -111,7 +123,33 @@ public class DataService extends IntentService {
 			Log.d(TAG, "loaded " + locations.length + " items from backend.");
 		}
 	}
+	
+	private void postRequests(String userID, String locationKey, String date) {
+		// Create a new RestTemplate instance
+		RestTemplate restTemplate = new RestTemplate();
 
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("locationKey", locationKey);
+		map.add("date", date);
+		map.add("userid", userID);
+
+		final String url = getString(R.string.base_uri)
+				+ getString(R.string.uri_requests);
+		
+		URI resultURL = null;
+		try {
+			resultURL = restTemplate.postForLocation(url, map);
+		} catch (Exception e) {
+			
+		}
+		
+		if (resultURL != null) {
+			Log.d(TAG, "Posted data to backend. Result: " + resultURL);
+		} else {
+			Log.d(TAG, "Received no data from backend.");
+		}
+	}
+	
 	private void getAllRequests() {
 		Request[] requests = null;
 		// Create a new RestTemplate instance
@@ -135,20 +173,13 @@ public class DataService extends IntentService {
 			Log.w(TAG, getText(R.string.error_tech_requestservice).toString(),
 					e);
 		}
-		 if (requests != null && requests.length > 0) {
-		// getContentResolver().delete(Requests.CONTENT_URI, null, null);
-		// for (int i = 0; i < requests.length; i++) {
-		// ContentValues values = new ContentValues();
-		// values.put(Requests.LOCATION_KEY, requests[i].getLocationKey());
-		// values.put(Requests.USERID, requests[i].getUserid());
-		// values.put(Requests.DATE, requests[i].getDate());
-		// Uri uri = getContentResolver().insert(Requests.CONTENT_URI, values);
-		// Log.d(TAG, "added row '" + uri + "'");
-		// }
-			 Log.d(TAG, "Loaded " + requests.length + " items from backend.");
-		 } else {
-			 Log.d(TAG, "Received no data from backend.");
-		 }
+		if (requests != null && requests.length > 0) {
+			Log.d(TAG, "Loaded " + requests.length + " items from backend.");
+			MMApplication mma = (MMApplication) getApplicationContext();
+			mma.setRequests(Arrays.asList(requests));
+		} else {
+			Log.d(TAG, "Received no data from backend.");
+		}
 	}
 
 }

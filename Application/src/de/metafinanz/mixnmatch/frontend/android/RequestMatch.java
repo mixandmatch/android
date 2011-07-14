@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
-import de.metafinanz.mixnmatch.frontend.android.data.Position;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Position;
 import de.metafinanz.mixnmatch.frontend.android.utils.TextTestUtils;
 
 public class RequestMatch extends AbstractAsyncActivity {

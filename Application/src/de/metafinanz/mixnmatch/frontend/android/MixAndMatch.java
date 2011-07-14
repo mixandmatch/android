@@ -1,5 +1,7 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.services.DataService;
 import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
 
@@ -47,6 +50,8 @@ public class MixAndMatch extends Activity {
 
 		DataServiceHelper.getInstance(this).updateLocations();
 		DataServiceHelper.getInstance(this).getRequests();
+		Location location = new Location("HVU", "HVU");
+		DataServiceHelper.getInstance(this).postRequest(location , new Date());
     }
 
 	@Override
