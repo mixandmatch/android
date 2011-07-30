@@ -75,7 +75,7 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 		assertNotNull(cursorResult);
 		
 		cursorResult.moveToNext();
-        String locName = cursorResult.getString(1);
+        String locName = cursorResult.getString(2);
         assertEquals("HVU Unterföhring", locName);
 	}
 
@@ -97,16 +97,16 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
 		
 		cursor.moveToNext();
 		
-        String key = cursor.getString(0);
+        String key = cursor.getString(1);
         assertEquals("HVU", key);
-        String locName = cursor.getString(1);
+        String locName = cursor.getString(2);
         assertEquals("HVU Unterföhring", locName);
 
 		cursor.moveToNext();
 
-        key = cursor.getString(0);
+        key = cursor.getString(1);
         assertEquals("VGU", key);
-        locName = cursor.getString(1);
+        locName = cursor.getString(2);
         assertEquals("VGU Unterföhring", locName);
             
 
