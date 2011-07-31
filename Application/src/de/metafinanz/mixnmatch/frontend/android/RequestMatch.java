@@ -2,6 +2,7 @@ package de.metafinanz.mixnmatch.frontend.android;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.data.Position;
+import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
 import de.metafinanz.mixnmatch.frontend.android.utils.TextTestUtils;
 
 public class RequestMatch extends AbstractAsyncActivity {
@@ -38,6 +42,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 	private Calendar meetingCalendar = null;
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
+	
+	private String selectedPlace = "";
 	
 	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
@@ -103,30 +109,20 @@ public class RequestMatch extends AbstractAsyncActivity {
 			public void onClick(View v) {
 				
 				boolean testResult = false;
-				// prüfen, ob Name gefüllt ist (wird noch erweitert auf Email usw)
+				// prüfen, ob Name gefüllt ist
 				EditText mEditName = (EditText) findViewById(R.id.EditName);
 				testResult = TextTestUtils.testText(TextTestUtils.Type.TEXT, mEditName);
-				
-				EditText mEditEmail = (EditText) findViewById(R.id.EditEmail);
-				testResult = TextTestUtils.testText(TextTestUtils.Type.EMAIL, mEditEmail);
-				
-				String name = mEditName.getText().toString();
-				String mail = mEditEmail.getText().toString();
-				TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
-				String date = mDateDisplay.getText().toString();
 				
 				if (testResult) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"Matchwunsch wird gesendet.", Toast.LENGTH_LONG);
 					toast.show();
-					sendMatchWish(mDateDisplay.getText().toString(), name, new Position(0, 0));
-					startActivity(iMixAndMatch);
+					sendMatchWish();
+					startActivity(iMixAndMatch); //Zurück auf die Startseite
 				}
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
-
-		
 	}
 
 	private void prepareLocationsSpinner() {
@@ -143,7 +139,25 @@ public class RequestMatch extends AbstractAsyncActivity {
 		SimpleCursorAdapter locationsCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, from, to);
 		locationsCursorAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
 		spinner.setAdapter(locationsCursorAdapter);
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				Cursor c = (Cursor)parent.getItemAtPosition(position);
+				selectedPlace = c.getString(c.getColumnIndexOrThrow(Location.Locations.KEY));
+				
+				Toast.makeText( parent.getContext(),
+						"Gewählter Ort: " + selectedPlace, Toast.LENGTH_LONG).show();
+			}
+
+			public void onNothingSelected(AdapterView<?> parent) {
+				// Do nothing.
+			}
+		});
+		
 	}
+	
 
 	private void init() {
 		meetingCalendar = Calendar.getInstance();
@@ -154,13 +168,11 @@ public class RequestMatch extends AbstractAsyncActivity {
 	 * 
 	 * @return http return code
 	 */
-	public void sendMatchWish(String when, String who, Position position) {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("day", when);
-		parameters.put("who", who);
-		parameters.put("where", position);
+	public void sendMatchWish() {
 
-		//Aufruf des Service, welche die Daten in einer Queue ablegt und sendet, sobald ein Signal vorhanden ist.
+		Date time = meetingCalendar.getTime();
+		DataServiceHelper.getInstance(this).postRequest(selectedPlace , time);
+
 	}
 
 
@@ -179,6 +191,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 					meetingCalendar.set(Calendar.YEAR, year);
 					meetingCalendar.set(Calendar.MONTH, monthOfYear);
 					meetingCalendar.set(Calendar.DATE, dayOfMonth);
+					Toast.makeText( view.getContext(),
+							"Gewählte Zeit: " + sdf.format(meetingCalendar.getTime()), Toast.LENGTH_LONG).show();
 					updateDisplay();
 			
 		}

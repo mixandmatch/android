@@ -1,7 +1,7 @@
 package de.metafinanz.mixnmatch.frontend.android.test;
 
-import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import junit.framework.TestCase;
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
 
 public class Test extends TestCase {
 
@@ -10,5 +10,7 @@ public class Test extends TestCase {
 		
 		assertNotNull(loc);
 	}
+
+
 
 }

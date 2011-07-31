@@ -60,6 +60,12 @@ public class Location {
 	}
 
 
+	@Override
+	public String toString() {
+		return key;
+	}
+
+
 	public static final class Locations implements BaseColumns {
 		private Locations() {
 		}

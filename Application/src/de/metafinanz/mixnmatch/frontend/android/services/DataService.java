@@ -1,11 +1,13 @@
 package de.metafinanz.mixnmatch.frontend.android.services;
 
-import java.net.URI;
 import java.util.Arrays;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
@@ -125,26 +127,25 @@ public class DataService extends IntentService {
 	}
 	
 	private void postRequests(String userID, String locationKey, String date) {
-		// Create a new RestTemplate instance
+		final String url = getString(R.string.base_uri) + getString(R.string.uri_requests);
+
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.setContentType(new MediaType("application","json"));
+		
+		Request req = new Request(locationKey, date, userID);
+		HttpEntity<Request> requestEntity = new HttpEntity<Request>(req, requestHeaders);
+		
 		RestTemplate restTemplate = new RestTemplate();
-
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("locationKey", locationKey);
-		map.add("date", date);
-		map.add("userid", userID);
-
-		final String url = getString(R.string.base_uri)
-				+ getString(R.string.uri_requests);
-		
-		URI resultURL = null;
+		ResponseEntity<String> resultURL = null;
 		try {
-			resultURL = restTemplate.postForLocation(url, map);
+			resultURL = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 		} catch (Exception e) {
-			
+			Log.e(TAG, "Fehler beim senden des Requests", e);
 		}
+		String resultBody = resultURL.getBody();
 		
-		if (resultURL != null) {
-			Log.d(TAG, "Posted data to backend. Result: " + resultURL);
+		if (resultBody != null) {
+			Log.d(TAG, "Posted data to backend. Result: " + resultBody);
 		} else {
 			Log.d(TAG, "Received no data from backend.");
 		}
