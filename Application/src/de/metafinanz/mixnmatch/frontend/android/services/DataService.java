@@ -142,10 +142,9 @@ public class DataService extends IntentService {
 		} catch (Exception e) {
 			Log.e(TAG, "Fehler beim senden des Requests", e);
 		}
-		String resultBody = resultURL.getBody();
 		
-		if (resultBody != null) {
-			Log.d(TAG, "Posted data to backend. Result: " + resultBody);
+		if (resultURL != null && resultURL.getBody() != null) {
+			Log.d(TAG, "Posted data to backend. Result: " + resultURL.getBody());
 		} else {
 			Log.d(TAG, "Received no data from backend.");
 		}

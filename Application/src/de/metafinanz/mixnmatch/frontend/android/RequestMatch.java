@@ -3,13 +3,10 @@ package de.metafinanz.mixnmatch.frontend.android;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,38 +16,26 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
-import de.metafinanz.mixnmatch.frontend.android.data.Position;
 import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
-import de.metafinanz.mixnmatch.frontend.android.utils.TextTestUtils;
 
 public class RequestMatch extends AbstractAsyncActivity {
 	private static final String TAG = "RequestMatch";
 	
 	private Intent iMixAndMatch;
-	private Intent iLocationDialog;
-	@SuppressWarnings("unused")
-	private Context context;
 	private Button   mPickDate;
-	private Button   mPickTime;
 	private Calendar meetingCalendar = null;
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
 	
 	private String selectedPlace = "";
 	
-	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-
-	@SuppressWarnings("unused")
-	private void setContext(Context context) {
-		this.context = context;
-	}
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,38 +45,13 @@ public class RequestMatch extends AbstractAsyncActivity {
 
 		prepareLocationsSpinner();
 		
-//		
-//		spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
-		
-		iLocationDialog = new Intent(this, LocationDialog.class);
-        
-        Button btnLocationView = (Button) findViewById(R.id.buttonLocationView);
-        OnClickListener oclBtnLocationView = new OnClickListener() {
-			public void onClick(View v) {
-				startActivity(iLocationDialog);
-			}
-		};
-		btnLocationView.setOnClickListener(oclBtnLocationView);
-		
 		//Datums-Button
-		@SuppressWarnings("unused")
-		TextView mDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
         mPickDate = (Button) findViewById(R.id.buttonPickDate);
         
         //ClickListener für den Button
         mPickDate.setOnClickListener(new View.OnClickListener() {
     	   public void onClick(View v) {
     		   showDialog(DATE_DIALOG_ID);
-    	   }
-        });
-        
-        //Zeit-Button
-        mPickTime = (Button) findViewById(R.id.buttonPickTime);
-        
-        //ClickListener für den Button
-        mPickTime.setOnClickListener(new View.OnClickListener() {
-    	   public void onClick(View v) {
-    		   showDialog(TIME_DIALOG_ID);
     	   }
         });
         
@@ -107,19 +67,11 @@ public class RequestMatch extends AbstractAsyncActivity {
 		Button btnMatchSenden = (Button) findViewById(R.id.buttonMatchwunschSenden);
 		OnClickListener oclBtnMatchesSenden = new OnClickListener() {
 			public void onClick(View v) {
-				
-				boolean testResult = false;
-				// prüfen, ob Name gefüllt ist
-				EditText mEditName = (EditText) findViewById(R.id.EditName);
-				testResult = TextTestUtils.testText(TextTestUtils.Type.TEXT, mEditName);
-				
-				if (testResult) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"Matchwunsch wird gesendet.", Toast.LENGTH_LONG);
-					toast.show();
-					sendMatchWish();
-					startActivity(iMixAndMatch); //Zurück auf die Startseite
-				}
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Matchwunsch wird gesendet.", Toast.LENGTH_LONG);
+				toast.show();
+				sendMatchWish();
+				startActivity(iMixAndMatch); //Zurück auf die Startseite
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);
@@ -161,6 +113,8 @@ public class RequestMatch extends AbstractAsyncActivity {
 
 	private void init() {
 		meetingCalendar = Calendar.getInstance();
+		meetingCalendar.set(Calendar.HOUR, 0);
+		meetingCalendar.set(Calendar.MINUTE, 0);
 	}
 
 	/**

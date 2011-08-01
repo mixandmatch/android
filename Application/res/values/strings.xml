@@ -39,4 +39,8 @@
     	
     <string name="error_tech_locationservice">Fehler beim aktualisieren der Lokationen.</string>
     <string name="error_tech_requestservice">Fehler beim aktualisieren der Essensanfragen.</string>
+    <string name="save">Speichern</string>
+    <string name="name">Name</string>
+    <string name="email">EMail-Adresse</string>
+    <string name="userid">User-ID</string>
 </resources>

@@ -1,97 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="vertical">
 	<ImageView android:src="@drawable/logo"
 		android:layout_height="wrap_content" android:id="@+id/logo"
-		android:layout_width="fill_parent" 
-		android:paddingTop="5px"
-		android:paddingBottom="20px" 
-		android:layout_gravity="top">
+		android:layout_width="fill_parent" android:paddingTop="5sp"
+		android:paddingBottom="20sp" android:layout_gravity="top">
 	</ImageView>
-	<TextView android:id="@+id/TextName" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:text="@string/name_feld">
-	</TextView>
-	<EditText android:id="@+id/EditName"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:paddingBottom="20px"
-		android:orientation="horizontal" 
-		android:inputType="textPersonName">
-	</EditText>
-	<TextView android:id="@+id/TextEmail" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:text="@string/email_feld">
-	</TextView>
-	<EditText android:id="@+id/EditEmail"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:paddingBottom="20px"
-		android:orientation="horizontal" android:inputType="textEmailAddress">
-	</EditText>
-		
-	<TextView android:id="@+id/TextOrt" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
+
+	<TextView android:id="@+id/TextOrt" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:text="@string/ort_feld">
 	</TextView>
-		
-	<Spinner android:id="@+id/OrtSpinner"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:paddingBottom="20px"
+
+	<Spinner android:id="@+id/OrtSpinner" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:paddingBottom="20sp"
 		android:prompt="@string/ort_wert">
 	</Spinner>
-	
-	<Button android:id="@+id/buttonLocationView"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content" 
-			android:text="@string/location_button">
-	</Button>
-	
-	<TextView android:id="@+id/TextDatum" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
+
+	<TextView android:id="@+id/TextDatum" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:text="@string/datum_feld">
 	</TextView>
-	
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:orientation="horizontal">
-	
-		<Button android:id="@+id/buttonPickDate"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content" 
-			android:layout_weight="1"
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:id="@+id/linearLayout1"
+		android:orientation="horizontal" android:layout_height="wrap_content">
+
+		<TextView android:id="@+id/TextDatumWert"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center_vertical|center_horizontal"  android:layout_weight="1"
+			android:text="">
+		</TextView>
+		<Button android:id="@+id/buttonPickDate" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_weight="1"
 			android:text="@string/date_button">
 		</Button>
-		
-		<Button android:id="@+id/buttonPickTime"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content" 
-			android:layout_weight="1"
-			android:text="@string/time_button">
-		</Button>
-	
 	</LinearLayout>
-		
-	<TextView android:id="@+id/TextDatumWert" 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_vertical|center_horizontal"
-		android:paddingBottom="20px"
-		android:text="">
-	</TextView>
-	
+
 	<Button android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/buttonMatchwunschSenden"
 		android:text="@string/matchsenden_button" android:layout_gravity="bottom">
 	</Button>
-	
 </LinearLayout>

@@ -135,7 +135,7 @@ public class DataServiceHelper {
 		Bundle dataBundle = new Bundle();
 		dataBundle.putString("date", sdf.format(date));
 		dataBundle.putString("locationKey", selectedPlace);
-		dataBundle.putString("userid", app.getUserId());
+		dataBundle.putString("userid", app.getUserID());
 		requestIntent.putExtras(dataBundle);
 		context.startService(requestIntent);
 	}
