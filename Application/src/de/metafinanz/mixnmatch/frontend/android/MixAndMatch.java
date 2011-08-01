@@ -3,17 +3,15 @@ package de.metafinanz.mixnmatch.frontend.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import de.metafinanz.mixnmatch.frontend.android.services.LocationsService;
-import de.metafinanz.mixnmatch.frontend.android.services.LocationsServiceHelper;
 
 public class MixAndMatch extends Activity {
 	private Intent iRequestMatch;
 	private Intent iReceiveMatch;
+	private Intent iReceiveMatchII;
 	private static final String TAG = "MixAndMatch";
 
 	/** Called when the activity is first created. */

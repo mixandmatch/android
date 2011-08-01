@@ -1,94 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/Flipper" 
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
-	<ImageView android:src="@drawable/logo"
-		android:layout_height="wrap_content" android:id="@+id/logo"
-		android:layout_width="fill_parent" 
-		android:paddingTop="5px"
-		android:paddingBottom="20px" 
-		android:layout_gravity="top">
-	</ImageView>
-	<TextView android:id="@+id/TextPartnerName" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:paddingBottom="10px"
-		android:text="@string/name_feld">
-	</TextView>
-	<TextView android:id="@+id/AnzeigePartnerName"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="20px" 
-		android:text="">
-	</TextView>
-	<TextView android:id="@+id/TextPartnerEmail" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:paddingBottom="10px"
-		android:text="@string/email_feld">
-	</TextView>
-	<TextView android:id="@+id/AnzeigePartnerEmail"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="20px" 
-		android:text="">
-	</TextView>
+	
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:orientation="vertical">
+		<ImageView android:src="@drawable/logo"
+			android:layout_height="wrap_content" android:id="@+id/logo"
+			android:layout_width="fill_parent" 
+			android:paddingTop="5px"
+			android:paddingBottom="20px" 
+			android:layout_gravity="top">
+		</ImageView>
+		<TextView android:id="@+id/TextPartnerName" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:paddingBottom="10px"
+			android:text="@string/name_feld">
+		</TextView>
+		<TextView android:id="@+id/AnzeigePartnerName"  
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="20px" 
+			android:text="">
+		</TextView>
+		<TextView android:id="@+id/TextPartnerEmail" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:paddingBottom="10px"
+			android:text="@string/email_feld">
+		</TextView>
+		<TextView android:id="@+id/AnzeigePartnerEmail"  
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="20px" 
+			android:text="">
+		</TextView>
 		
-	<TextView android:id="@+id/TextPartnerOrt" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:paddingBottom="10px"
-		android:text="@string/ort_feld">
-	</TextView>
+		<TextView android:id="@+id/TextPartnerOrt" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:paddingBottom="10px"
+			android:text="@string/ort_feld">
+		</TextView>
 		
-	<TextView android:id="@+id/AnzeigePartnerOrt"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="20px" 
-		android:text="">
-	</TextView>
+		<TextView android:id="@+id/AnzeigePartnerOrt"  
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="20px" 
+			android:text="">
+		</TextView>
 	
-	<TextView android:id="@+id/TextDatumTreff" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:paddingBottom="10px"
-		android:text="@string/datum_feld">
-	</TextView>
+		<TextView android:id="@+id/TextDatumTreff" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:paddingBottom="10px"
+			android:text="@string/datum_feld">
+		</TextView>
 	
-	<TextView android:id="@+id/AnzeigeDatumTreff"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="20px" 
-		android:text="">
-	</TextView>
+		<TextView android:id="@+id/AnzeigeDatumTreff"  
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="20px" 
+			android:text="">
+		</TextView>
+		
+		<TextView android:id="@+id/TextZeitTreff" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:paddingBottom="10px"
+				android:text="@string/zeit_feld">
+		</TextView>
+		
+		<TextView android:id="@+id/AnzeigeZeitTreff"  
+			android:layout_width="fill_parent"	
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="20px" 
+			android:text="">
+		</TextView>
 	
-	<TextView android:id="@+id/TextZeitTreff" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" 
-		android:orientation="horizontal"
-		android:paddingBottom="10px"
-		android:text="@string/zeit_feld">
-	</TextView>
+		<Button android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/buttonEmailSenden"
+			android:text="@string/emailsenden_button" android:layout_gravity="bottom">
+		</Button>
 	
-	<TextView android:id="@+id/AnzeigeZeitTreff"  
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="20px" 
-		android:text="">
-	</TextView>
-	
-	<Button android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:id="@+id/buttonEmailSenden"
-		android:text="@string/emailsenden_button" android:layout_gravity="bottom">
-	</Button>
-	
-</LinearLayout>
+	</LinearLayout>
+</ViewFlipper>

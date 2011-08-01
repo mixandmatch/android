@@ -1,5 +1,6 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +28,10 @@ import android.widget.Toast;
 public class RequestMatch extends AbstractAsyncActivity {
 	private Intent iRequestMatch;
 	private Intent iLocationDialog;
+	private Context context;
 	private TextView mDateDisplay;
+	private Calendar meetingCalendar = null;
 	private Button   mPickDate;
-	private TextView mTimeDisplay;
 	private Button   mPickTime;
 	private int mYear;
 	private int mMonth;
@@ -39,6 +41,12 @@ public class RequestMatch extends AbstractAsyncActivity {
 	static final int DATE_DIALOG_ID = 0;
 	static final int TIME_DIALOG_ID = 1;
 
+	private void setContext(Context context) {
+		this.context = context;
+	}
+	
+	private final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,7 +83,6 @@ public class RequestMatch extends AbstractAsyncActivity {
         });
         
         //Zeit-Button
-        mTimeDisplay = (TextView) findViewById(R.id.TextUhrzeitWert);
         mPickTime = (Button) findViewById(R.id.buttonPickTime);
         
         //ClickListener für den Button
@@ -111,14 +118,14 @@ public class RequestMatch extends AbstractAsyncActivity {
 				String mail = mEditEmail.getText().toString();
 				
 				if (name.length() == 0) {
-					new AlertDialog.Builder(getApplicationContext())
+					new AlertDialog.Builder(context)
 							.setMessage(R.string.error_name_missing)
 							.setNeutralButton(R.string.error_ok, null).show();
 
 					return;
 				} 
 				else if  (mail.length() == 0) {
-					new AlertDialog.Builder(getApplicationContext())
+					new AlertDialog.Builder(context)
 					.setMessage(R.string.error_mail_missing)
 					.setNeutralButton(R.string.error_ok, null).show();
 
@@ -219,22 +226,9 @@ public class RequestMatch extends AbstractAsyncActivity {
 		}
 	}
 	private void updateDisplay() {
-    	mDateDisplay.setText(
-    			new StringBuilder()
-    			.append(mDay).append(".")
-    			.append(mMonth + 1).append(".")
-    			.append(mYear).append(" "));
-    	
-    	mTimeDisplay.setText(
-    			new StringBuilder().append(pad(mHour)).append(":").append(pad(mMinute)));
+    	TextView tvDateDisplay = (TextView) findViewById(R.id.TextDatumWert);
+    	tvDateDisplay.setText(sdf.format(meetingCalendar.getTime()));
     }
-    
-	private static String pad(int c) {
-		if (c >= 10)
-			return String.valueOf(c);
-		else
-			return "0" + String.valueOf(c);
-	}
 	
     //Rückgabe des ausgewählten Datums
     private DatePickerDialog.OnDateSetListener mDateSetListener =
