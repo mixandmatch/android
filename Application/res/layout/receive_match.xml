@@ -13,28 +13,15 @@
 			android:paddingBottom="20px" 
 			android:layout_gravity="top">
 		</ImageView>
-		<TextView android:id="@+id/TextPartnerName" 
+		
+		<TextView android:id="@+id/TextDatumTreff" 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
 			android:orientation="horizontal"
 			android:paddingBottom="10px"
-			android:text="@string/name_feld">
+			android:text="@string/datum_feld">
 		</TextView>
-		<TextView android:id="@+id/AnzeigePartnerName"  
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:paddingBottom="20px" 
-			android:text="">
-		</TextView>
-		<TextView android:id="@+id/TextPartnerEmail" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" 
-			android:orientation="horizontal"
-			android:paddingBottom="10px"
-			android:text="@string/email_feld">
-		</TextView>
-		<TextView android:id="@+id/AnzeigePartnerEmail"  
+		<TextView android:id="@+id/AnzeigeDatumTreff"  
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
@@ -49,7 +36,6 @@
 			android:paddingBottom="10px"
 			android:text="@string/ort_feld">
 		</TextView>
-		
 		<TextView android:id="@+id/AnzeigePartnerOrt"  
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -57,33 +43,16 @@
 			android:paddingBottom="20px" 
 			android:text="">
 		</TextView>
-	
-		<TextView android:id="@+id/TextDatumTreff" 
+		
+		<TextView android:id="@+id/TextTeilnehmer" 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" 
 			android:orientation="horizontal"
 			android:paddingBottom="10px"
-			android:text="@string/datum_feld">
+			android:text="@string/teilnehmer_feld">
 		</TextView>
-	
-		<TextView android:id="@+id/AnzeigeDatumTreff"  
+		<TextView android:id="@+id/AnzeigeTeilnehmer"  
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:paddingBottom="20px" 
-			android:text="">
-		</TextView>
-		
-		<TextView android:id="@+id/TextZeitTreff" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" 
-			android:orientation="horizontal"
-			android:paddingBottom="10px"
-				android:text="@string/zeit_feld">
-		</TextView>
-		
-		<TextView android:id="@+id/AnzeigeZeitTreff"  
-			android:layout_width="fill_parent"	
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:paddingBottom="20px" 

@@ -20,7 +20,7 @@ public class MixAndMatch extends Activity {
 	private static final String USER_ID = "userID";
 	private Intent iRequestMatch;
 	private Intent iReceiveMatch;
-	private Intent iReceiveMatchII;
+	private Intent iMyRequests;
 	private static final String TAG = "MixAndMatch";
 	private static final int DIALOG_SETTINGS_ID = 100;
 
@@ -41,6 +41,7 @@ public class MixAndMatch extends Activity {
         
 		iRequestMatch = new Intent(this, RequestMatch.class);
         iReceiveMatch = new Intent(this, ReceiveMatch.class);
+        iMyRequests = new Intent(this, MyRequests.class);
         
         Button btnMatchBekannt = (Button) findViewById(R.id.buttonMatchwunschBekanntgeben);
         OnClickListener oclBtnMatchesBekannt = new OnClickListener() {
@@ -57,6 +58,14 @@ public class MixAndMatch extends Activity {
 			}
 		};
 		btnMatchEmpfangen.setOnClickListener(oclBtnMatchesEmpfangen);
+		
+		Button btnMeineAnfragen = (Button) findViewById(R.id.buttonMeineAnfragen);
+        OnClickListener oclBtnMeineAnfragen = new OnClickListener() {
+			public void onClick(View v) {
+				startActivity(iMyRequests);
+			}
+		};
+		btnMeineAnfragen.setOnClickListener(oclBtnMeineAnfragen);
 		
 		init();
 
