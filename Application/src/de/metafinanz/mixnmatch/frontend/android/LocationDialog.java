@@ -2,7 +2,17 @@ package de.metafinanz.mixnmatch.frontend.android;
 
 import android.os.Bundle;
 
-public class LocationDialog {
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
+
+public class LocationDialog extends MapActivity {
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 //	@Override
 //	protected void onCreate(Bundle savedInstanceState) {

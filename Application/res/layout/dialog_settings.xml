@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" android:minWidth="300dp">
+	<TextView android:id="@+id/textView1" android:text="@string/name"
+		android:textSize="15sp" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<EditText android:layout_height="wrap_content" android:id="@+id/editName"
+		android:layout_width="fill_parent" android:minWidth="300dp"></EditText>
+	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:textSize="15sp" android:layout_height="wrap_content"
+		android:text="@string/userid"></TextView>
+	<EditText android:layout_height="wrap_content" android:minWidth="300dp"
+		android:id="@+id/editUserId" android:layout_width="fill_parent"></EditText>
+	<TextView android:id="@+id/textView2" android:text="@string/email"
+		android:layout_width="wrap_content" android:textSize="15sp"
+		android:layout_height="wrap_content"></TextView>
+	<EditText android:layout_height="wrap_content" android:minWidth="300dp"
+		android:id="@+id/editEMail" android:layout_width="fill_parent"></EditText>
+	<Button android:id="@+id/btnSave" android:layout_height="wrap_content"
+		android:textSize="15sp" android:text="@string/save"
+		android:layout_width="fill_parent"></Button>
+</LinearLayout>
