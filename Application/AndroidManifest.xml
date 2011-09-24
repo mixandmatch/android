@@ -20,6 +20,7 @@
 
 		<activity android:name=".RequestMatch" />
 		<activity android:name=".ReceiveMatch"/> 
+		<activity android:name=".MyRequests"/> 
 		<activity android:name=".LocationDialog" android:theme="@android:style/Theme.NoTitleBar" />
 		
 		<service android:enabled="true" android:name=".services.DataService" />
