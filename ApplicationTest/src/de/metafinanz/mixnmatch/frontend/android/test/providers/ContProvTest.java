@@ -8,6 +8,8 @@ import android.test.ProviderTestCase2;
 import android.util.Log;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Request;
+import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 import de.metafinanz.mixnmatch.frontend.android.providers.ContentLocations;
 
@@ -111,6 +113,34 @@ public class ContProvTest extends ProviderTestCase2<ContProv> {
             
 
 
+	}
+	
+	public void testInsertRequestUriContentValues() {
+		ContProv provider = getProvider();
+		ContentValues values = new ContentValues();
+		values.put(Requests.LOCATION_KEY, "HVU");
+		values.put(Requests.DATE, "03.08.2011");
+		values.put(Requests.USER_ID, "TSP");
+		
+		Uri resultUri = provider.insert(Requests.CONTENT_URI, values);
+		assertNotNull(resultUri);
+
+		Log.d(TAG, "Insert-URI: " + Requests.CONTENT_URI);
+		Log.d(TAG, "Result-URI: " + resultUri);
+		
+		
+		ContProv providerResult = getProvider();
+		Cursor cursorResult = providerResult.query(resultUri, Request.COLUMNS, null, null, null);
+		
+		assertNotNull(cursorResult);
+		
+		cursorResult.moveToNext();
+        String locKey = cursorResult.getString(0);
+        assertEquals("HVU", locKey);
+        String date = cursorResult.getString(1);
+        assertEquals("2011.08.03", date);
+        String userId = cursorResult.getString(2);
+        assertEquals("TSP", userId);
 	}
 
 //	public void testUpdateUriContentValuesStringStringArray() {

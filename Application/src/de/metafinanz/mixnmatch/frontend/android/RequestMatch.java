@@ -7,7 +7,6 @@ import java.util.Date;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -70,12 +69,17 @@ public class RequestMatch extends AbstractAsyncActivity {
 		Button btnMatchSenden = (Button) findViewById(R.id.buttonMatchwunschSenden);
 		OnClickListener oclBtnMatchesSenden = new OnClickListener() {
 			public void onClick(View v) {
-
-				Toast toast = Toast.makeText(getApplicationContext(),
-						"Matchwunsch wird gesendet.", Toast.LENGTH_LONG);
-				toast.show();
-				sendMatchWish();
-				startActivity(iMixAndMatch); //Zurück auf die Startseite
+				if (selectedPlace.length() == 0) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Matchwunsch kann nicht gesendet werden, da keine Lokation ausgewählt wurde.", Toast.LENGTH_LONG);
+					toast.show();
+				} else {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Matchwunsch wird gesendet.", Toast.LENGTH_SHORT);
+					toast.show();
+					sendMatchWish();
+					startActivity(iMixAndMatch); //Zurück auf die Startseite
+				}
 			}
 		};
 		btnMatchSenden.setOnClickListener(oclBtnMatchesSenden);

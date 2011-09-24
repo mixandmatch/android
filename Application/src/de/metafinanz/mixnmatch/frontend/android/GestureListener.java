@@ -1,6 +1,7 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.animation.Animation;
@@ -17,8 +18,9 @@ public class GestureListener extends SimpleOnGestureListener {
 	private Animation slideLeftOut;
 	private Animation slideRightIn;
 	private Animation slideRightOut;
+	private Cursor cursor = null;
 
-	public GestureListener(Context context, ViewFlipper viewFlipper) {
+	public GestureListener(Context context, ViewFlipper viewFlipper, Cursor cursor) {
 		super();
 		this.viewFlipper = viewFlipper;
 
@@ -30,6 +32,7 @@ public class GestureListener extends SimpleOnGestureListener {
 				R.anim.slide_right_in);
 		slideRightOut = AnimationUtils.loadAnimation(context,
 				R.anim.slide_right_out);
+		this.cursor  = cursor;
 	}
 
 	@Override
@@ -43,12 +46,16 @@ public class GestureListener extends SimpleOnGestureListener {
 					&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 				viewFlipper.setInAnimation(slideLeftIn);
 				viewFlipper.setOutAnimation(slideLeftOut);
+				if (cursor != null && !cursor.isLast())
+					cursor.moveToNext();
 				viewFlipper.showNext();
 			} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
 					&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 				viewFlipper.setInAnimation(slideRightIn);
 				viewFlipper.setOutAnimation(slideRightOut);
 				viewFlipper.showPrevious();
+				if (cursor != null && !cursor.isFirst())
+					cursor.moveToPrevious();
 			}
 		} catch (Exception e) {
 			// nothing

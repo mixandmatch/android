@@ -24,8 +24,8 @@
 		
 		<service android:enabled="true" android:name=".services.DataService" />
 		
-		<provider android:name=".providers.ContProv" android:authorities="de.metafinanz.mixnmatch.frontend.android.data.Location"	/>
+		<provider android:name=".providers.ContProv" 
+			android:authorities="de.metafinanz.mixnmatch.frontend.android.data.Location;de.metafinanz.mixnmatch.frontend.android.data.Request"	/>
 
-		<uses-library android:name="com.google.android.maps" />
 	</application>
 </manifest>

@@ -1,6 +1,10 @@
 package de.metafinanz.mixnmatch.frontend.android.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -8,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
@@ -19,8 +24,11 @@ import android.widget.Toast;
 import de.metafinanz.mixnmatch.frontend.android.MMApplication;
 import de.metafinanz.mixnmatch.frontend.android.R;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.RessourceType;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
+import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.data.Request;
+import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 
 /**
  * Serielle Abarbeitung von Intends durch eine interne Queue
@@ -73,12 +81,21 @@ public class DataService extends IntentService {
 		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST) {
 			Log.d(TAG, "getting all requests");
 			getAllRequests();
+		} else if (intent.getFlags() == FLAG_REQUEST_GET_ONE_REQUEST) {
+			Log.d(TAG, "getting one requests - NOT YET IMPLEMENTED");
 		} else if (intent.getFlags() == FLAG_REQUEST_POST_REQUEST) {
 			Log.d(TAG, "getting all requests");
-			String date = intent.getStringExtra("date");
-			String userid = intent.getStringExtra("userid");
-			String locationKey = intent.getStringExtra("locationKey");
-			postRequests(userid,locationKey, date);
+			String dateAsString = intent.getStringExtra("date");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
+			Date date = null;
+			try {
+				date = sdf.parse(dateAsString);
+				String userid = intent.getStringExtra("userid");
+				String locationKey = intent.getStringExtra("locationKey");
+				postRequests(userid, locationKey, date);
+			} catch (ParseException e) {
+				Log.e(TAG, "Fehlerhaftes Dateumsformat.");
+			}
 		}
 	}
 
@@ -122,11 +139,12 @@ public class DataService extends IntentService {
 						values);
 				Log.d(TAG, "added row '" + uri + "'");
 			}
+			DataServiceHelper.updateLastUpdateTime(RessourceType.Locations);
 			Log.d(TAG, "loaded " + locations.length + " items from backend.");
 		}
 	}
 	
-	private void postRequests(String userID, String locationKey, String date) {
+	private void postRequests(String userID, String locationKey, Date date) {
 		final String url = getString(R.string.base_uri) + getString(R.string.uri_requests);
 
 		HttpHeaders requestHeaders = new HttpHeaders();
@@ -159,6 +177,8 @@ public class DataService extends IntentService {
 		// org.apache.http package to make network requests
 		restTemplate
 				.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+		List<HttpMessageConverter<?>> listHttpMessageConverters = restTemplate.getMessageConverters();
+		restTemplate.setMessageConverters(listHttpMessageConverters);
 
 		// The URL for making the GET request
 		final String url = getString(R.string.base_uri) +  getString(R.string.uri_requests);
@@ -166,6 +186,8 @@ public class DataService extends IntentService {
 		// Initiate the HTTP GET request, expecting an array of State
 		// objects in response
 		// Man kann auch gleich ein POJO statt String erstellen lassen.
+
+		Log.d(TAG, "Loading requests from backend...");
 		try {
 			requests = restTemplate.getForObject(url, Request[].class);
 
@@ -177,6 +199,18 @@ public class DataService extends IntentService {
 			Log.d(TAG, "Loaded " + requests.length + " items from backend.");
 			MMApplication mma = (MMApplication) getApplicationContext();
 			mma.setRequests(Arrays.asList(requests));
+			
+//			getContentResolver().delete(Requests.CONTENT_URI, null, null); // Es kann kein ContentProvider gefunden werden, da in der Manifest-Datei nur Locations geschlüsselt ist.
+			for (int i = 0; i < requests.length; i++) {
+				ContentValues values = new ContentValues();
+				values.put(Requests.LOCATION_KEY, requests[i].getLocationKey());
+				values.put(Requests.DATE, requests[i].getDate().toString());
+				values.put(Requests.USER_ID, requests[i].getUserid());
+				
+				Uri uri = getContentResolver().insert(Requests.CONTENT_URI, values);
+				Log.d(TAG, "added row '" + uri + "'");
+			}
+			DataServiceHelper.updateLastUpdateTime(RessourceType.Requests);
 		} else {
 			Log.d(TAG, "Received no data from backend.");
 		}

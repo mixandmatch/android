@@ -9,13 +9,13 @@
 	<classpathentry kind="lib" path="lib/httpclient-cache-4.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpcore-4.1.jar"/>
 	<classpathentry kind="lib" path="lib/httpmime-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-all-1.6.6.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-auth-1.0.0.M3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-auth-1.0.0.M3.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-core-1.0.0.M3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-core-1.0.0.M3.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-rest-template-1.0.0.M3-sources.jar"/>
-	<classpathentry kind="lib" path="lib/spring-android-rest-template-1.0.0.M3.jar" sourcepath="lib/spring-android-rest-template-1.0.0.M3-sources.jar"/>
+	<classpathentry kind="lib" path="D:/MixMatch-Workspace/installation/android-sdk-r10/extras/android/compatibility/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="lib/gson-1.7.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/gson-1.7.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gson-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-android-auth-1.0.0.M4.jar"/>
+	<classpathentry kind="lib" path="lib/spring-android-core-1.0.0.M4.jar"/>
+	<classpathentry kind="lib" path="lib/spring-android-rest-template-1.0.0.M4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
