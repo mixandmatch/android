@@ -8,21 +8,12 @@ import de.metafinanz.mixnmatch.frontend.android.data.Request;
 
 public class MMApplication extends Application {
 	
-	private List<Request> requests = new ArrayList<Request>();
 	private String userID = null;
 	private String userName = null;
 	private String userEMail = null;
 
 	public MMApplication() {
 		super();
-	}
-
-	public void setRequests(List<Request> requests) {
-		this.requests = requests;
-	}
-
-	public List<Request> getRequests() {
-		return requests;
 	}
 
 	public String getUserID() {

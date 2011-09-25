@@ -1,5 +1,6 @@
 package de.metafinanz.mixnmatch.frontend.android.providers;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -198,7 +199,7 @@ public class ContProv extends ContentProvider {
 	private Object[] columnValuesOfRequest(Request req) {
 		return new Object[] { req.getId(), // id
 				req.getLocationKey(), // location key
-				req.getDate().toString(), // datum
+				DateFormat.getInstance().format(req.getDate()), // datum
 				req.getUserid() // user key
 				 
 		};

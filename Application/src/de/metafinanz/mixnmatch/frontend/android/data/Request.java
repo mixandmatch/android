@@ -3,7 +3,10 @@ package de.metafinanz.mixnmatch.frontend.android.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import android.content.ContentValues;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -14,6 +17,7 @@ public class Request {
 	private static final String TAG = "Request";
 	
 	public static String[] COLUMNS = {Requests.ID, Requests.LOCATION_KEY, Requests.DATE, Requests.USER_ID};
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	private String locationKey;
 	private Date date;
@@ -26,16 +30,34 @@ public class Request {
 	private String type;
 	
 
-	public Request(String locationKey, String date, String userid) {
+	public Request(String locationKey, String reqDate, String userid) {
 		super();
 		this.locationKey = locationKey;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		try {
-			this.date = sdf.parse(date);
+        
+        try {
+        	this.date = sdf.parse(reqDate);
 		} catch (ParseException e) {
-			Log.e(TAG, "Fehler beim parsen des Datums", e);
+			Log.e(TAG, "Fehler bei Datumskonvertierung.", e);
 		}
+        
 		this.userid = userid;
+	}
+	
+	public Request(Map<String, String> mapData) {
+        String type = (String) mapData.get("type");
+        String _id = (String) mapData.get("_id");
+        String _rev = (String) mapData.get("_rev");
+        String reqDate = (String) mapData.get("date");
+        String url = (String) mapData.get("url");
+        locationKey = (String) mapData.get("locationKey");
+        userid = (String) mapData.get("userid");
+        
+        try {
+			date = sdf.parse(reqDate);
+		} catch (ParseException e) {
+			Log.e(TAG, "Fehler bei Datumskonvertierung.", e);
+		}
+        
 	}
 	
 	public Request(String locationKey, Date date, String userid) {
@@ -57,12 +79,10 @@ public class Request {
 	}
 
 	public String getDateAsString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		return sdf.format(date);
 	}
 	
 	public void setDate(String date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		try {
 			this.date = sdf.parse(date);
 		} catch (ParseException e) {
@@ -161,7 +181,14 @@ public class Request {
 		this.matchUrl = matchUrl;
 	}
 
-	
+	public ContentValues getContentValues() {
+		ContentValues contentRequest = new ContentValues();
+		contentRequest.put(Requests.LOCATION_KEY, locationKey);
+		contentRequest.put(Requests.DATE, getDateAsString());
+		contentRequest.put(Requests.USER_ID, userid);
+		
+		return contentRequest;
+	}
 
 	
 }

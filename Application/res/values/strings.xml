@@ -21,7 +21,7 @@
     <string name="uri_requests">/requests</string>
     <string name="uri_locations">/locations</string>
     
-    <string name="location_service_started">Location service startet.</string>
+    <string name="location_service_started">Location service started.</string>
     <string name="location_service_stopped">Location service stopped.</string>
     <string name="location_service_created">Location service created.</string>
     <string name="local_service_connected">Location service connected.</string>

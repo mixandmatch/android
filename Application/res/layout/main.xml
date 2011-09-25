@@ -16,5 +16,8 @@
 	<Button android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/buttonMatchEmpfangen"
 		android:text="@string/matchempfangen_button"></Button>
+	<Button android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/buttonMeineAnfragen"
+		android:text="@string/meineanfragen_button"></Button>
 
 </LinearLayout>

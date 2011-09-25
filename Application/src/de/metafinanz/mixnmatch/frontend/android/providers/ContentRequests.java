@@ -1,5 +1,6 @@
 package de.metafinanz.mixnmatch.frontend.android.providers;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,10 +70,18 @@ public class ContentRequests {
 	}
 
 	public Date insert(ContentValues values) {
+
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		String locationKey = values.getAsString(Requests.LOCATION_KEY);
 		String tmpdate = values.getAsString(Requests.DATE);
-		Date date = new Date(tmpdate);
+		Date date;
+		try {
+			date = sdf.parse(tmpdate);
+		} catch (ParseException e) {
+			Log.e(TAG, "Fehler beim parsen des Datums. Verwende 1.1.1970.");
+			date = new Date(0);
+		}
 		String userId = values.getAsString(Requests.USER_ID);
 
 		if (locationKey == null || date == null || userId == null)

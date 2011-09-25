@@ -1,5 +1,8 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
@@ -18,9 +21,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
+import com.jakewharton.android.viewpagerindicator.TitleProvider;
+
 import de.metafinanz.mixnmatch.frontend.android.data.Request;
 import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
+
 
 public class ReceiveMatch extends Activity {
 	private static final String TAG = "ReceiveMatch";
@@ -42,7 +50,10 @@ public class ReceiveMatch extends Activity {
 		
         awesomeAdapter = new AwesomePagerAdapter();
         awesomePager = (ViewPager) findViewById(R.id.awesomepager);
+        TitlePageIndicator indicator =
+                (TitlePageIndicator)findViewById( R.id.indicator );
         awesomePager.setAdapter(awesomeAdapter);
+        indicator.setViewPager( awesomePager );
 		
 	}
 	
@@ -72,7 +83,7 @@ public class ReceiveMatch extends Activity {
 		
 	}
 
-	private class AwesomePagerAdapter extends PagerAdapter{
+	private class AwesomePagerAdapter extends PagerAdapter implements TitleProvider{
 		
 		@Override
 		public int getCount() {
@@ -94,44 +105,51 @@ public class ReceiveMatch extends Activity {
 	     */
 		@Override
 		public Object instantiateItem(View collection, int position) {
-			Log.d(TAG, "Instatiate view for position " + position);
+			Log.d(TAG, "Instantiate view for position " + position);
 			Request request = getData(position);
-			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 			
 			LinearLayout parent = new LinearLayout(context);
+			parent.setOrientation(LinearLayout.VERTICAL); 
+			parent.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+			
 			LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 
 			TextView tvDate = new TextView(context);
-			tvDate.setText("Datum: " + request.getDate());
-			tvDate.setTextColor(Color.WHITE);
-			tvDate.setTextSize(30);
+			tvDate.setText("Datum: " + sdf.format(request.getDate()));
+			tvDate.setTextColor(Color.BLACK);
+			tvDate.setTextSize(15);
+			tvDate.setLayoutParams(params);
 
 			TextView tvLocation = new TextView(context);
 			tvLocation.setText("Lokation: " + request.getLocationKey());
-			tvLocation.setTextColor(Color.WHITE);
-			tvLocation.setTextSize(30);
+			tvLocation.setTextColor(Color.BLACK);
+			tvLocation.setTextSize(15);
+			tvLocation.setLayoutParams(params);
 
 			TextView tvCompanions = new TextView(context);
 			tvCompanions.setText("Mitesser: -" );
-			tvCompanions.setTextColor(Color.WHITE);
-			tvCompanions.setTextSize(20);
+			tvCompanions.setTextColor(Color.BLACK);
+			tvCompanions.setTextSize(15);
+			tvCompanions.setLayoutParams(params);
 			
-			parent.addView(tvDate, params);
-			parent.addView(tvLocation, params);
-			parent.addView(tvCompanions, params);
+			parent.addView(tvDate);
+			parent.addView(tvLocation);
+			parent.addView(tvCompanions);
+			
+			
+			((ViewPager) collection).addView(parent, 0);
+			
+			return parent;
 
-			
-			((ViewPager) collection).addView(parent,0);
-			
-			TextView tv = new TextView(context);
-            tv.setText("Bonjour PAUG " + position);
-            tv.setTextColor(Color.WHITE);
-            tv.setTextSize(30);
+//			TextView tv = new TextView(context);
+//            tv.setText("Bonjour PAUG " + position);
+//            tv.setTextColor(Color.BLACK);
+//            tv.setTextSize(30);
+//            
+//            ((ViewPager) collection).addView(tv,0);
             
-            ((ViewPager) collection).addView(tv,0);
-            return tv;
 			
-//			return parent;
 		}
 		
 		private Request getData(int position) {
@@ -142,7 +160,13 @@ public class ReceiveMatch extends Activity {
 			String id = cursor.getString(cursor.getColumnIndex(Requests.ID));
 			String locKey = cursor.getString(cursor.getColumnIndex(Requests.LOCATION_KEY));
 			String tmpdate = cursor.getString(cursor.getColumnIndex(Requests.DATE));
-			Date date = new Date(tmpdate);
+			Date date = null;
+			try {
+				date = DateFormat.getInstance().parse(tmpdate);
+			} catch (ParseException e) {
+				Log.e(TAG, "Fehler beim parsen des Datums ("+tmpdate+"). Verwende 1.1.1970.");
+				date = new Date(0);
+			}
 			String userId = cursor.getString(cursor.getColumnIndex(Requests.USER_ID));
 			request.setId(Integer.parseInt(id));
 			request.setLocationKey(locKey);
@@ -171,15 +195,15 @@ public class ReceiveMatch extends Activity {
 	     */
 		@Override
 		public void destroyItem(View collection, int position, Object view) {
-//			((ViewPager) collection).removeView((LinearLayout) view);
-			((ViewPager) collection).removeView((TextView) view);
+			((ViewPager) collection).removeView((LinearLayout) view);
+//			((ViewPager) collection).removeView((TextView) view);
 		}
 
 		
 		@Override
 		public boolean isViewFromObject(View view, Object object) {
-//			return view==((LinearLayout)object);
-			return view==((TextView)object);
+			return view==((LinearLayout)object);
+//			return view==((TextView)object);
 		}
 		
 	    /**
@@ -203,6 +227,15 @@ public class ReceiveMatch extends Activity {
 
 		@Override
 		public void startUpdate(View arg0) {}
+
+		@Override
+		public String getTitle(int position) {
+
+			Request request = getData(position);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+			
+			return sdf.format(request.getDate());
+		}
     	
     }
 }
