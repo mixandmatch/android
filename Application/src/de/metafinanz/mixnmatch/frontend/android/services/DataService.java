@@ -6,10 +6,11 @@ import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
@@ -22,12 +23,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import de.metafinanz.mixnmatch.frontend.android.MMApplication;
 import de.metafinanz.mixnmatch.frontend.android.R;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
-import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.data.Request;
+import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 
 /**
  * Serielle Abarbeitung von Intends durch eine interne Queue
@@ -108,6 +108,7 @@ public class DataService extends IntentService {
 		// objects in response
 		// String result = restTemplate.getForObject(url, String.class);
 		// Man kann auch gleich ein POJO statt String erstellen lassen.
+		Log.d(TAG, "Requesting URL: " + url);
 		try {
 			locations = restTemplate.getForObject(url, Location[].class);
 
@@ -137,15 +138,19 @@ public class DataService extends IntentService {
 		final String url = getString(R.string.base_uri) + getString(R.string.uri_requests);
 
 		HttpHeaders requestHeaders = new HttpHeaders();
-		requestHeaders.setContentType(new MediaType("application","json"));
+		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Request req = new Request(locationKey, date, userID);
-		HttpEntity<Request> requestEntity = new HttpEntity<Request>(req, requestHeaders);
+		Gson gson = new Gson();
+		String resGson = gson.toJson(req.getDataAsMap());
+		
+		HttpEntity<String> requestEntity = new HttpEntity<String>(resGson, requestHeaders);
 		
 		RestTemplate restTemplate = new RestTemplate();
+		
 		ResponseEntity<String> resultURL = null;
 		try {
-			resultURL = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+			resultURL = restTemplate.postForEntity(url, requestEntity, String.class);
 		} catch (Exception e) {
 			Log.e(TAG, "Fehler beim senden des Requests", e);
 		}

@@ -180,6 +180,15 @@ public class Request {
 	public void setMatchUrl(String matchUrl) {
 		this.matchUrl = matchUrl;
 	}
+	
+	public Map<String, String> getDataAsMap() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(Requests.LOCATION_KEY, locationKey);
+		map.put(Requests.DATE, getDateAsString());
+		map.put(Requests.USER_ID, userid);
+		
+		return map;
+	}
 
 	public ContentValues getContentValues() {
 		ContentValues contentRequest = new ContentValues();
