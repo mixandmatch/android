@@ -1,0 +1,1 @@
+{"requestUrl":"http://ec2-46-137-12-115.eu-west-1.compute.amazonaws.com/api/requests","requestMethod":"POST","requestBody":"{\"locationKey\":\"hvu\",\"date\":\"20110401\",\"userid\":\"bad\"}","headers":["Content-Type","application/json","Accept","application/json"]}

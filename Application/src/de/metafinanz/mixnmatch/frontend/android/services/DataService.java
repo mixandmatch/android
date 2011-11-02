@@ -6,10 +6,11 @@ import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import android.app.IntentService;
@@ -122,6 +123,7 @@ public class DataService extends IntentService {
 		// objects in response
 		// String result = restTemplate.getForObject(url, String.class);
 		// Man kann auch gleich ein POJO statt String erstellen lassen.
+		Log.d(TAG, "Requesting URL: " + url);
 		try {
 			locations = restTemplate.getForObject(url, Location[].class);
 
@@ -172,9 +174,13 @@ public class DataService extends IntentService {
 		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Request req = new Request(locationKey, date, userID);
-		HttpEntity<Request> requestEntity = new HttpEntity<Request>(req, requestHeaders);
+		Gson gson = new Gson();
+		String resGson = gson.toJson(req.getDataAsMap());
+		
+		HttpEntity<String> requestEntity = new HttpEntity<String>(resGson, requestHeaders);
 		
 		RestTemplate restTemplate = new RestTemplate();
+		
 		ResponseEntity<String> resultURL = null;
 		try {
 //			resultURL = restTemplate.postForEntity(url,  requestEntity, String.class); 
