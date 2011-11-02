@@ -4,5 +4,8 @@
   <item android:id="@+id/refresh"
           android:icon="@drawable/ic_menu_refresh"
           android:title="@string/refresh" />
+  <item android:id="@+id/delete"
+          android:icon="@drawable/ic_menu_delete"
+          android:title="@string/delete" />
   
 </menu>

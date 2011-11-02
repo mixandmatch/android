@@ -46,4 +46,5 @@
     <string name="email">EMail-Adresse</string>
     <string name="userid">User-ID</string>
     <string name="refresh">aktualisieren</string>
+    <string name="delete">löschen</string>
 </resources>

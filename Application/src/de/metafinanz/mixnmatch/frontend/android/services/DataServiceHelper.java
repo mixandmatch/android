@@ -130,17 +130,34 @@ public class DataServiceHelper {
 	 */
 	public void postRequest(String selectedPlace, Date date) {
 		Log.d(TAG, "starting service for postRequest(String userID, Location location, Date date)");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		MMApplication app = (MMApplication) context.getApplicationContext();
 		
 		Intent requestIntent = new Intent(context, DataService.class);
-		requestIntent.addFlags(DataService.FLAG_REQUEST_POST_REQUEST);
+		requestIntent.addFlags(DataService.FLAG_REQUEST_POST_ONE_REQUEST);
 		Bundle dataBundle = new Bundle();
-		dataBundle.putString("date", sdf.format(date));
+		dataBundle.putString("date", app.sdf.format(date));
 		dataBundle.putString("locationKey", selectedPlace);
 		dataBundle.putString("userid", app.getUserID());
 		requestIntent.putExtras(dataBundle);
 		context.startService(requestIntent);
 	}
 
+	/**
+	 * URI: BASE_URI/URI_REQUESTS/{location}/{date}/lunch/{user} 	
+	 * HTTP Method: get 	
+	 * Beschreibung: Ein Post auf diese Resource erzeugt ein neues Request Objekt. Im Request Body muss u.g. Event Request JSON Objekt mitgeliefert werden. Anschlieﬂend erfolgt ein Redirect auf die soeben erzeugte Resource.
+	 */
+	public void deleteRequest(Date date, String locatioKey) {
+		Log.d(TAG, "starting service for deleteRequest(String date, String user)");
+		MMApplication app = (MMApplication) context.getApplicationContext();
+		
+		Intent requestIntent = new Intent(context, DataService.class);
+		requestIntent.addFlags(DataService.FLAG_REQUEST_DELETE_ONE_REQUEST);
+		Bundle dataBundle = new Bundle();
+		dataBundle.putString("date", app.sdf.format(date));
+		dataBundle.putString("userid", app.getUserID());
+		dataBundle.putString("locKey", locatioKey);
+		requestIntent.putExtras(dataBundle);
+		context.startService(requestIntent);
+	}
 }

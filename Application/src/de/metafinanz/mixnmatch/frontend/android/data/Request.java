@@ -3,7 +3,6 @@ package de.metafinanz.mixnmatch.frontend.android.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -190,5 +189,12 @@ public class Request {
 		return contentRequest;
 	}
 
+	@Override
+	public String toString() {
+		Log.d(TAG, "toString() von Request.java aufgerufen:" + getContentValues().toString());
+		return getContentValues().toString();
+	}
+
+	
 	
 }

@@ -22,12 +22,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import de.metafinanz.mixnmatch.frontend.android.MMApplication;
 import de.metafinanz.mixnmatch.frontend.android.R;
 import de.metafinanz.mixnmatch.frontend.android.data.Location;
 import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
-import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.data.Request;
+import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 
 /**
  * Serielle Abarbeitung von Intends durch eine interne Queue
@@ -42,7 +41,10 @@ public class DataService extends IntentService {
 	public final static int FLAG_REQUEST_UPDATE_LOCATIONS = 100;
 	public final static int FLAG_REQUEST_GET_ALL_REQUEST = 200;
 	public final static int FLAG_REQUEST_GET_ONE_REQUEST = 300;
-	public final static int FLAG_REQUEST_POST_REQUEST = 400;
+	public final static int FLAG_REQUEST_POST_ONE_REQUEST = 400;
+	public final static int FLAG_REQUEST_DELETE_ONE_REQUEST = 500;
+	public final static int FLAG_REQUEST_GET_ALL_REQUEST_AT_LOCATION = 600;
+	public final static int FLAG_REQUEST_GET_ALL_REQUEST_AT_LOCATION_AT_DATE = 700;
 
 	public DataService() {
 		super("DataService");
@@ -80,7 +82,19 @@ public class DataService extends IntentService {
 		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST) {
 			Log.d(TAG, "getting all requests");
 			getAllRequests();
-		} else if (intent.getFlags() == FLAG_REQUEST_POST_REQUEST) {
+		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST_AT_LOCATION) {
+			Log.d(TAG, "getting all requests at a specific location");
+			getAllRequests();
+		} else if (intent.getFlags() == FLAG_REQUEST_GET_ALL_REQUEST_AT_LOCATION_AT_DATE) {
+			Log.d(TAG, "getting all requests at a specific location at a specific date");
+			getAllRequests();
+		} else if (intent.getFlags() == FLAG_REQUEST_GET_ONE_REQUEST) {
+			Log.d(TAG, "getting one requests - NOT YET IMPLEMENTED");
+			getSpecificRequest();
+		} else if (intent.getFlags() == FLAG_REQUEST_DELETE_ONE_REQUEST) {
+			Log.d(TAG, "deleting one requests - NOT YET IMPLEMENTED");
+			deleteRequest(intent);
+		} else if (intent.getFlags() == FLAG_REQUEST_POST_ONE_REQUEST) {
 			Log.d(TAG, "posting request");
 			String date = intent.getStringExtra("date");
 			String userid = intent.getStringExtra("userid");
@@ -121,6 +135,7 @@ public class DataService extends IntentService {
 				ContentValues values = new ContentValues();
 				values.put(Locations.KEY, locations[i].getKey());
 				values.put(Locations.LABLE, locations[i].getLabel());
+				values.put(Locations.DESCRIPTION, locations[i].getDescription());
 				values.put(Locations.COORDINATE_LONGITUDE, locations[i]
 						.getCoordinates().getLon());
 				values.put(Locations.COORDINATE_LADITUDE, locations[i]
@@ -132,12 +147,29 @@ public class DataService extends IntentService {
 			Log.d(TAG, "loaded " + locations.length + " items from backend.");
 		}
 	}
-	
+
+	/**
+	 * EventRequest-Objekt welches gefüllt werden muss.
+	 * { 
+	 *   "locationKey": "<JSON String, required>",
+	 *   "date": "<JSON String, required>",
+	 *   "userid": <JSON String, required>",
+	 *   "url": "<JSON String, wird vom Webservice erzeugt>",
+	 *   "matchUrl": "<JSON String, nur bei /users/user s.o.>"
+	 *}
+	 *
+	 * curl -i -v -H "Accept: application/json" -X POST -H "Content-Type: application/json" -d '{"locationKey":"hvu","date":"20110401","userid":"bad"}' http://mixmatch-t.elasticbeanstalk.com/requests
+	 *
+	 * Method: post
+	 * @param userID
+	 * @param locationKey
+	 * @param date
+	 */
 	private void postRequests(String userID, String locationKey, String date) {
 		final String url = getString(R.string.base_uri) + getString(R.string.uri_requests);
 
 		HttpHeaders requestHeaders = new HttpHeaders();
-		requestHeaders.setContentType(new MediaType("application","json"));
+		requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 		
 		Request req = new Request(locationKey, date, userID);
 		HttpEntity<Request> requestEntity = new HttpEntity<Request>(req, requestHeaders);
@@ -145,6 +177,7 @@ public class DataService extends IntentService {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> resultURL = null;
 		try {
+//			resultURL = restTemplate.postForEntity(url,  requestEntity, String.class); 
 			resultURL = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 		} catch (Exception e) {
 			Log.e(TAG, "Fehler beim senden des Requests", e);
@@ -156,7 +189,11 @@ public class DataService extends IntentService {
 			Log.d(TAG, "Received no data from backend.");
 		}
 	}
-	
+
+	/**
+	 * URL: /requests
+	 * Method: get
+	 */
 	private void getAllRequests() {
 		// Create a new RestTemplate instance
 		RestTemplate restTemplate = new RestTemplate();
@@ -193,4 +230,59 @@ public class DataService extends IntentService {
 		}
 	}
 
+	/**
+	 * URL: /requests/{location}/{date}/lunch/{user}
+	 * Method: delete
+	 */
+	private void deleteRequest(Intent intent) {
+		String date = intent.getStringExtra("date");
+		String user = intent.getStringExtra("userid");
+		String locationKey = intent.getStringExtra("locKey");
+		
+		if (date == null || user == null) {
+			Log.e(TAG, "Can't delete Request. Date or user ist null.");
+			return;
+		}
+		StringBuffer url = new StringBuffer();
+		url.append(getString(R.string.base_uri));
+		url.append(getString(R.string.uri_requests));
+		url.append("/");
+		url.append(locationKey);
+		url.append("/");
+		url.append(date);
+		url.append("/lunch/");
+		url.append(user);
+		Log.i(TAG, "Lösche mit URL " + url);
+		// Create a new RestTemplate instance
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.delete(url.toString());
+		
+	}
+	
+	/**
+	 * URL: /{location}/{date}/lunch/{user}
+	 * Method: get
+	 */
+	private void getSpecificRequest() {
+		
+	}
+	
+	/**
+	 * URL: /{location}
+	 * Method: get
+	 */
+	private void getRequestsAtLocation() {
+		
+		
+	}
+	
+	/**
+	 * URL: /{location}/{date}
+	 * 		/{location}/{date}/lunch
+	 * Method: get
+	 */
+	private void getRequestsAtLocationAtDate() {
+		
+		
+	}
 }

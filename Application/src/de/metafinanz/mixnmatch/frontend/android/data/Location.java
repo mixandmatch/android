@@ -7,6 +7,7 @@ import de.metafinanz.mixnmatch.frontend.android.providers.ContProv;
 public class Location {
 	
 	public static String[] COLUMNS = {Locations.LOCATION_ID, Locations.KEY, Locations.LABLE};
+	public static String[] COLUMNS_DESCRIPTION = {Locations.LOCATION_ID, Locations.KEY, Locations.LABLE, Locations.DESCRIPTION};
 
 	private long id;
 	private String key;
@@ -88,9 +89,11 @@ public class Location {
 		private Locations() {
 		}
 		
-		public static final String type = "locations";
+		public static final String types = "locations";
+		public static final String type = "location";
 
 		public static final Uri CONTENT_URI = Uri.parse("content://" + ContProv.AUTHORITY_LOCATION + "/locations");
+		public static final Uri CONTENT_URI_LOCATION_ITEM = Uri.parse("content://" + ContProv.AUTHORITY_LOCATION + "/location");
 
 		public static final String CONTENT_TYPE_QUERY_ITEM = "vnd.android.cursor.item/vnd.mixnmatch.locations";
 		public static final String CONTENT_TYPE_QUERY_LIST = "vnd.android.cursor.dir/vnd.mixnmatch.locations";

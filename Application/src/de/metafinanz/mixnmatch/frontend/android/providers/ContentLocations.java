@@ -39,20 +39,23 @@ public class ContentLocations {
 	}
 
 	/**
-	 * Liefert je nach Query eine Auswahl an Locations zurück. Die Query wird
-	 * momentan aber nicht ausgewertet.
+	 * Liefert alle Locations zurück.
 	 * 
-	 * @param processedQuery
 	 * @return
 	 */
-	public List<Location> getMatches(String processedQuery) {
+	public List<Location> getMatches() {
 		List<Location> listResult = new ArrayList<Location>();
 		listResult.addAll(locations.values());
 		return listResult;
 	}
 
-	public Location getMatch(Long index) {
-		return locations.get(index);
+	public Location getMatch(String key) {
+		if (key != null)
+			for (Location loc: locations.values()) {
+				if (loc.getKey().equals(key)) 
+					return loc;
+			}
+		return null;
 	}
 
 	public void setLocations(List<Location> locations) {
@@ -68,11 +71,13 @@ public class ContentLocations {
 	public Long insert(ContentValues values) {
 		String key = values.getAsString(Locations.KEY);
 		String label = values.getAsString(Locations.LABLE);
+		String description = values.getAsString(Locations.DESCRIPTION);
 
 		if (key == null || label == null)
 			throw new IllegalArgumentException("Either key or label is null");
 
 		Location newLoc = new Location(key, label);
+		newLoc.setDescription(description);
 
 		if (this.locations.containsValue(newLoc)) {
 			Log.w(TAG, "Element " + newLoc.getKey()

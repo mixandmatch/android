@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 import com.jakewharton.android.viewpagerindicator.TitleProvider;
 
+import de.metafinanz.mixnmatch.frontend.android.data.Location;
+import de.metafinanz.mixnmatch.frontend.android.data.Location.Locations;
 import de.metafinanz.mixnmatch.frontend.android.data.Request;
 import de.metafinanz.mixnmatch.frontend.android.data.Request.Requests;
 import de.metafinanz.mixnmatch.frontend.android.services.DataServiceHelper;
@@ -45,8 +47,8 @@ public class ReceiveMatch extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.receive_match);
 		this.context = this;
-		cursor = getContentResolver().query(Requests.CONTENT_URI, Request.COLUMNS, null, null, null);
-		startManagingCursor(cursor);
+		
+		initCursor();
 		
         awesomeAdapter = new AwesomePagerAdapter();
         awesomePager = (ViewPager) findViewById(R.id.awesomepager);
@@ -64,6 +66,9 @@ public class ReceiveMatch extends Activity {
 	    return true;
 	}
 	
+	/**
+	 * Menü-Aktionen auswerten
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
@@ -71,19 +76,39 @@ public class ReceiveMatch extends Activity {
 	    case R.id.refresh:
 	        refreshRequests();
 	        return true;
+	    case R.id.delete:
+	        deleteRequest();
+	        return true;
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
 	}
 
-    private void refreshRequests() {
+
+	private void refreshRequests() {
 		DataServiceHelper.getInstance(this).getRequests(true);
 		cursor = getContentResolver().query(Requests.CONTENT_URI, Request.COLUMNS, null, null, null);
 		startManagingCursor(cursor);
-		
+	}
+	
+	private void deleteRequest() {
+		DataServiceHelper.getInstance(this).deleteRequest(awesomeAdapter.getActualDate(), awesomeAdapter.getActualLocationKey());
+		cursor = getContentResolver().query(Requests.CONTENT_URI, Request.COLUMNS, null, null, null);
+		startManagingCursor(cursor);
+	}
+
+
+	private void initCursor() {
+		if (cursor == null) {
+			cursor = getContentResolver().query(Requests.CONTENT_URI, Request.COLUMNS, null, null, null);
+			startManagingCursor(cursor);
+		}
 	}
 
 	private class AwesomePagerAdapter extends PagerAdapter implements TitleProvider{
+		
+		private String actualLocationKey;
+		private Date actualDate;
 		
 		@Override
 		public int getCount() {
@@ -127,6 +152,12 @@ public class ReceiveMatch extends Activity {
 			tvLocation.setTextSize(15);
 			tvLocation.setLayoutParams(params);
 
+			TextView tvLocationDescription = new TextView(context);
+			tvLocationDescription.setText("Beschreibung: " + getLocationDescription(request.getLocationKey()));
+			tvLocationDescription.setTextColor(Color.BLACK);
+			tvLocationDescription.setTextSize(15);
+			tvLocationDescription.setLayoutParams(params);
+
 			TextView tvCompanions = new TextView(context);
 			tvCompanions.setText("Mitesser: -" );
 			tvCompanions.setTextColor(Color.BLACK);
@@ -135,6 +166,7 @@ public class ReceiveMatch extends Activity {
 			
 			parent.addView(tvDate);
 			parent.addView(tvLocation);
+			parent.addView(tvLocationDescription);
 			parent.addView(tvCompanions);
 			
 			
@@ -152,35 +184,40 @@ public class ReceiveMatch extends Activity {
 			
 		}
 		
+		private String getLocationDescription(String locationKey) {
+
+			Cursor locCursor = getContentResolver().query(Locations.CONTENT_URI_LOCATION_ITEM, Location.COLUMNS_DESCRIPTION, locationKey, null, null);
+			if (locCursor != null) {
+				locCursor.moveToFirst();
+
+				String description = locCursor.getString(locCursor.getColumnIndex(Locations.DESCRIPTION));
+				return description;
+			}
+			return null;
+		}
+
 		private Request getData(int position) {
 			initCursor();
 			cursor.moveToFirst();
 			cursor.move(position);
 			Request request = new Request();
 			String id = cursor.getString(cursor.getColumnIndex(Requests.ID));
-			String locKey = cursor.getString(cursor.getColumnIndex(Requests.LOCATION_KEY));
+			String actualLocationKey = cursor.getString(cursor.getColumnIndex(Requests.LOCATION_KEY));
 			String tmpdate = cursor.getString(cursor.getColumnIndex(Requests.DATE));
-			Date date = null;
+			actualDate = null;
 			try {
-				date = DateFormat.getInstance().parse(tmpdate);
+				actualDate = DateFormat.getInstance().parse(tmpdate);
 			} catch (ParseException e) {
 				Log.e(TAG, "Fehler beim parsen des Datums ("+tmpdate+"). Verwende 1.1.1970.");
-				date = new Date(0);
+				actualDate = new Date(0);
 			}
 			String userId = cursor.getString(cursor.getColumnIndex(Requests.USER_ID));
 			request.setId(Integer.parseInt(id));
-			request.setLocationKey(locKey);
-			request.setDate(date);
+			request.setLocationKey(actualLocationKey);
+			request.setDate(actualDate);
 			request.setUserid(userId);
 			
 			return request;
-		}
-
-		private void initCursor() {
-			if (cursor == null) {
-				cursor = getContentResolver().query(Requests.CONTENT_URI, Request.COLUMNS, null, null, null);
-				startManagingCursor(cursor);
-			}
 		}
 
 	    /**
@@ -235,6 +272,14 @@ public class ReceiveMatch extends Activity {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 			
 			return sdf.format(request.getDate());
+		}
+
+		public String getActualLocationKey() {
+			return actualLocationKey;
+		}
+
+		public Date getActualDate() {
+			return actualDate;
 		}
     	
     }

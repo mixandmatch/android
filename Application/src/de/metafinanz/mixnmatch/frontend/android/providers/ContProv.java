@@ -3,7 +3,6 @@ package de.metafinanz.mixnmatch.frontend.android.providers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.ContentProvider;
@@ -109,10 +108,10 @@ public class ContProv extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		Log.d(TAG, "query qith uri " + uri.toString());
-		if (!TextUtils.isEmpty(selection)) {
-			throw new IllegalArgumentException("selection not allowed for "
-					+ uri);
-		}
+//		if (!TextUtils.isEmpty(selection)) {
+//			throw new IllegalArgumentException("selection not allowed for "
+//					+ uri);
+//		}
 		if (selectionArgs != null && selectionArgs.length != 0) {
 			throw new IllegalArgumentException("selectionArgs not allowed for "
 					+ uri);
@@ -127,10 +126,10 @@ public class ContProv extends ContentProvider {
 			if (uri.getPathSegments().size() > 1) {
 				query = uri.getLastPathSegment().toLowerCase();
 			}
-			return getSuggestionsLocations(query, projection);
+			return getSuggestionsLocations(query);
 		case SEARCH_ONE_LOCATIONS:
-			Long index = Long.valueOf(uri.getLastPathSegment());
-			return getOneLocation(index, projection);
+			String key = uri.getLastPathSegment();
+			return getOneLocation(selection);
 
 		case SEARCH_ALL_REQUESTS:
 			if (uri.getPathSegments().size() > 1) {
@@ -144,24 +143,23 @@ public class ContProv extends ContentProvider {
 
 	}
 
-	private Cursor getOneLocation(Long index, String[] projection) {
+	private Cursor getOneLocation(String key) {
 		ContentLocations instanceOfContentLocations = ContentLocations.getInstance();
-		Location location = instanceOfContentLocations.getMatch(index);
+		Location location = instanceOfContentLocations.getMatch(key);
 
 		if (location != null) {
 			Log.i(TAG, "found location" + location.getKey());
-			MatrixCursor cursor = new MatrixCursor(Location.COLUMNS);
-			cursor.addRow(columnValuesOfLocation(location));
+			MatrixCursor cursor = new MatrixCursor(Location.COLUMNS_DESCRIPTION);
+			cursor.addRow(columnValuesOfLocationWithDescription(location));
 	
 			return cursor;
 		}
 		return null;
 	}
 
-	private Cursor getSuggestionsLocations(String query, String[] projection) {
+	private Cursor getSuggestionsLocations(String query) {
 		String processedQuery = query == null ? "" : query.toLowerCase();
-		List<Location> locations = ContentLocations.getInstance().getMatches(
-				processedQuery);
+		List<Location> locations = ContentLocations.getInstance().getMatches();
 
 		Log.i(TAG, "found " + locations.size() + " results");
 		MatrixCursor cursor = new MatrixCursor(Location.COLUMNS);
@@ -195,6 +193,13 @@ public class ContProv extends ContentProvider {
 				loc.getLabel() // lable
 		};
 	}
+	private Object[] columnValuesOfLocationWithDescription(Location loc) {
+		return new Object[] { loc.getId(), // id
+				loc.getKey(), // key
+				loc.getDescription(), // description
+				loc.getLabel() // lable
+		};
+	}
 	
 	private Object[] columnValuesOfRequest(Request req) {
 		return new Object[] { req.getId(), // id
@@ -216,8 +221,8 @@ public class ContProv extends ContentProvider {
 
 	static {
 		sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.type, SEARCH_ALL_LOCATIONS);
-		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.type + "/#", SEARCH_ONE_LOCATIONS);
+		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.types, SEARCH_ALL_LOCATIONS);
+		sURIMatcher.addURI(AUTHORITY_LOCATION, Locations.type, SEARCH_ONE_LOCATIONS);
 		sURIMatcher.addURI(AUTHORITY_REQUEST, Requests.type, SEARCH_ALL_REQUESTS);
 		
 		

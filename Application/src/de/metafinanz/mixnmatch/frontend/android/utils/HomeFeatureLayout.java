@@ -1,17 +1,8 @@
 package de.metafinanz.mixnmatch.frontend.android.utils;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import de.metafinanz.mixnmatch.frontend.android.R;
 
 public class HomeFeatureLayout extends HorizontalScrollView {
 //    private static final int SWIPE_MIN_DISTANCE = 5;

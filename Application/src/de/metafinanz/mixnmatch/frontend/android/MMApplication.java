@@ -1,12 +1,12 @@
 package de.metafinanz.mixnmatch.frontend.android;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 import android.app.Application;
-import de.metafinanz.mixnmatch.frontend.android.data.Request;
 
 public class MMApplication extends Application {
+
+	public final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	private String userID = null;
 	private String userName = null;
