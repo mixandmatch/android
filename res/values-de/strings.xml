@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MixMatch</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="buttonLocations">Orte</string>
+    <string name="buttonAppointments">Verabredungen</string>
+    <string name="textWelcomeMain">Willkommen zu Mix&amp;Match</string>
+    <string name="title_activity_locations">Orte</string>
+    <string name="title_activity_appointments">Verabredungen</string>
+    <string name="buttonSave">Speichern</string>
+    <string name="textAppointmentsSubHeader">Deine gespeicherten Verabredungen:</string>
+    <string name="textAppointmentsHeader">Hallo </string>
+
+</resources>
