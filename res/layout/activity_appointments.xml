@@ -1,0 +1,32 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AppointmentsTableLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AppointmentsActivity" >
+    
+    <TableRow android:id="@+id/appointmentsTableRow1"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/textAppointmentsHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/textAppointmentsHeader"
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:gravity="center_horizontal"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/appointmentsTableRow2"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/textAppointmentsSubHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textAppointmentsSubHeader"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:gravity="center_horizontal"/>
+    </TableRow>
+
+</TableLayout>

@@ -27,6 +27,11 @@
 			<version>4.1.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>support-v4</artifactId>
+			<version>r7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -36,8 +41,8 @@
 				<version>3.6.1</version>
 				<configuration>
 					<sdk>
-						<platform>18</platform>
-						<path>D:\Java\adt-bundle-windows-x86_64-20130917\sdk</path>
+						<platform>16</platform>
+						<path>${android.sdk.path}</path>
 					</sdk>
 					<deleteConflictingFiles>true</deleteConflictingFiles>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
@@ -55,7 +60,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

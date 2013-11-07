@@ -2,6 +2,9 @@ package de.metafinanz.mixmatch.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public abstract class MixMatchActivity extends Activity {
 
@@ -9,10 +12,16 @@ public abstract class MixMatchActivity extends Activity {
 	private final String KEY_USERNAME = "mixmatch_username";
 	
 	private String username;
+	public static final String USER_NAME = "user.name";
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initUsername();
+	}
+
+
+	public void initUsername() {
 		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
 		username = settings.getString(KEY_USERNAME, "");
 	}
@@ -21,17 +30,24 @@ public abstract class MixMatchActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
-		settings.edit().putString(KEY_USERNAME, username);
-		settings.edit().commit();
+		storeUsername();
 	}
 
 
-	protected String getUsername() {
-		return username;
+	public void storeUsername() {
+		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
+		Editor edit = settings.edit();
+		edit.putString(KEY_USERNAME, getUsername());
+		edit.commit();
+		Log.i("Username bei storeUsername: ", "1:" + settings.getString(KEY_USERNAME, ""));
+	}
+
+
+	public String getUsername() {
+		return this.username;
 	}
 	
-	protected void setUsername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 }

@@ -4,5 +4,13 @@
     <string name="app_name">MixMatch</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="buttonLocations">Locations</string>
+    <string name="buttonAppointments">Appointments</string>
+    <string name="textWelcomeMain">Welcome to Mix&amp;Match</string>
+    <string name="title_activity_locations">LocationsActivity</string>
+    <string name="title_activity_appointments">AppointmentsActivity</string>
+    <string name="buttonSave">Save</string>
+    <string name="textAppointmentsSubHeader">Your actual approved appointments:</string>
+    <string name="textAppointmentsHeader">Hello </string>
 
 </resources>

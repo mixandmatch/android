@@ -1,23 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/TableLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     tools:context=".MainActivity" >
 
+    <TableRow
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/textView1"
+        <TextView
+            android:id="@+id/textAppointments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/textWelcomeMain"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:gravity="center_horizontal"/>
+    </TableRow>
+
+    <TableRow
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_marginTop="10dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonLocations" 
+            android:onClick="showLocations"/>
+
+    </TableRow>
+
+    <TableRow
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/buttonAppointments" 
+            android:onClick="showAppointments"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:gravity="center_horizontal" >
 
-    <Button
-        android:id="@+id/button1"
+        <EditText
+            android:id="@+id/textUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10" 
+            android:inputType="text"
+            android:visibility="invisible">
+
+            <requestFocus />
+        </EditText>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="sendMessage"
-        android:text="Button" />
+        android:layout_height="wrap_content" 
+        android:gravity="center_horizontal">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonSaveUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonSave" 
+            android:visibility="invisible"
+            android:onClick="saveUsername"/>
+
+    </TableRow>
+
+</TableLayout>

@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="16" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="de.metafinanz.mixmatch.activities.LocationsActivity"
+            android:label="@string/title_activity_locations"
+            android:parentActivityName="de.metafinanz.mixmatch.activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.metafinanz.mixmatch.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.metafinanz.mixmatch.activities.AppointmentsActivity"
+            android:label="@string/title_activity_appointments"
+            android:parentActivityName="de.metafinanz.mixmatch.activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.metafinanz.mixmatch.activities.MainActivity" />
         </activity>
     </application>
 

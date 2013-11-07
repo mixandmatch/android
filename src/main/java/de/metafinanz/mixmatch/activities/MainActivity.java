@@ -1,19 +1,23 @@
 package de.metafinanz.mixmatch.activities;
 
-import de.metafinanz.mixmatch.R;
-import de.metafinanz.mixmatch.R.layout;
-import de.metafinanz.mixmatch.R.menu;
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import de.metafinanz.mixmatch.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MixMatchActivity {
+	
+	private Intent intentAppointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        intentAppointments = new Intent(this, AppointmentsActivity.class);
     }
 
 
@@ -24,8 +28,32 @@ public class MainActivity extends Activity {
         return true;
     }
     
-    public void sendMessage(View view) {
-    	System.out.println("Test");
+    public void showLocations(View view) {
+    	System.out.println("Show Locations");
+    	Intent intent = new Intent(this, LocationsActivity.class);
+    	startActivity(intent);
+    }
+    
+    public void showAppointments(View view) {
+    	
+    	String userName = getUsername();
+    	if (userName != null && userName.length() > 0) {
+    		startActivity(this.intentAppointments);
+    	} else {
+    		EditText text = (EditText) findViewById(R.id.textUsername);
+    		text.setVisibility(EditText.VISIBLE);
+    		Button buttonSave = (Button) findViewById(R.id.buttonSaveUsername);
+    		buttonSave.setVisibility(View.VISIBLE);
+    	}
+    	
+    	
+    }
+    
+    public void saveUsername(View view) {
+    	EditText userText = (EditText) findViewById(R.id.textUsername);
+    	String username = userText.getText().toString();
+    	setUsername(username);
+    	startActivity(this.intentAppointments);
     }
     
 }
