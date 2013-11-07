@@ -1,0 +1,8 @@
+.project
+.DS_Store
+.classpath
+.settings
+target
+bin
+gen
+/C:
