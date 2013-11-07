@@ -4,15 +4,11 @@
 	<groupId>de.metafinanz.mobile</groupId>
 	<artifactId>mixmatch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>apk</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.android</groupId>
 			<artifactId>spring-android-rest-template</artifactId>
-			<version>1.0.1.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.android</groupId>
-			<artifactId>spring-android-auth</artifactId>
 			<version>1.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
@@ -25,6 +21,12 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>4.1.2</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -35,6 +37,7 @@
 				<configuration>
 					<sdk>
 						<platform>18</platform>
+						<path>D:\Java\adt-bundle-windows-x86_64-20130917\sdk</path>
 					</sdk>
 					<deleteConflictingFiles>true</deleteConflictingFiles>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
@@ -50,5 +53,43 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.jayway.maven.plugins.android.generation2
+										</groupId>
+										<artifactId>
+											android-maven-plugin
+										</artifactId>
+										<versionRange>
+											[3.6.1,)
+										</versionRange>
+										<goals>
+											<goal>
+												generate-sources
+											</goal>
+											<goal>proguard</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
