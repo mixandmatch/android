@@ -7,8 +7,8 @@
     <string name="buttonLocations">Locations</string>
     <string name="buttonAppointments">Appointments</string>
     <string name="textWelcomeMain">Welcome to Mix&amp;Match</string>
-    <string name="title_activity_locations">LocationsActivity</string>
-    <string name="title_activity_appointments">AppointmentsActivity</string>
+    <string name="title_activity_locations">Locations</string>
+    <string name="title_activity_appointments">Appointments</string>
     <string name="buttonSave">Save</string>
     <string name="textAppointmentsSubHeader">Your actual approved appointments:</string>
     <string name="textAppointmentsHeader">Hello </string>

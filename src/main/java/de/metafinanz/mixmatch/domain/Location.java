@@ -20,5 +20,10 @@ public class Location {
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
 	}
+	
+	@Override
+	public String toString() {
+		return getLocationName();
+	}
 
 }

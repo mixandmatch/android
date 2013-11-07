@@ -7,8 +7,17 @@ import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.domain.User;
 
 public class DataService {
+	
+	private static final DataService instance = new DataService();
 
 	Mocker mocker = new Mocker();
+	
+	private DataService() {
+	}
+	
+	public static DataService getInstance() {
+		return instance;
+	}
 
 	public List<Location> getLocations() {
 		// TODO Remove Mocker

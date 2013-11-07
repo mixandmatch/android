@@ -7,8 +7,18 @@ import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.domain.User;
 
 public class MixMatchService {
+	
+	private static final MixMatchService instance = new MixMatchService();
+	
+	DataService dataservice = DataService.getInstance();
+	
+	private MixMatchService() {
+	}
 
-	DataService dataservice = new DataService();
+	public static MixMatchService getInstance() {
+		return instance;
+	}
+	
 	
 	public List<Appointment> getAppointments(String username) {
 		return dataservice.getAppointmentsByUsername(username);

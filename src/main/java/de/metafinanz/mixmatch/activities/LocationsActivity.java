@@ -1,10 +1,17 @@
 package de.metafinanz.mixmatch.activities;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import de.metafinanz.mixmatch.R;
+import de.metafinanz.mixmatch.domain.Location;
+import de.metafinanz.mixmatch.service.MixMatchService;
 
 public class LocationsActivity extends MixMatchActivity {
 
@@ -14,6 +21,12 @@ public class LocationsActivity extends MixMatchActivity {
 		setContentView(R.layout.activity_locations);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		List<Location> list = MixMatchService.getInstance().getLocations();
+		ArrayAdapter<Location> adapter = new ArrayAdapter<Location>(getApplicationContext(), android.R.layout.simple_list_item_1, list);
+		
+		ListView view = (ListView) findViewById(R.id.locationsListView);
+		view.setAdapter(adapter);
+		
 	}
 
 	/**
