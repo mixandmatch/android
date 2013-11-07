@@ -3,7 +3,6 @@ package de.metafinanz.mixmatch.activities;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public abstract class MixMatchActivity extends Activity {
