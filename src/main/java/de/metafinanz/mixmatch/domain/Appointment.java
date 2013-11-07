@@ -1,13 +1,15 @@
 package de.metafinanz.mixmatch.domain;
 
 import java.util.Date;
+import java.util.Set;
 
 public class Appointment {
 
 	private String appointmentID;
 	private Date timestamp;
 	private String locationID;
-	private String userID;
+	private User owner;
+	private Set<User> participants;
 
 	public String getAppointmentID() {
 		return appointmentID;
@@ -33,12 +35,20 @@ public class Appointment {
 		this.locationID = locationID;
 	}
 
-	public String getUserID() {
-		return userID;
+	public User getOwner() {
+		return owner;
 	}
 
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public Set<User> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(Set<User> participants) {
+		this.participants = participants;
 	}
 
 }
