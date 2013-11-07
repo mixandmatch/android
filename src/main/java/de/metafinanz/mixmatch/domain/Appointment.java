@@ -51,4 +51,31 @@ public class Appointment {
 		this.participants = participants;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((appointmentID == null) ? 0 : appointmentID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appointment other = (Appointment) obj;
+		if (appointmentID == null) {
+			if (other.appointmentID != null)
+				return false;
+		} else if (!appointmentID.equals(other.appointmentID))
+			return false;
+		return true;
+	}
+
+	
 }

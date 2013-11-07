@@ -8,12 +8,12 @@ import android.util.Log;
 
 public abstract class MixMatchActivity extends Activity {
 
-	private final String MIXMATCH_PREFS = "mixmatch_preferences";
-	private final String KEY_USERNAME = "mixmatch_username";
-	
+	private static final String MIXMATCH_PREFS = "mixmatch_preferences";
+	private static final String KEY_USERNAME = "mixmatch_username";
+
 	private String username;
 	public static final String USER_NAME = "user.name";
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -26,12 +26,12 @@ public abstract class MixMatchActivity extends Activity {
 		username = settings.getString(KEY_USERNAME, "");
 	}
 
-
 	@Override
 	protected void onPause() {
 		super.onPause();
 		storeUsername();
 	}
+
 
 
 	public void storeUsername() {
@@ -46,6 +46,7 @@ public abstract class MixMatchActivity extends Activity {
 	public String getUsername() {
 		return this.username;
 	}
+
 	
 	public void setUsername(String username) {
 		this.username = username;
