@@ -37,7 +37,6 @@
 				<configuration>
 					<sdk>
 						<platform>18</platform>
-						<path>D:\Java\adt-bundle-windows-x86_64-20130917\sdk</path>
 					</sdk>
 					<deleteConflictingFiles>true</deleteConflictingFiles>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
