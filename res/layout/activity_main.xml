@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <TableRow
-        android:gravity="center_horizontal">
+    <TableRow android:gravity="center_horizontal" >
 
         <TextView
             android:id="@+id/textAppointments"
@@ -23,11 +22,14 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_marginTop="10dp"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/buttonLocations" 
-            android:onClick="showLocations"/>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/actionbar_background"
+            android:onClick="showLocations"
+            android:text="@string/buttonLocations"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
     </TableRow>
 
@@ -39,8 +41,12 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="@drawable/actionbar_background"
+            android:onClick="showAppointments"
             android:text="@string/buttonAppointments" 
-            android:onClick="showAppointments"/>
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
     </TableRow>
 
     <TableRow
