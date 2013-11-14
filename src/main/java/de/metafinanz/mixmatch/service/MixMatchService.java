@@ -37,4 +37,8 @@ public class MixMatchService {
 		return dataservice.getLocations();
 	}
 	
+	public Location getLocationById(String id) {
+		return dataservice.getLocationById(id);
+	}
+	
 }

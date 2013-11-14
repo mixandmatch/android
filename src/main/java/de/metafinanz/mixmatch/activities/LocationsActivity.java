@@ -2,15 +2,15 @@ package de.metafinanz.mixmatch.activities;
 
 import java.util.List;
 
-import android.R.anim;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.metafinanz.mixmatch.R;
@@ -18,9 +18,12 @@ import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.service.MixMatchService;
 
 public class LocationsActivity extends MixMatchActivity {
+	
+	private Intent intentLocationDetail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		intentLocationDetail = new Intent(this, LocationDetailActivity.class);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_locations);
 		// Show the Up button in the action bar.
@@ -31,12 +34,22 @@ public class LocationsActivity extends MixMatchActivity {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				TextView textView = (TextView) super.getView(position, convertView, parent);
 				textView.setTextColor(getResources().getColor(android.R.color.black));
+				
 				return textView;
 			}
 		};
 		
 		ListView view = (ListView) findViewById(R.id.locationsListView);
 		view.setAdapter(adapter);
+		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View arg1, int position,
+					long id) {
+				Location location = (Location) parent.getItemAtPosition(position);
+				intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
+				startActivity(intentLocationDetail);				
+			}
+		});
 		
 	}
 

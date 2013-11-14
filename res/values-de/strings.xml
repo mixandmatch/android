@@ -12,5 +12,8 @@
     <string name="buttonSave">Speichern</string>
     <string name="textAppointmentsSubHeader">Deine gespeicherten Verabredungen:</string>
     <string name="textAppointmentsHeader">Hallo </string>
+    <string name="textLocationDetailHeader">Aktuelle Verabredungen in:</string>
+    <string name="textLocationDetailHeaderEmptyAppoinments">Es gibt derzeit keine Verabredungen.</string>
+    <string name="dateTimeFormat">dd.MM.yyyy hh:mm</string>
 
 </resources>

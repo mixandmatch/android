@@ -23,6 +23,17 @@ public class DataService {
 		// TODO Remove Mocker
 		return new ArrayList<Location>(mocker.locations);
 	}
+	
+	public Location getLocationById(String id) {
+		Location result = null;
+		for(Location location: getLocations()) {
+			if (location.getLocationID().equals(id)) {
+				result = location;
+				break;
+			}
+		}
+		return result;
+	}
 
 	public List<User> getParticipantsByAppointment(Appointment appointment) {
 		// TODO Remove Mocker

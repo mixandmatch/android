@@ -12,6 +12,7 @@ public abstract class MixMatchActivity extends Activity {
 
 	private String username;
 	public static final String USER_NAME = "user.name";
+	public static final String LOCATION_ID = "locationId";
 
 	@Override
 	protected void onResume() {

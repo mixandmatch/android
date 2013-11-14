@@ -10,7 +10,11 @@
     <string name="title_activity_locations">Locations</string>
     <string name="title_activity_appointments">Appointments</string>
     <string name="buttonSave">Save</string>
-    <string name="textAppointmentsSubHeader">Your actual approved appointments:</string>
+    <string name="textAppointmentsSubHeader">Your current approved appointments:</string>
     <string name="textAppointmentsHeader">Hello </string>
+    <string name="title_activity_location_detail">Location</string>
+    <string name="textLocationDetailHeader">Current Appointments in:</string>
+    <string name="textLocationDetailHeaderEmptyAppoinments">Currently there are no appointments.</string>
+    <string name="dateTimeFormat">MM/dd/yyyy hh:mm</string>
 
 </resources>

@@ -2,7 +2,6 @@ package de.metafinanz.mixmatch.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +28,6 @@ public class MainActivity extends MixMatchActivity {
     }
     
     public void showLocations(View view) {
-    	System.out.println("Show Locations");
     	Intent intent = new Intent(this, LocationsActivity.class);
     	startActivity(intent);
     }
@@ -44,9 +42,7 @@ public class MainActivity extends MixMatchActivity {
     		text.setVisibility(EditText.VISIBLE);
     		Button buttonSave = (Button) findViewById(R.id.buttonSaveUsername);
     		buttonSave.setVisibility(View.VISIBLE);
-    	}
-    	
-    	
+    	}    	    	
     }
     
     public void saveUsername(View view) {
