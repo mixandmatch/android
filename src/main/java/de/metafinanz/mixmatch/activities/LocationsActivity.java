@@ -1,10 +1,16 @@
 package de.metafinanz.mixmatch.activities;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,26 +26,49 @@ import de.metafinanz.mixmatch.service.MixMatchService;
 public class LocationsActivity extends MixMatchActivity {
 	
 	private Intent intentLocationDetail;
+	private List<Location> locationList = new ArrayList<Location>();
+	private ListView view;
+	private ArrayAdapter<Location> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		intentLocationDetail = new Intent(this, LocationDetailActivity.class);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_locations);
-		// Show the Up button in the action bar.
-		setupActionBar();
-		List<Location> list = MixMatchService.getInstance().getLocations();
-		ArrayAdapter<Location> adapter = new ArrayAdapter<Location>(getApplicationContext(), android.R.layout.simple_list_item_1, list) {
+		view = (ListView) findViewById(R.id.locationsListView);
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		// Asychroner Task für REST-Service
+		AsyncTask<Void, Void, List<Location>> asyncTask = new AsyncTask<Void, Void, List<Location>>() {
+
 			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				TextView textView = (TextView) super.getView(position, convertView, parent);
-				textView.setTextColor(getResources().getColor(android.R.color.black));
-				
-				return textView;
+			protected List<Location> doInBackground(Void... params) {
+				List<Location> list = service.getLocations();
+				return list;
 			}
+			
+			@Override
+			protected void onPostExecute(List<Location> result) {
+				super.onPostExecute(result);
+				Log.i("LocationActivity", result.toString());
+				for (Location location : result) {
+					Log.i("LocationActivity", location.getLocationName());
+				}
+				locationList = result;
+				adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
+				view.setAdapter(adapter);				
+			}
+			
 		};
 		
-		ListView view = (ListView) findViewById(R.id.locationsListView);
+		asyncTask.execute();
+		
+		adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
 		view.setAdapter(adapter);
 		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -50,15 +79,8 @@ public class LocationsActivity extends MixMatchActivity {
 				startActivity(intentLocationDetail);				
 			}
 		});
-		
 	}
 
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,21 +89,20 @@ public class LocationsActivity extends MixMatchActivity {
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
+	
+	private class MyArrayAdapter extends ArrayAdapter<Location> {
+		
+		public MyArrayAdapter(Context context, int textViewResourceId,
+				List<Location> objects) {
+			super(context, textViewResourceId, objects);
 		}
-		return super.onOptionsItemSelected(item);
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TextView textView = (TextView) super.getView(position, convertView, parent);
+			textView.setTextColor(getResources().getColor(android.R.color.black));				
+			return textView;
+		}
 	}
 
 }

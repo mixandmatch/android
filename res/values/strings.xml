@@ -9,12 +9,18 @@
     <string name="textWelcomeMain">Welcome to Mix&amp;Match</string>
     <string name="title_activity_locations">Locations</string>
     <string name="title_activity_appointments">Appointments</string>
+    <string name="title_activity_new_appointment">Create Appointment</string>
     <string name="buttonSave">Save</string>
+    <string name="buttonNew">+</string>
     <string name="textAppointmentsSubHeader">Your current approved appointments:</string>
     <string name="textAppointmentsHeader">Hello </string>
     <string name="title_activity_location_detail">Location</string>
     <string name="textLocationDetailHeader">Current Appointments in:</string>
     <string name="textLocationDetailHeaderEmptyAppoinments">Currently there are no appointments.</string>
-    <string name="dateTimeFormat">MM/dd/yyyy hh:mm</string>
+    <string name="dateTimeFormat">MM/dd/yyyy HH:mm</string>
+    <string name="restServiceURL">http://192.168.178.59:8080/</string>
+    <string name="title_activity_new_appointment2">NewAppointment2Activity</string>
+    <string name="textDate">Date</string>
+    <string name="textTime">Time</string>
 
 </resources>

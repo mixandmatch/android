@@ -1,26 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TableLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:stretchColumns="0,1"
     tools:context=".LocationDetailActivity" >
 
-    <TextView
-        android:id="@+id/textNameLocationDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        />
-	<ListView
-            android:id="@+id/locationDetailAppointmentsListView"
-            android:layout_width="match_parent"
+    <TableRow android:gravity="left" >
+
+        <TextView
+            android:id="@+id/textNameLocationDetail"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" 
+            android:text="Test"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="66dp"
+            android:minHeight="0dp"
+			android:minWidth="0dp"
+            android:onClick="showNewAppointment"
+            android:text="@string/buttonNew" 
+            style="@android:attr/buttonStyleSmall"/>
+    </TableRow>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/locationDetailAppointmentsListView"
             style="@style/dividedListStyle"
-            android:listSelector="@drawable/list_selector"         
-            >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/list_selector" >
         </ListView>
-</RelativeLayout>
+    </LinearLayout>
+
+</TableLayout>

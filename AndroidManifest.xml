@@ -11,6 +11,7 @@
 
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -49,6 +50,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.metafinanz.mixmatch.activities.LocationsActivity" />
+        </activity>
+        <activity
+            android:name="de.metafinanz.mixmatch.activities.NewAppointmentActivity"
+            android:label="@string/title_activity_new_appointment"
+            android:parentActivityName="de.metafinanz.mixmatch.activities.LocationDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.metafinanz.mixmatch.activities.LocationDetailActivity" />
         </activity>
     </application>
 

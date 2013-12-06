@@ -2,11 +2,14 @@ package de.metafinanz.mixmatch.domain;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * In this first version a user doesn't have a account. Therefore only a
  * username is needed.
  * 
  */
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class User {
 
 	private String username;

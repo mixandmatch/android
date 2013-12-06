@@ -6,7 +6,7 @@ import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.domain.User;
 
-public class DataService {
+public class DataService implements IDataService {
 	
 	private static final DataService instance = new DataService();
 
@@ -82,7 +82,9 @@ public class DataService {
 		}
 		return appointments;
 	}
-	
-	
-	
+	@Override
+	public void createNewAppointment(Appointment appointment) {
+		// TODO Auto-generated method stub
+		
+	}
 }

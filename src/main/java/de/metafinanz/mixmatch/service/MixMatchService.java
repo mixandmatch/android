@@ -2,6 +2,8 @@ package de.metafinanz.mixmatch.service;
 
 import java.util.List;
 
+import android.content.Context;
+
 import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.domain.User;
@@ -10,12 +12,17 @@ public class MixMatchService {
 	
 	private static final MixMatchService instance = new MixMatchService();
 	
-	DataService dataservice = DataService.getInstance();
+	private static IDataService dataservice;
 	
 	private MixMatchService() {
 	}
 
-	public static MixMatchService getInstance() {
+	public static MixMatchService getInstance(Context ctx) {
+
+		if (dataservice == null) {
+			dataservice = RestDataService.getInstance(ctx);
+		}
+
 		return instance;
 	}
 	
@@ -39,6 +46,11 @@ public class MixMatchService {
 	
 	public Location getLocationById(String id) {
 		return dataservice.getLocationById(id);
+	}
+
+	public void createNewAppointment(Appointment appointment) {
+		dataservice.createNewAppointment(appointment);
+		
 	}
 	
 }

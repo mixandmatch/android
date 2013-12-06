@@ -28,7 +28,7 @@ public class Mocker {
 		
 		Appointment app1 = new Appointment();
 		app1.setAppointmentID("appointment1");
-		app1.setOwner(users.get(0));
+		app1.setOwner(users.get(0).getUsername());
 		app1.setTimestamp(getToday());
 		app1.setLocationID(locations.get(0).getLocationID());
 		app1.setParticipants(new HashSet<User>());
@@ -40,7 +40,7 @@ public class Mocker {
 		
 		Appointment app2 = new Appointment();
 		app2.setAppointmentID("appointment2");
-		app2.setOwner(users.get(0));
+		app2.setOwner(users.get(0).getUsername());
 		app2.setTimestamp(getToday());
 		app2.setLocationID(locations.get(2).getLocationID());
 		app2.setParticipants(new HashSet<User>());
@@ -52,7 +52,7 @@ public class Mocker {
 		
 		Appointment app3 = new Appointment();
 		app3.setAppointmentID("appointment3");
-		app3.setOwner(users.get(0));
+		app3.setOwner(users.get(0).getUsername());
 		app3.setTimestamp(getToday());
 		app3.setLocationID(locations.get(1).getLocationID());
 		app3.setParticipants(new HashSet<User>());

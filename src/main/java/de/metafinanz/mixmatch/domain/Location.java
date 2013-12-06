@@ -1,5 +1,8 @@
 package de.metafinanz.mixmatch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Location {
 
 	private String locationID;

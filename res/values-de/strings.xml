@@ -9,11 +9,15 @@
     <string name="textWelcomeMain">Willkommen zu Mix&amp;Match</string>
     <string name="title_activity_locations">Orte</string>
     <string name="title_activity_appointments">Verabredungen</string>
+    <string name="title_activity_new_appointment">Verabredung erstellen</string>
     <string name="buttonSave">Speichern</string>
+    <string name="buttonNew">+</string>
     <string name="textAppointmentsSubHeader">Deine gespeicherten Verabredungen:</string>
     <string name="textAppointmentsHeader">Hallo </string>
-    <string name="textLocationDetailHeader">Aktuelle Verabredungen in:</string>
+    <string name="textLocationDetailHeader">Aktuelle Verabredungen:</string>
     <string name="textLocationDetailHeaderEmptyAppoinments">Es gibt derzeit keine Verabredungen.</string>
-    <string name="dateTimeFormat">dd.MM.yyyy hh:mm</string>
-
+    <string name="dateTimeFormat">dd.MM.yyyy HH:mm</string>
+	<string name="restServiceURL">http://192.168.178.59:8080/</string>
+	<string name="textDate">Datum</string>
+    <string name="textTime">Uhrzeit</string>
 </resources>
