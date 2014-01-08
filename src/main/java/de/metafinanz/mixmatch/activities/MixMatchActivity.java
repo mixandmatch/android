@@ -1,12 +1,15 @@
 package de.metafinanz.mixmatch.activities;
 
+import de.metafinanz.mixmatch.R;
 import de.metafinanz.mixmatch.service.MixMatchService;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 public abstract class MixMatchActivity extends Activity {
@@ -28,13 +31,17 @@ public abstract class MixMatchActivity extends Activity {
 		service = MixMatchService.getInstance(getBaseContext());
 		setupActionBar();
 	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		initUsername();
 	}
 
+	public void showSettings(MenuItem item) {
+    	Intent intent = new Intent(this, SettingsActivity.class);
+    	startActivityForResult(intent, 1);
+    }
 
 	public void initUsername() {
 		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);

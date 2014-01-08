@@ -3,6 +3,7 @@ package de.metafinanz.mixmatch.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,13 @@ public class MainActivity extends MixMatchActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    
+    public void showImpressum(MenuItem item) {
+    	Intent intent = new Intent(this, ImpressActivity.class);
+    	startActivity(intent);
+    }
+    
+    
     
     public void showLocations(View view) {
     	Intent intent = new Intent(this, LocationsActivity.class);

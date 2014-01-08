@@ -3,24 +3,24 @@ package de.metafinanz.mixmatch.activities;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.metafinanz.mixmatch.R;
+import de.metafinanz.mixmatch.activities.dialogs.AppointmentAlertDialogFragment;
 import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
-import de.metafinanz.mixmatch.service.MixMatchService;
 
 public class LocationDetailActivity extends MixMatchActivity {
 	
@@ -30,6 +30,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 	private TextView view;
 	private Intent intentNewAppointment;
 	private String locationId;
+	private AppointmentAlertDialogFragment appointmentAlertDialogFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,13 @@ public class LocationDetailActivity extends MixMatchActivity {
 		setContentView(R.layout.activity_location_detail);
 		appointmentsListView = (ListView) findViewById(R.id.locationDetailAppointmentsListView);
 		intentNewAppointment = new Intent(this, NewAppointmentActivity.class);
+		appointmentAlertDialogFragment = new AppointmentAlertDialogFragment();
 	}
+	
+	public void showAlertDialog() {
+		appointmentAlertDialogFragment.show(getFragmentManager(), "ALertDialog");
+	}
+
 	
 	@Override
 	protected void onStart() {
@@ -79,13 +86,35 @@ public class LocationDetailActivity extends MixMatchActivity {
 					}														
 				}
 			};
-			asyncTask.execute(location);			
+			asyncTask.execute(location);
+			appointmentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View arg1, int position,
+						long id) {
+					Appointment location = (Appointment) parent.getItemAtPosition(position);
+					//intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
+					//startActivity(intentLocationDetail);				
+				}
+			});
+			appointmentsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View arg1,
+						int position, long id) {
+					showAlertDialog();
+					return false;
+				}
+			});
 		}
 	}
 	
 	public void showNewAppointment(View view) {
 		intentNewAppointment.putExtra(LOCATION_ID, locationId);
-    	startActivity(intentNewAppointment);
+    	startActivityForResult(intentNewAppointment, 1);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

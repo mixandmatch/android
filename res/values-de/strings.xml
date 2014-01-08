@@ -3,6 +3,7 @@
 
     <string name="app_name">MixMatch</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_impress">Impressum</string>
     <string name="hello_world">Hello world!</string>
     <string name="buttonLocations">Orte</string>
     <string name="buttonAppointments">Verabredungen</string>
@@ -20,4 +21,12 @@
 	<string name="restServiceURL">http://192.168.178.59:8080/</string>
 	<string name="textDate">Datum</string>
     <string name="textTime">Uhrzeit</string>
+    <string name="title_activity_impress">Impressum</string>
+    <string name="textImpress">Metafinanz Informationssysteme GmbH \nLeopoldstr. 146 \n80804 München</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="textUsername">Nutzername</string>
+    <string name="titleLocationDetailAlertDialog">Hinweise</string>
+    <string name="messageLocationDetailAlertDialog">Erstellen eines Kalender-Eintrags für eine Verabredung.</string>
+    <string name="buttonCancel">Abbrechen</string>
+    <string name="buttonOk">OK</string>
 </resources>

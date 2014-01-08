@@ -83,8 +83,8 @@ public class DataService implements IDataService {
 		return appointments;
 	}
 	@Override
-	public void createNewAppointment(Appointment appointment) {
-		// TODO Auto-generated method stub
+	public String createNewAppointment(Appointment appointment) {
+		return null;
 		
 	}
 }

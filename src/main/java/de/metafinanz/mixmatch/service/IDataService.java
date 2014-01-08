@@ -14,6 +14,6 @@ public interface IDataService {
 	List<Appointment> getAppointmentsByLocation(Location location);
 	List<Appointment> getAppointmentsByLocationId(String id);
 	List<Appointment> getAppointmentsByUsername(String username);
-	void createNewAppointment(Appointment appointment);
+	String createNewAppointment(Appointment appointment);
 
 }

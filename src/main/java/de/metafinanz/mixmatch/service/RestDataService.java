@@ -94,17 +94,18 @@ public class RestDataService implements IDataService {
 	}
 
 	@Override
-	public void createNewAppointment(Appointment appointment) {
-		handleJSON(appointment);	
+	public String createNewAppointment(Appointment appointment) {
+		return handleJSON(appointment);	
 	}
 	
-	private void handleJSON(Appointment appointment) {
+	private String handleJSON(Appointment appointment) {
 		HttpHeaders requestHeaders = new HttpHeaders();
         // Sending a JSON or XML object i.e. "application/json" or "application/xml"
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Appointment> requestEntity = new HttpEntity<Appointment>(appointment, requestHeaders);
         ResponseEntity<String> response = restTemplate.exchange(this.baseUrl + "appointments", HttpMethod.POST, requestEntity,
                 String.class);
+        return response.getBody();
 	}
 	
 	private void handleString() {

@@ -48,9 +48,8 @@ public class MixMatchService {
 		return dataservice.getLocationById(id);
 	}
 
-	public void createNewAppointment(Appointment appointment) {
-		dataservice.createNewAppointment(appointment);
-		
+	public String createNewAppointment(Appointment appointment) {
+		return dataservice.createNewAppointment(appointment);		
 	}
 	
 }

@@ -49,19 +49,23 @@ public class NewAppointmentActivity extends MixMatchActivity {
 		cal.set(Calendar.MONTH, datePicker.getMonth());
 		cal.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
 		
-		appointment.setOwner("ulf");
+		appointment.setOwner(getUsername() == null ? "ulf" : getUsername());
 		appointment.setTimestamp(cal.getTime());
 		
 		AsyncTask<Appointment, Void, Void> asyncTask = new AsyncTask<Appointment, Void, Void>() {
 
 			@Override
 			protected Void doInBackground(Appointment... params) {
-				service.createNewAppointment(params[0]);
+				String appointmentID = service.createNewAppointment(params[0]);
+				if (appointmentID != null && appointmentID.length() > 0) {
+					// neuen Kalendereintrag erstellen.
+				}
 				return null;
 			}
 						
 		};
 		asyncTask.execute(appointment);
+		finish();
 		
 	}
 }
