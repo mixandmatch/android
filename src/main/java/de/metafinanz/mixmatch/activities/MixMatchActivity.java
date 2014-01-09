@@ -30,6 +30,13 @@ public abstract class MixMatchActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		service = MixMatchService.getInstance(getBaseContext());
 		setupActionBar();
+		initUsername();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		initUsername();
 	}
 	
 	@Override
@@ -93,5 +100,6 @@ public abstract class MixMatchActivity extends Activity {
 	
 	public void setUsername(String username) {
 		this.username = username;
+		storeUsername();
 	}
 }

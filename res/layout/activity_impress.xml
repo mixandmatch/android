@@ -11,7 +11,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
         android:singleLine="false"
-        android:text="@string/textImpress" />
+        android:text="@string/textImpress"
+        android:textSize="20sp" />
 
 </RelativeLayout>
