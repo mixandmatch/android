@@ -23,6 +23,11 @@ import de.metafinanz.mixmatch.R;
 import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.service.MixMatchService;
 
+/**
+ * Activity, die alle verfügbaren Locations anzeigt.
+ * @author ulf
+ *
+ */
 public class LocationsActivity extends MixMatchActivity {
 	
 	private Intent intentLocationDetail;

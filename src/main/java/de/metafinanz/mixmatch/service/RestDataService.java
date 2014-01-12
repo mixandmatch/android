@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
+import org.springframework.web.util.UriUtils;
 
 import android.content.Context;
 import android.util.Log;
@@ -26,6 +28,8 @@ public class RestDataService implements IDataService {
 	private RestTemplate restTemplate;
 	private String baseUrl;
 	private static Context ctx;
+	private static String REST_URL_APPOINTMENTS_FOR_LOCATION = "appointments/{id}";
+	private static String REST_URL_APPOINTMENTS_FOR_USER = "appointments/user/{id}";
 	
 	private List<Location> locationList = new ArrayList<Location>();
 	
@@ -53,6 +57,7 @@ public class RestDataService implements IDataService {
 	@Override
 	public Location getLocationById(String id) {
 		Location result = null;
+		
 		for(Location location: this.locationList) {
 			if (location.getLocationID().equals(id)) {
 				result = location;
@@ -70,7 +75,8 @@ public class RestDataService implements IDataService {
 
 	@Override
 	public List<Appointment> getAppointmentsByLocation(Location location) {
-		Appointment[] appointments = restTemplate.getForObject(baseUrl + "appointments?locationId=" + location.getLocationID(), Appointment[].class);
+		String url = baseUrl + REST_URL_APPOINTMENTS_FOR_LOCATION;
+		Appointment[] appointments = restTemplate.getForObject(url, Appointment[].class, location.getLocationID());
 		Log.i("RestDataService", "" + appointments);
 		
 		if (appointments != null) {
@@ -89,8 +95,15 @@ public class RestDataService implements IDataService {
 
 	@Override
 	public List<Appointment> getAppointmentsByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		String url = baseUrl + REST_URL_APPOINTMENTS_FOR_USER;
+		Appointment[] appointments = restTemplate.getForObject(url, Appointment[].class, username);
+		Log.i("RestDataService", "" + appointments);
+		
+		if (appointments != null) {
+			return Arrays.asList(appointments);
+		} else {
+			return new ArrayList<Appointment>();
+		}
 	}
 
 	@Override
@@ -101,10 +114,10 @@ public class RestDataService implements IDataService {
 	private String handleJSON(Appointment appointment) {
 		HttpHeaders requestHeaders = new HttpHeaders();
         // Sending a JSON or XML object i.e. "application/json" or "application/xml"
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Appointment> requestEntity = new HttpEntity<Appointment>(appointment, requestHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(this.baseUrl + "appointments", HttpMethod.POST, requestEntity,
-                String.class);
+        //requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        //HttpEntity<Appointment> requestEntity = new HttpEntity<Appointment>(appointment, requestHeaders);
+        ResponseEntity<String> response = restTemplate.postForEntity(this.baseUrl + "appointments", appointment, String.class); 
+        //exchange(this.baseUrl + "appointments", HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
 	}
 	

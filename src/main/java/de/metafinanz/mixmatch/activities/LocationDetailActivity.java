@@ -1,6 +1,8 @@
 package de.metafinanz.mixmatch.activities;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -22,6 +24,11 @@ import de.metafinanz.mixmatch.activities.dialogs.AppointmentAlertDialogFragment;
 import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
 
+/**
+ * Activity, die zu einer Location die verfügbaren Verabredungen anzeigt.
+ * @author ulf
+ *
+ */
 public class LocationDetailActivity extends MixMatchActivity {
 	
 	private List<Appointment> appointmentList;
@@ -66,6 +73,12 @@ public class LocationDetailActivity extends MixMatchActivity {
 				@Override
 				protected List<Appointment> doInBackground(Location... params) {
 					List<Appointment> list = service.getAppointments(params[0]);
+					Collections.sort(list, new Comparator<Appointment>() {
+						@Override
+						public int compare(Appointment o1, Appointment o2) {
+							return o1.getTimestamp().compareTo(o2.getTimestamp());
+						}
+					});
 					return list;
 				}
 				
@@ -87,6 +100,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 				}
 			};
 			asyncTask.execute(location);
+			
 			appointmentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View arg1, int position,
@@ -123,8 +137,6 @@ public class LocationDetailActivity extends MixMatchActivity {
 		getMenuInflater().inflate(R.menu.location_detail, menu);
 		return true;
 	}
-
-
 	
 	private class MyArrayAdapter extends ArrayAdapter<Appointment> {
 		

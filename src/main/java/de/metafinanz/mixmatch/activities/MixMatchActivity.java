@@ -1,8 +1,13 @@
 package de.metafinanz.mixmatch.activities;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import de.metafinanz.mixmatch.R;
+import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.service.MixMatchService;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,6 +16,10 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 public abstract class MixMatchActivity extends Activity {
 
@@ -102,4 +111,6 @@ public abstract class MixMatchActivity extends Activity {
 		this.username = username;
 		storeUsername();
 	}
+	
+	
 }

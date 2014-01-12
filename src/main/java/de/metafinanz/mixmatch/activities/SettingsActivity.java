@@ -1,14 +1,16 @@
 package de.metafinanz.mixmatch.activities;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import de.metafinanz.mixmatch.R;
 
+/**
+ * Activity, zum Speichern des Nutzernamens.
+ * @author ulf
+ *
+ */
 public class SettingsActivity extends MixMatchActivity {
 
 	private EditText userText;

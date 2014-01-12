@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
+/**
+ * Activity, die das Impressum anzeigt.
+ * @author ulf
+ *
+ */
 public class ImpressActivity extends MixMatchActivity {
 
 	@Override

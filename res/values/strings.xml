@@ -27,6 +27,7 @@
     <string name="textImpress">Metafinanz Informationssysteme GmbH \nLeopoldstr. 146 \n80804 München</string>
     <string name="title_activity_settings">Settings</string>
     <string name="textUsername">Username</string>
+    <string name="textUsernameDescription">Username (mf-token)</string>
     <string name="titleLocationDetailAlertDialog">Hint</string>
     <string name="messageLocationDetailAlertDialog">Maybe a nice function to create a calendar entry for an appointment.</string>
     <string name="buttonCancel">Cancel</string>

@@ -25,6 +25,7 @@
     <string name="textImpress">Metafinanz Informationssysteme GmbH \nLeopoldstr. 146 \n80804 München</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="textUsername">Nutzername</string>
+    <string name="textUsernameDescription">Nutzername (mf-Kürzel)</string>
     <string name="titleLocationDetailAlertDialog">Hinweise</string>
     <string name="messageLocationDetailAlertDialog">Erstellen eines Kalender-Eintrags für eine Verabredung.</string>
     <string name="buttonCancel">Abbrechen</string>
