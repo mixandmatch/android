@@ -12,13 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import de.metafinanz.mixmatch.R;
+import de.metafinanz.mixmatch.activities.dialogs.QuitApplicationAlertDialogFragment;
 import de.metafinanz.mixmatch.domain.Location;
 
 public class MainActivity extends MixMatchActivity {
 	
+	private QuitApplicationAlertDialogFragment quitDialog = new QuitApplicationAlertDialogFragment();
 	private Intent intentAppointments;
-
-    @Override
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -50,6 +52,12 @@ public class MainActivity extends MixMatchActivity {
 		};
 		asyncTask.execute();
     }
+    
+    @Override
+    public void finish() {
+    	super.finish();
+    	Log.i("MainActivity", "Activity Main wurde beendet");
+    }
 
 
     @Override
@@ -63,8 +71,6 @@ public class MainActivity extends MixMatchActivity {
     	Intent intent = new Intent(this, ImpressActivity.class);
     	startActivity(intent);
     }
-    
-    
     
     public void showLocations(View view) {
     	Intent intent = new Intent(this, LocationsActivity.class);
@@ -90,5 +96,9 @@ public class MainActivity extends MixMatchActivity {
     	setUsername(username);
     	startActivity(this.intentAppointments);
     }
+    
+	public void handleQuit(MenuItem item) {
+		quitDialog.show(getFragmentManager(), "QuitDialog");
+	}
     
 }

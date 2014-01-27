@@ -4,6 +4,8 @@
     <string name="app_name">MixMatch</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_impress">Impressum</string>
+    <string name="action_reload">Reload</string>
+    <string name="action_quit">Beenden</string>
     <string name="hello_world">Hello world!</string>
     <string name="buttonLocations">Orte</string>
     <string name="buttonAppointments">Verabredungen</string>
@@ -26,8 +28,12 @@
     <string name="title_activity_settings">Einstellungen</string>
     <string name="textUsername">Nutzername</string>
     <string name="textUsernameDescription">Nutzername (mf-Kürzel)</string>
+    <string name="textDataserviceDescription">Dataservice</string>
+    <string name="textDataservice">Dataservice</string>
     <string name="titleLocationDetailAlertDialog">Hinweise</string>
+    <string name="titleQuitAlertDialog">Beenden</string>
     <string name="messageLocationDetailAlertDialog">Erstellen eines Kalender-Eintrags für eine Verabredung.</string>
+    <string name="messageQuitAlertDialog">Wirklich beenden?</string>
     <string name="buttonCancel">Abbrechen</string>
     <string name="buttonOk">OK</string>
 </resources>

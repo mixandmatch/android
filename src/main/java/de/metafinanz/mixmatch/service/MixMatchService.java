@@ -4,11 +4,16 @@ import java.util.List;
 
 import android.content.Context;
 
+import de.metafinanz.mixmatch.activities.MixMatchActivity;
 import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
 import de.metafinanz.mixmatch.domain.User;
 
 public class MixMatchService {
+	
+	public static final String DATA_SERVICE_REST = "rest";
+	public static final String DATA_SERVICE_LOCAL = "local";
+	public static final String DATA_SERVICE_KEY = "dataService";
 	
 	private static final MixMatchService instance = new MixMatchService();
 	
@@ -18,12 +23,17 @@ public class MixMatchService {
 	}
 
 	public static MixMatchService getInstance(Context ctx) {
-
-		if (dataservice == null) {
+		init(ctx);
+		return instance;
+	}
+	
+	public static void init(Context ctx) {
+		String ds = ctx.getSharedPreferences(MixMatchActivity.MIXMATCH_PREFS, MixMatchActivity.MODE_PRIVATE).getString("dataService", "rest");
+		if (DATA_SERVICE_LOCAL.equals(ds)) {
+			dataservice = DataService.getInstance();
+		} else {
 			dataservice = RestDataService.getInstance(ctx);
 		}
-
-		return instance;
 	}
 	
 	

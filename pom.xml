@@ -6,12 +6,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>apk</packaging>
 	<dependencies>
+	    <!-- Spring for Android -->
 		<dependency>
 			<groupId>org.springframework.android</groupId>
 			<artifactId>spring-android-rest-template</artifactId>
 			<version>1.0.1.RELEASE</version>
 		</dependency>
-
+		<!-- Lib zum Lesen und Schreiben von Entity-Objekten <-> JSON -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

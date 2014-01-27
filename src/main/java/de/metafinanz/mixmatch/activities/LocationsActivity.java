@@ -2,14 +2,11 @@ package de.metafinanz.mixmatch.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.metafinanz.mixmatch.R;
 import de.metafinanz.mixmatch.domain.Location;
-import de.metafinanz.mixmatch.service.MixMatchService;
 
 /**
  * Activity, die alle verfügbaren Locations anzeigt.
@@ -47,45 +43,52 @@ public class LocationsActivity extends MixMatchActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
-		// Asychroner Task für REST-Service
-		AsyncTask<Void, Void, List<Location>> asyncTask = new AsyncTask<Void, Void, List<Location>>() {
-
-			@Override
-			protected List<Location> doInBackground(Void... params) {
-				List<Location> list = service.getLocations();
-				return list;
-			}
-			
-			@Override
-			protected void onPostExecute(List<Location> result) {
-				super.onPostExecute(result);
-				Log.i("LocationActivity", result.toString());
-				for (Location location : result) {
-					Log.i("LocationActivity", location.getLocationName());
-				}
-				locationList = result;
-				adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
-				view.setAdapter(adapter);				
-			}
-			
-		};
-		
-		asyncTask.execute();
-		
-		adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
-		view.setAdapter(adapter);
-		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View arg1, int position,
-					long id) {
-				Location location = (Location) parent.getItemAtPosition(position);
-				intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
-				startActivity(intentLocationDetail);				
-			}
-		});
+		loadLocationList();
 	}
+	
+	private void loadLocationList() {
+		// Asychroner Task für REST-Service
+				AsyncTask<Void, Void, List<Location>> asyncTask = new AsyncTask<Void, Void, List<Location>>() {
 
+					@Override
+					protected List<Location> doInBackground(Void... params) {
+						List<Location> list = service.getLocations();
+						return list;
+					}
+					
+					@Override
+					protected void onPostExecute(List<Location> result) {
+						super.onPostExecute(result);
+						Log.i("LocationActivity", result.toString());
+						for (Location location : result) {
+							Log.i("LocationActivity", location.getLocationName());
+						}
+						locationList = result;
+						adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
+						view.setAdapter(adapter);				
+					}
+					
+				};
+				
+				asyncTask.execute();
+				
+				adapter = new MyArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, locationList);
+				view.setAdapter(adapter);
+				view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View arg1, int position,
+							long id) {
+						Location location = (Location) parent.getItemAtPosition(position);
+						intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
+						startActivity(intentLocationDetail);				
+					}
+				});
+	}
+	
+	public void handleReload(MenuItem item) {
+		loadLocationList();
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

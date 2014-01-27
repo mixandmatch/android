@@ -1,19 +1,19 @@
 package de.metafinanz.mixmatch.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpInputMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriTemplate;
-import org.springframework.web.util.UriUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import android.content.Context;
 import android.util.Log;
@@ -30,13 +30,13 @@ public class RestDataService implements IDataService {
 	private static Context ctx;
 	private static String REST_URL_APPOINTMENTS_FOR_LOCATION = "appointments/{id}";
 	private static String REST_URL_APPOINTMENTS_FOR_USER = "appointments/user/{id}";
+	private MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 	
 	private List<Location> locationList = new ArrayList<Location>();
 	
 	private RestDataService() {
 		this.restTemplate = new RestTemplate();
-		this.restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        this.restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());        
+        this.restTemplate.getMessageConverters().add(converter);        
 	}
 	
 	public static RestDataService getInstance(Context context) {
@@ -112,11 +112,7 @@ public class RestDataService implements IDataService {
 	}
 	
 	private String handleJSON(Appointment appointment) {
-		HttpHeaders requestHeaders = new HttpHeaders();
-        // Sending a JSON or XML object i.e. "application/json" or "application/xml"
-        //requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        //HttpEntity<Appointment> requestEntity = new HttpEntity<Appointment>(appointment, requestHeaders);
-        ResponseEntity<String> response = restTemplate.postForEntity(this.baseUrl + "appointments", appointment, String.class); 
+        ResponseEntity<String> response = restTemplate.postForEntity(this.baseUrl + "appointments", appointment, String.class);
         //exchange(this.baseUrl + "appointments", HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
 	}

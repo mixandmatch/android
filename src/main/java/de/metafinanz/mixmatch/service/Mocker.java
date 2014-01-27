@@ -81,7 +81,7 @@ public class Mocker {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for(int i = 0; i < 5; i++) {
 			Location location = new Location();
-			location.setLocationID("Location" + i);
+			location.setLocationID(String.valueOf(i));
 			location.setLocationName("Location:" + i);
 			locations.add(location);
 		}

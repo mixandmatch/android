@@ -1,39 +1,27 @@
 package de.metafinanz.mixmatch.activities;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import de.metafinanz.mixmatch.R;
-import de.metafinanz.mixmatch.domain.Appointment;
-import de.metafinanz.mixmatch.service.MixMatchService;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import de.metafinanz.mixmatch.service.MixMatchService;
 
 public abstract class MixMatchActivity extends Activity {
 
 	public static final String USER_NAME = "user.name";
 	public static final String LOCATION_ID = "locationId";
 	
-	private static final String MIXMATCH_PREFS = "mixmatch_preferences";
-	private static final String KEY_USERNAME = "mixmatch_username";
+	public static final String MIXMATCH_PREFS = "mixmatch_preferences";
+	public static final String KEY_USERNAME = "mixmatch_username";
 
 	private String username;
 	
-	
 	protected MixMatchService service;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,8 +79,6 @@ public abstract class MixMatchActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
-
 	public void storeUsername() {
 		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
 		Editor edit = settings.edit();
@@ -100,17 +86,27 @@ public abstract class MixMatchActivity extends Activity {
 		edit.commit();
 		Log.i("Username bei storeUsername: ", "1:" + settings.getString(KEY_USERNAME, ""));
 	}
-
+	
+	public void storeString(String key, String value) {
+		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
+		Editor edit = settings.edit();
+		edit.putString(key, value);
+		edit.commit();
+	}
+	
+	public String getString(String key) {
+		SharedPreferences settings = getSharedPreferences(MIXMATCH_PREFS, MODE_PRIVATE);
+		String value = settings.getString(key, key);
+		return value;
+	}
 
 	public String getUsername() {
 		return this.username;
 	}
-
 	
 	public void setUsername(String username) {
 		this.username = username;
 		storeUsername();
 	}
-	
 	
 }

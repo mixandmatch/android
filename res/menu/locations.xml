@@ -6,5 +6,12 @@
         android:showAsAction="never"
         android:title="@string/action_settings"
         android:onClick="showSettings"/>
+    <item
+        android:id="@+id/action_reload"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_reload"
+        android:onClick="handleReload"
+        android:icon="@drawable/ic_action_refresh"/>
 
 </menu>

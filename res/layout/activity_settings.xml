@@ -27,21 +27,38 @@
         android:layout_below="@+id/textView1"
         android:layout_marginLeft="26dp"
         android:layout_marginTop="17dp"
-        android:background="@drawable/edit_text_border"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="text|textNoSuggestions"
         android:singleLine="true"
         android:text="@string/textUsername"
         android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewSettingsDataService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textSettingsUsername"
+        android:layout_below="@+id/textSettingsUsername"
+        android:layout_marginTop="16dp"
+        android:text="@string/textDataserviceDescription"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/buttonSettingsSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textSettingsUsername"
-        android:layout_below="@+id/textSettingsUsername"
-        android:layout_marginTop="20dp"
-        android:onClick="saveUsername"
+        android:layout_alignLeft="@+id/textViewSettingsDataService"
+        android:layout_below="@+id/spinnerSettingsDataService"
+        android:layout_marginTop="42dp"
+        android:onClick="save"
         android:text="@string/buttonSave" />
+
+    <Spinner
+        android:id="@+id/spinnerSettingsDataService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewSettingsDataService"
+        android:layout_below="@+id/textViewSettingsDataService"
+        android:layout_marginTop="18dp" />
 
 </RelativeLayout>

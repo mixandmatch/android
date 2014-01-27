@@ -16,6 +16,16 @@ public class Appointment {
 	
 	public Appointment() {
 	}
+	
+	public Appointment(String appointmentID, Date timestamp, String locationID,
+			String owner, Set<User> participants) {
+		super();
+		this.appointmentID = appointmentID;
+		this.timestamp = timestamp;
+		this.locationID = locationID;
+		this.owner = owner;
+		this.participants = participants;
+	}
 
 	public String getAppointmentID() {
 		return appointmentID;
