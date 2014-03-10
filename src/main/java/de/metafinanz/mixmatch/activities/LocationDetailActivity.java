@@ -36,7 +36,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 	private ListView appointmentsListView;
 	private TextView view;
 	private Intent intentNewAppointment;
-	private String locationId;
+	private Long locationId;
 	private AppointmentAlertDialogFragment appointmentAlertDialogFragment;
 
 	@Override
@@ -57,7 +57,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 	protected void onStart() {
 		super.onStart();
 		Intent intent = getIntent();
-		this.locationId = intent.getStringExtra(LOCATION_ID);
+		this.locationId = intent.getLongExtra(LOCATION_ID, 0);
 		
 		view = (TextView) findViewById(R.id.textNameLocationDetail);
 		
@@ -76,7 +76,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 					Collections.sort(list, new Comparator<Appointment>() {
 						@Override
 						public int compare(Appointment o1, Appointment o2) {
-							return o1.getTimestamp().compareTo(o2.getTimestamp());
+							return o1.getAppointmentDate().compareTo(o2.getAppointmentDate());
 						}
 					});
 					return list;
@@ -87,7 +87,7 @@ public class LocationDetailActivity extends MixMatchActivity {
 					super.onPostExecute(result);
 					Log.i("LocationActivity", "" + result);
 					for (Appointment appointment : result) {
-						Log.i("LocationActivityDetail", appointment.getOwner());
+						Log.i("LocationActivityDetail", appointment.getOwnerID().getUsername());
 					}
 					
 					if (result.isEmpty()) {
@@ -151,8 +151,8 @@ public class LocationDetailActivity extends MixMatchActivity {
 			textView.setTextColor(getResources().getColor(android.R.color.black));
 			Appointment appointment = getItem(position);
 			SimpleDateFormat sdf = new SimpleDateFormat(getResources().getText(R.string.dateTimeFormat).toString());
-			CharSequence displayTime = sdf.format(appointment.getTimestamp());
-			textView.setText(displayTime + " (" + appointment.getOwner() + ")");
+			CharSequence displayTime = sdf.format(appointment.getAppointmentDate());
+			textView.setText(displayTime + " (" + appointment.getOwnerID().getUsername() + ")");
 			return textView;
 		}
 	}

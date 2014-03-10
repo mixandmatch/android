@@ -54,12 +54,16 @@ public class MixMatchService {
 		return dataservice.getLocations();
 	}
 	
-	public Location getLocationById(String id) {
+	public Location getLocationById(Long id) {
 		return dataservice.getLocationById(id);
 	}
 
-	public String createNewAppointment(Appointment appointment) {
+	public Appointment createNewAppointment(Appointment appointment) {
 		return dataservice.createNewAppointment(appointment);		
+	}
+
+	public User getOrCreateUser(String username) {
+		return dataservice.getOrCreateUser(username);
 	}
 	
 }

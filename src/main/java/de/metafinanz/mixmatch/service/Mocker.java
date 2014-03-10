@@ -27,38 +27,35 @@ public class Mocker {
 		appointments = new HashSet<Appointment>();
 		
 		Appointment app1 = new Appointment();
-		app1.setAppointmentID("appointment1");
-		app1.setOwner(users.get(0).getUsername());
-		app1.setTimestamp(getToday());
-		app1.setLocationID(locations.get(0).getLocationID());
+		app1.setAppointmentID(1L);
+		app1.setOwnerID(users.get(0));
+		app1.setAppointmentDate(getToday());
+		app1.setAppointmentLocation(locations.get(0));
 		app1.setParticipants(new HashSet<User>());
 		for(int i = 0; i < 10; i++) {
 			app1.getParticipants().add(users.get(i));
-			users.get(i).getAppointments().add(app1);
 		}
 		appointments.add(app1);
 		
 		Appointment app2 = new Appointment();
-		app2.setAppointmentID("appointment2");
-		app2.setOwner(users.get(0).getUsername());
-		app2.setTimestamp(getToday());
-		app2.setLocationID(locations.get(2).getLocationID());
+		app2.setAppointmentID(2L);
+		app2.setOwnerID(users.get(0));
+		app2.setAppointmentDate(getToday());
+		app2.setAppointmentLocation(locations.get(0));
 		app2.setParticipants(new HashSet<User>());
 		for(int i = 10; i < 20; i++) {
 			app2.getParticipants().add(users.get(i));
-			users.get(i).getAppointments().add(app2);
 		}
 		appointments.add(app2);
 		
 		Appointment app3 = new Appointment();
-		app3.setAppointmentID("appointment3");
-		app3.setOwner(users.get(0).getUsername());
-		app3.setTimestamp(getToday());
-		app3.setLocationID(locations.get(1).getLocationID());
+		app3.setAppointmentID(3L);
+		app3.setOwnerID(users.get(0));
+		app3.setAppointmentDate(getToday());
+		app3.setAppointmentLocation(locations.get(0));
 		app3.setParticipants(new HashSet<User>());
 		for(int i = 0; i < 20; i+=2) {
 			app3.getParticipants().add(users.get(i));
-			users.get(i).getAppointments().add(app3);
 		}
 		appointments.add(app3);
 		
@@ -72,7 +69,6 @@ public class Mocker {
 			User user = new User();
 			user.setUsername("Username" + i);
 			users.add(user);
-			user.setAppointments(new HashSet<Appointment>());
 		}
 		return users;
 	}
@@ -81,7 +77,7 @@ public class Mocker {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for(int i = 0; i < 5; i++) {
 			Location location = new Location();
-			location.setLocationID(String.valueOf(i));
+			location.setLocationID(Long.valueOf(i));
 			location.setLocationName("Location:" + i);
 			locations.add(location);
 		}

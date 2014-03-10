@@ -25,7 +25,7 @@ public class Test {
 		System.out.println(converter.canRead(String.class, null));
 		
 		Location loc = new Location();
-		loc.setLocationID("125");
+		loc.setLocationID(125L);
 		
 		HttpOutputMessage message = new HttpOutputMessage() {
 			
@@ -46,7 +46,7 @@ public class Test {
 		converter.write(loc, null, message);
 		System.out.println(message.getBody());
 		
-		loc.setLocationID("123");
+		loc.setLocationID(123L);
 		loc.setLocationName("test");
 		String json = converter.getObjectMapper().writeValueAsString(loc);
 		System.out.println(json);

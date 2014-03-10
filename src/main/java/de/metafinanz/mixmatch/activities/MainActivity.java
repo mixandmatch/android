@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import de.metafinanz.mixmatch.R;
 import de.metafinanz.mixmatch.activities.dialogs.QuitApplicationAlertDialogFragment;
+import de.metafinanz.mixmatch.domain.Appointment;
 import de.metafinanz.mixmatch.domain.Location;
+import de.metafinanz.mixmatch.domain.User;
 
 public class MainActivity extends MixMatchActivity {
 	
@@ -94,6 +96,21 @@ public class MainActivity extends MixMatchActivity {
     	EditText userText = (EditText) findViewById(R.id.textUsername);
     	String username = userText.getText().toString();
     	setUsername(username);
+    	
+    	AsyncTask<String, Void, User> asyncTask = new AsyncTask<String, Void, User>() {
+    		@Override
+    		protected User doInBackground(String... params) {
+    			return service.getOrCreateUser(params[0]);
+    		}
+    		
+    		@Override
+    		protected void onPostExecute(User result) {
+    			super.onPostExecute(result);
+    		}
+    	};
+    	
+    	asyncTask.execute(username);
+    	
     	startActivity(this.intentAppointments);
     }
     

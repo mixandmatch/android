@@ -21,7 +21,7 @@
     <string name="textLocationDetailHeader">Current Appointments in:</string>
     <string name="textLocationDetailHeaderEmptyAppoinments">Currently there are no appointments.</string>
     <string name="dateTimeFormat">MM/dd/yyyy HH:mm</string>
-    <string name="restServiceURL">http://192.168.178.59:8080/</string>
+    <string name="restServiceURL">http://ec2-54-246-100-223.eu-west-1.compute.amazonaws.com:8080/mam-backend-0.0.1.BUILD-SNAPSHOT-dev/rest/</string>
     <string name="title_activity_new_appointment2">NewAppointment2Activity</string>
     <string name="textDate">Date</string>
     <string name="textTime">Time</string>

@@ -5,58 +5,60 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Appointment {
 
-	private String appointmentID;
-	private Date timestamp;
-	private String locationID;
-	private String owner;
+	private Long appointmentID;
 	private Set<User> participants;
+	private Date appointmentDate;
+
+	private User ownerID;
+	private Location appointmentLocation;
 	
 	public Appointment() {
 	}
 	
-	public Appointment(String appointmentID, Date timestamp, String locationID,
-			String owner, Set<User> participants) {
+	public Appointment(Long appointmentID, Date appointmentDate, Location location,
+			User owner, Set<User> participants) {
 		super();
 		this.appointmentID = appointmentID;
-		this.timestamp = timestamp;
-		this.locationID = locationID;
-		this.owner = owner;
+		this.appointmentDate = appointmentDate;
+		this.appointmentLocation = location;
+		this.ownerID = owner;
 		this.participants = participants;
 	}
 
-	public String getAppointmentID() {
+	public Long getAppointmentID() {
 		return appointmentID;
 	}
 
-	public void setAppointmentID(String appointmentID) {
+	public void setAppointmentID(Long appointmentID) {
 		this.appointmentID = appointmentID;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
+	public Date getAppointmentDate() {
+		return appointmentDate;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setAppointmentDate(Date appointmentDate) {
+		this.appointmentDate = appointmentDate;
 	}
 
-	public String getLocationID() {
-		return locationID;
+	public User getOwnerID() {
+		return ownerID;
 	}
 
-	public void setLocationID(String locationID) {
-		this.locationID = locationID;
+	public void setOwnerID(User ownerID) {
+		this.ownerID = ownerID;
 	}
 
-	public String getOwner() {
-		return owner;
+	public Location getAppointmentLocation() {
+		return appointmentLocation;
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setAppointmentLocation(Location appointmentLocation) {
+		this.appointmentLocation = appointmentLocation;
 	}
 
 	public Set<User> getParticipants() {

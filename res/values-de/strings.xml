@@ -20,7 +20,7 @@
     <string name="textLocationDetailHeader">Aktuelle Verabredungen:</string>
     <string name="textLocationDetailHeaderEmptyAppoinments">Es gibt derzeit keine Verabredungen.</string>
     <string name="dateTimeFormat">dd.MM.yyyy HH:mm</string>
-	<string name="restServiceURL">http://192.168.178.59:8080/</string>
+	<string name="restServiceURL">http://ec2-54-246-100-223.eu-west-1.compute.amazonaws.com:8080/mam-backend-0.0.1.BUILD-SNAPSHOT-dev/rest/</string>
 	<string name="textDate">Datum</string>
     <string name="textTime">Uhrzeit</string>
     <string name="title_activity_impress">Impressum</string>

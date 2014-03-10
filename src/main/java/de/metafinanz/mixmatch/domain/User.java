@@ -13,8 +13,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User {
 
 	private String username;
-	private Set<Appointment> appointments;
-
+	private Long id;
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public User(String username) {
+		this.username = username;
+	}
+	
 	@Override
 	public boolean equals(Object aObject) {
 		if (aObject instanceof User) {
@@ -31,12 +39,12 @@ public class User {
 		this.username = username;
 	}
 
-	public Set<Appointment> getAppointments() {
-		return appointments;
+	public Long getId() {
+		return this.id;
 	}
-
-	public void setAppointments(Set<Appointment> appointments) {
-		this.appointments = appointments;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

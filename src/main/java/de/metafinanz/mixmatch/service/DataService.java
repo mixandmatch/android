@@ -22,13 +22,17 @@ public class DataService implements IDataService {
 
 	Mocker mocker = new Mocker();
 
-	private Map<String, List<Appointment>> appointmentMap = new HashMap<String, List<Appointment>>();
+	private Map<Long, List<Appointment>> appointmentMap = new HashMap<Long, List<Appointment>>();
 	private List<Appointment> appointmentList = new ArrayList<Appointment>();
 	
 	private DataService() {
 		Set<User> participants = new HashSet<User>();
-		this.appointmentList.add(new Appointment("1", new Date(), "1", "ujr", participants));
-		this.appointmentMap.put("1", appointmentList);
+		Location loc = new Location();
+		loc.setLocationID(1L);
+		User user1 = new User();
+		user1.setUsername("ujr");
+		this.appointmentList.add(new Appointment(1L, new Date(), loc, user1, participants));
+		this.appointmentMap.put(1L, appointmentList);
 	}
 	
 	public static DataService getInstance() {
@@ -40,7 +44,7 @@ public class DataService implements IDataService {
 		return new ArrayList<Location>(mocker.locations);
 	}
 	
-	public Location getLocationById(String id) {
+	public Location getLocationById(Long id) {
 		Location result = null;
 		for(Location location: getLocations()) {
 			if (location.getLocationID().equals(id)) {
@@ -67,7 +71,7 @@ public class DataService implements IDataService {
 		return getAppointmentsByLocationId(location.getLocationID());
 	}
 	
-	public List<Appointment> getAppointmentsByLocationId(String locationId) {
+	public List<Appointment> getAppointmentsByLocationId(Long locationId) {
 		List<Appointment> result = new ArrayList<Appointment>();
 		
 		if (locationId != null) {
@@ -89,7 +93,7 @@ public class DataService implements IDataService {
 		if (username != null) {
 			while(iter.hasNext()) {
 				for(Appointment app : iter.next()) {
-					if (app.getOwner().equals(username) || app.getParticipants().contains(username)) {
+					if (app.getOwnerID().getUsername().equals(username) || app.getParticipants().contains(username)) {
 						result.add(app);
 					}
 				}
@@ -99,22 +103,28 @@ public class DataService implements IDataService {
 		return result;
 	}
 	@Override
-	public String createNewAppointment(Appointment appointment) {
+	public Appointment createNewAppointment(Appointment appointment) {
 		
-		List<Appointment> appList = this.appointmentMap.get(appointment.getLocationID());
+		List<Appointment> appList = this.appointmentMap.get(appointment.getAppointmentLocation().getLocationID());
 		
-		appointment.setAppointmentID(String.valueOf(idCounter.incrementAndGet()));
+		appointment.setAppointmentID(idCounter.incrementAndGet());
 		
 		if (appList != null) {
 			appList.add(appointment);
-			this.appointmentMap.put(appointment.getLocationID(), appList);
+			this.appointmentMap.put(appointment.getAppointmentLocation().getLocationID(), appList);
 		} else {
 			List<Appointment> newAppList = new ArrayList<Appointment>();
 			newAppList.add(appointment);
-			this.appointmentMap.put(appointment.getLocationID(), newAppList);
+			this.appointmentMap.put(appointment.getAppointmentLocation().getLocationID(), newAppList);
 		}		
 		
-		return appointment.getAppointmentID();
+		return appointment;
 		
+	}
+	
+	@Override
+	public User getOrCreateUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

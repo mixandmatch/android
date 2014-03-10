@@ -9,11 +9,12 @@ import de.metafinanz.mixmatch.domain.User;
 public interface IDataService {
 	
 	List<Location> getLocations();
-	Location getLocationById(String id);
+	Location getLocationById(Long id);
 	List<User>getParticipantsByAppointment(Appointment appointment);
 	List<Appointment> getAppointmentsByLocation(Location location);
-	List<Appointment> getAppointmentsByLocationId(String id);
+	List<Appointment> getAppointmentsByLocationId(Long id);
 	List<Appointment> getAppointmentsByUsername(String username);
-	String createNewAppointment(Appointment appointment);
+	Appointment createNewAppointment(Appointment appointment);
+	User getOrCreateUser(String username);
 
 }

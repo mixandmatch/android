@@ -55,7 +55,7 @@ public class AppointmentsActivity extends MixMatchActivity {
 				Collections.sort(list, new Comparator<Appointment>() {
 					@Override
 					public int compare(Appointment o1, Appointment o2) {
-						return o1.getTimestamp().compareTo(o2.getTimestamp());
+						return o1.getAppointmentDate().compareTo(o2.getAppointmentDate());
 					}
 				});
 				return list;
@@ -66,7 +66,7 @@ public class AppointmentsActivity extends MixMatchActivity {
 				super.onPostExecute(result);
 				Log.i("AppointmentActivity", "" + result);
 				for (Appointment appointment : result) {
-					Log.i("AppointmentActivity", appointment.getOwner());
+					Log.i("AppointmentActivity", appointment.getOwnerID().getUsername());
 				}
 
 				appointmentList = result;
@@ -100,10 +100,10 @@ public class AppointmentsActivity extends MixMatchActivity {
 			textView.setTextColor(getResources().getColor(android.R.color.black));
 			Appointment appointment = getItem(position);
 			SimpleDateFormat sdf = new SimpleDateFormat(getResources().getText(R.string.dateTimeFormat).toString());
-			CharSequence displayTime = sdf.format(appointment.getTimestamp());
-			Location location = service.getLocationById(appointment.getLocationID());
+			CharSequence displayTime = sdf.format(appointment.getAppointmentDate());
+			Location location = service.getLocationById(appointment.getAppointmentLocation().getLocationID());
 			String locationName = location !=null ? location.getLocationName() + ": " : "";
-			textView.setText(locationName + displayTime + " (" + appointment.getOwner() + ")");
+			textView.setText(locationName + displayTime + " (" + appointment.getOwnerID().getUsername() + ")");
 			return textView;
 		}
 	}

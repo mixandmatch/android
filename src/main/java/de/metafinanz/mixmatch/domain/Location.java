@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Location {
 
-	private String locationID;
+	private Long locationID;
 	private String locationName;
 
-	public String getLocationID() {
+	public Long getLocationID() {
 		return locationID;
 	}
 
-	public void setLocationID(String locationID) {
+	public void setLocationID(Long locationID) {
 		this.locationID = locationID;
 	}
 
