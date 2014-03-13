@@ -13,6 +13,7 @@
     <string name="title_activity_locations">Locations</string>
     <string name="title_activity_appointments">Appointments</string>
     <string name="title_activity_new_appointment">Create Appointment</string>
+    <string name="title_activity_appointments_detail">Details</string>
     <string name="buttonSave">Save</string>
     <string name="buttonNew">+</string>
     <string name="textAppointmentsSubHeader">Your current approved appointments:</string>
@@ -38,6 +39,9 @@
     <string name="messageQuitAlertDialog">Do you really want to quit?</string>
     <string name="buttonCancel">Cancel</string>
     <string name="buttonOk">OK</string>
+    <string name="textAppointmentDetailHeader">Appointment-Details</string>
+    <string name="textOwner">Owner</string>
+
     <string-array name="dataservice_list">
         <item>rest</item>
         <item>local</item>

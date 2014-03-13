@@ -130,6 +130,22 @@ public class RestDataService implements IDataService {
 		return userCreated;
 	}
 	
+	public List<Appointment> getAppointments() {
+		Appointment[] appointments = restTemplate.getForObject(baseUrl + REST_URL_APPOINTMENTS, Appointment[].class);
+		return Arrays.asList(appointments);
+	}
+	
+	@Override
+	public Appointment getAppointmentById(Long appointmentId) {
+		List<Appointment> appList = getAppointments();
+		for (Appointment appointment : appList) {
+			if (appointment.getAppointmentID().equals(appointmentId)) {
+				return appointment;
+			}
+		}
+		return null;
+	}
+	
 	private Appointment handleJSON(Appointment appointment) {
 		JSONAppointment jsonApp = new JSONAppointment();
 		jsonApp.setAppointmentDate(appointment.getAppointmentDate());

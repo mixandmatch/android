@@ -17,8 +17,7 @@
         android:allowBackup="true"
         android:icon="@drawable/mixmatch"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme"
-        >
+        android:theme="@style/CustomActionBarTheme" >
         <activity
             android:name="de.metafinanz.mixmatch.activities.MainActivity"
             android:label="@string/app_name" >
@@ -74,6 +73,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.metafinanz.mixmatch.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="de.metafinanz.mixmatch.activities.AppointmentsDetailActivity"
+            android:label="@string/title_activity_appointments_detail"
+            android:parentActivityName="de.metafinanz.mixmatch.activities.AppointmentsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.metafinanz.mixmatch.activities.LocationDetailActivity" />
         </activity>
     </application>
 

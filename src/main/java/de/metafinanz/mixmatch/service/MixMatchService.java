@@ -65,5 +65,9 @@ public class MixMatchService {
 	public User getOrCreateUser(String username) {
 		return dataservice.getOrCreateUser(username);
 	}
+
+	public Appointment getAppointmentById(Long appointmentId) {
+		return dataservice.getAppointmentById(appointmentId);		
+	}
 	
 }

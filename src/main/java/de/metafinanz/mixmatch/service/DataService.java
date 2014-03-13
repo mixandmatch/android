@@ -127,4 +127,10 @@ public class DataService implements IDataService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Appointment getAppointmentById(Long appointmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

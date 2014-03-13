@@ -16,5 +16,6 @@ public interface IDataService {
 	List<Appointment> getAppointmentsByUsername(String username);
 	Appointment createNewAppointment(Appointment appointment);
 	User getOrCreateUser(String username);
+	Appointment getAppointmentById(Long appointmentId);
 
 }

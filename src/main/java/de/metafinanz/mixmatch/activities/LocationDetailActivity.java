@@ -36,8 +36,9 @@ public class LocationDetailActivity extends MixMatchActivity {
 	private ListView appointmentsListView;
 	private TextView view;
 	private Intent intentNewAppointment;
+	private Intent intentAppointmentDetail;
 	private Long locationId;
-	private AppointmentAlertDialogFragment appointmentAlertDialogFragment;
+	private AppointmentAlertDialogFragment appointmentAddParticipantDialogFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +46,22 @@ public class LocationDetailActivity extends MixMatchActivity {
 		setContentView(R.layout.activity_location_detail);
 		appointmentsListView = (ListView) findViewById(R.id.locationDetailAppointmentsListView);
 		intentNewAppointment = new Intent(this, NewAppointmentActivity.class);
-		appointmentAlertDialogFragment = new AppointmentAlertDialogFragment();
+		intentAppointmentDetail = new Intent(this, AppointmentsDetailActivity.class);
+		appointmentAddParticipantDialogFragment = new AppointmentAlertDialogFragment();
 	}
 	
-	public void showAlertDialog() {
-		appointmentAlertDialogFragment.show(getFragmentManager(), "ALertDialog");
+	public void showAddParticipantDialog() {
+		appointmentAddParticipantDialogFragment.show(getFragmentManager(), "AddParticipantDialog");
 	}
 
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
+		loadAppointments();
+	}
+
+	private void loadAppointments() {
 		Intent intent = getIntent();
 		this.locationId = intent.getLongExtra(LOCATION_ID, 0);
 		
@@ -105,16 +111,16 @@ public class LocationDetailActivity extends MixMatchActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View arg1, int position,
 						long id) {
-					Appointment location = (Appointment) parent.getItemAtPosition(position);
-					//intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
-					//startActivity(intentLocationDetail);				
+					Appointment app = (Appointment) parent.getItemAtPosition(position);
+					intentAppointmentDetail.putExtra(APPOINTMENT_ID, app.getAppointmentID());
+					startActivity(intentAppointmentDetail);			
 				}
 			});
 			appointmentsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View arg1,
 						int position, long id) {
-					showAlertDialog();
+					showAddParticipantDialog();
 					return false;
 				}
 			});

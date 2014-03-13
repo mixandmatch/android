@@ -13,6 +13,7 @@
     <string name="title_activity_locations">Orte</string>
     <string name="title_activity_appointments">Verabredungen</string>
     <string name="title_activity_new_appointment">Verabredung erstellen</string>
+    <string name="title_activity_appointments_detail">Verabredungs-Details</string>
     <string name="buttonSave">Speichern</string>
     <string name="buttonNew">+</string>
     <string name="textAppointmentsSubHeader">Deine gespeicherten Verabredungen:</string>
@@ -20,7 +21,6 @@
     <string name="textLocationDetailHeader">Aktuelle Verabredungen:</string>
     <string name="textLocationDetailHeaderEmptyAppoinments">Es gibt derzeit keine Verabredungen.</string>
     <string name="dateTimeFormat">dd.MM.yyyy HH:mm</string>
-	<string name="restServiceURL">http://ec2-54-246-100-223.eu-west-1.compute.amazonaws.com:8080/mam-backend-0.0.1.BUILD-SNAPSHOT-dev/rest/</string>
 	<string name="textDate">Datum</string>
     <string name="textTime">Uhrzeit</string>
     <string name="title_activity_impress">Impressum</string>

@@ -14,6 +14,7 @@ public abstract class MixMatchActivity extends Activity {
 
 	public static final String USER_NAME = "user.name";
 	public static final String LOCATION_ID = "locationId";
+	public static final String APPOINTMENT_ID = "appointmentId";
 	
 	public static final String MIXMATCH_PREFS = "mixmatch_preferences";
 	public static final String KEY_USERNAME = "mixmatch_username";
