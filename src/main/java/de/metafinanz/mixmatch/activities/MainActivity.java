@@ -27,6 +27,8 @@ public class MainActivity extends MixMatchActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         intentAppointments = new Intent(this, AppointmentsActivity.class);
+        getActionBar().setHomeButtonEnabled(false);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
     }
     
     @Override
