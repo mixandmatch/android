@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import de.metafinanz.mixmatch.R;
 import de.metafinanz.mixmatch.service.MixMatchService;
 
 public abstract class MixMatchActivity extends Activity {
@@ -42,6 +43,12 @@ public abstract class MixMatchActivity extends Activity {
 		super.onResume();
 		initUsername();
 	}
+	
+	@Override
+	public void onBackPressed() {
+	    super.onBackPressed();
+	    overridePendingTransition(R.anim.left_in, R.anim.right_out);   
+	}
 
 	public void showSettings(MenuItem item) {
     	Intent intent = new Intent(this, SettingsActivity.class);
@@ -67,14 +74,8 @@ public abstract class MixMatchActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			NavUtils.navigateUpFromSameTask(this);
+			overridePendingTransition(R.anim.left_in, R.anim.right_out); 
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

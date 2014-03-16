@@ -30,12 +30,7 @@ public class AppointmentsActivity extends MixMatchActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointments);
 		appointmentsListView = (ListView) findViewById(R.id.userAppointmentsListView);
-		String userName = getUsername();
-		TextView text = (TextView) findViewById(R.id.textAppointmentsHeader);
-		if (userName != null && userName.length() > 0) {
-			text.append(" ");
-			text.append(userName);
-		}
+		
 	}
 	
 	@Override
@@ -43,6 +38,12 @@ public class AppointmentsActivity extends MixMatchActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		getAppointmentsForUser();
+		String userName = getUsername();
+		TextView text = (TextView) findViewById(R.id.textAppointmentsHeader);
+		if (userName != null && userName.length() > 0) {
+			text.append(" ");
+			text.append(userName);
+		}
 	}
 	
 	private void getAppointmentsForUser() {

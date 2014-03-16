@@ -79,6 +79,7 @@ public class MainActivity extends MixMatchActivity {
     public void showLocations(View view) {
     	Intent intent = new Intent(this, LocationsActivity.class);
     	startActivity(intent);
+    	overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
     
     public void showAppointments(View view) {
@@ -86,6 +87,7 @@ public class MainActivity extends MixMatchActivity {
     	String userName = getUsername();
     	if (userName != null && userName.length() > 0) {
     		startActivity(this.intentAppointments);
+    		overridePendingTransition(R.anim.right_in, R.anim.left_out);
     	} else {
     		EditText text = (EditText) findViewById(R.id.textUsername);
     		text.setVisibility(EditText.VISIBLE);
@@ -114,6 +116,7 @@ public class MainActivity extends MixMatchActivity {
     	asyncTask.execute(username);
     	
     	startActivity(this.intentAppointments);
+    	overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
     
 	public void handleQuit(MenuItem item) {

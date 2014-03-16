@@ -44,6 +44,7 @@ public class AppointmentsDetailActivity extends MixMatchActivity {
 	            // This activity is part of this app's task, so simply
 	            // navigate up to the logical parent activity.
 	            NavUtils.navigateUpTo(this, upIntent);
+	            overridePendingTransition(R.anim.left_in, R.anim.right_out);
 	        }
 	        return true;
 	    }

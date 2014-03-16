@@ -113,7 +113,8 @@ public class LocationDetailActivity extends MixMatchActivity {
 						long id) {
 					Appointment app = (Appointment) parent.getItemAtPosition(position);
 					intentAppointmentDetail.putExtra(APPOINTMENT_ID, app.getAppointmentID());
-					startActivity(intentAppointmentDetail);			
+					startActivity(intentAppointmentDetail);
+					overridePendingTransition(R.anim.right_in, R.anim.left_out);
 				}
 			});
 			appointmentsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

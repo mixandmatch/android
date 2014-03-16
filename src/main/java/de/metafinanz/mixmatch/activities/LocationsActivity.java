@@ -3,10 +3,12 @@ package de.metafinanz.mixmatch.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +46,7 @@ public class LocationsActivity extends MixMatchActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		loadLocationList();
-	}
+	}	
 	
 	private void loadLocationList() {
 		// Asychroner Task für REST-Service
@@ -80,7 +82,8 @@ public class LocationsActivity extends MixMatchActivity {
 							long id) {
 						Location location = (Location) parent.getItemAtPosition(position);
 						intentLocationDetail.putExtra(LOCATION_ID, location.getLocationID());
-						startActivity(intentLocationDetail);				
+						startActivity(intentLocationDetail);
+						overridePendingTransition(R.anim.right_in, R.anim.left_out);
 					}
 				});
 	}
